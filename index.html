@@ -18330,50 +18330,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// ============================================
-// 📲 دالة مشاركة بطاقة الرابط (Link Card)
-// ============================================
-async function shareAppGlobal() {
-    const lang = currentLanguage; // ar أو tr
-    
-    // النصوص التي ستظهر فوق البطاقة
-    // ملاحظة: الصورة والعنوان العريض سيأخذهما واتساب من الميتا تاج في موقعك
-    const contentData = {
-        ar: {
-            title: "حاسبة الزكاة الذكية",
-            text: "تطبيق شامل لحساب زكاة المال والذهب والأسهم بدقة."
-        },
-        tr: {
-            title: "Zekât Hesaplayıcı",
-            text: "Kapsamlı zekât hesaplama uygulaması."
-        }
-    };
-
-    const currentContent = contentData[lang];
-    
-    // الرابط مع تحديد اللغة
-    const appUrl = window.location.href.split('?')[0] + '?lang=' + lang;
-
-    // دمج النص والرابط
-    const shareText = `${currentContent.title}\n${currentContent.text}`;
-
-    try {
-        // نستخدم navigator.share بدون files
-        // هذا يجبر الهاتف على عرضها كـ "رابط" وليس "صورة"
-        await navigator.share({
-            title: currentContent.title,
-            text: shareText,
-            url: appUrl
-        });
-        
-    } catch (error) {
-        console.log("Sharing failed:", error);
-        // النسخ للحافظة كبديل
-        navigator.clipboard.writeText(shareText + "\n" + appUrl);
-        showToast(lang === 'ar' ? 'تم نسخ الرابط' : 'Bağlantı kopyalandı', 'success');
-    }
-}
-
 
 
 
@@ -18745,6 +18701,7 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
 
 
 
