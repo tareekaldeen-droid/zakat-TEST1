@@ -1,0 +1,21 @@
+{
+  "name": "حاسبة الزكاة",
+  "short_name": "الزكاة",
+  "start_url": "./index.html?lang=ar",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0d7c66",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=192,h=192,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=512,h=512,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
