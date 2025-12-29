@@ -18338,98 +18338,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// ============================================
-// 1️⃣ تهيئة اللغة عند تحميل الصفحة (الحل لمشكلة الريلود)
-// ============================================
 
-// تحديد اللغة بناءً على الرابط أولاً، ثم الذاكرة، ثم الافتراضي
-let currentLanguage = getInitialLanguage();
-
-function getInitialLanguage() {
-    // 1. هل الرابط يحتوي على لغة؟ (مثلاً جاء من مشاركة)
-    const urlParams = new URLSearchParams(window.location.search);
-    const langParam = urlParams.get('lang');
-    if (langParam === 'ar' || langParam === 'tr') {
-        // نحفظها للمستقبل
-        localStorage.setItem('userLanguage', langParam);
-        return langParam;
-    }
-
-    // 2. هل المستخدم اختار لغة سابقاً؟
-    const savedLang = localStorage.getItem('userLanguage');
-    if (savedLang) {
-        return savedLang;
-    }
-
-    // 3. الافتراضي
-    return 'ar';
-}
-
-// دالة تغيير اللغة (استخدمها عند ضغط زر تغيير اللغة)
-function setLanguage(lang) {
-    currentLanguage = lang;
-    localStorage.setItem('userLanguage', lang); // حفظ اللغة
-    
-    // تحديث النصوص في الصفحة (استدعِ دالة التحديث الخاصة بك هنا)
-    updatePageLanguage(); 
-    
-    // تحديث الرابط في المتصفح بدون إعادة تحميل (اختياري لجمالية الرابط)
-    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?lang=' + lang;
-    window.history.pushState({path: newUrl}, '', newUrl);
-}
-
-
-
-
-        
-// ============================================
-// 2️⃣ دالة المشاركة (تشارك الرابط مع اللغة المحفوظة)
-// ============================================
-async function shareAppGlobal() {
-    // نستخدم اللغة الحالية التي تم ضبطها في الكود أعلاه
-    const lang = currentLanguage; 
-    
-    const contentData = {
-        ar: {
-            title: "حاسبة الزكاة الذكية",
-            text: "تطبيق ويب متكامل لحساب الزكاة الشرعية بمختلف أنواعها."
-        },
-        tr: {
-            title: "Zekât Hesaplayıcı",
-            text: "Zekât hesaplama uygulaması."
-        }
-    };
-
-    const currentContent = contentData[lang];
-    
-    // 🔥 هام: إنشاء الرابط مع تحديد اللغة الحالية
-    // هذا يضمن أنه عندما يفتح الشخص الآخر الرابط، سيفتح بنفس اللغة
-    const appUrl = window.location.origin + window.location.pathname + '?lang=' + lang;
-
-    const shareText = `${currentContent.title}\n${currentContent.text}`;
-
-    try {
-        if (navigator.share) {
-            await navigator.share({
-                title: currentContent.title,
-                text: currentContent.text, // نرسل النص
-                url: appUrl              // نرسل الرابط (ليظهر كبطاقة)
-            });
-        } else {
-            throw new Error("Share API not supported");
-        }
-    } catch (error) {
-        console.log("Sharing failed or cancelled:", error);
-        // النسخ للحافظة كبديل
-        navigator.clipboard.writeText(shareText + "\n" + appUrl);
-        // تأكد من وجود دالة showToast أو استبدلها بـ alert
-        if (typeof showToast === 'function') {
-            showToast(lang === 'ar' ? 'تم نسخ الرابط' : 'Bağlantı kopyalandı', 'success');
-        } else {
-            alert(lang === 'ar' ? 'تم نسخ الرابط' : 'Bağlantı kopyalandı');
-        }
-    }
-}
 
         
 
@@ -18801,6 +18710,7 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
 
 
 
