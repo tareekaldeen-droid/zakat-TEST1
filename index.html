@@ -944,173 +944,128 @@
 
 
 /* ================================================================= */
-/* 🌙 الوضع الليلي الاحترافي الشامل - قسم الأحكام الفقهية (Fiqh) */
+/* 🌙 الوضع الليلي: تخصيص شامل لمحتوى البطاقة فقط (Inside Card Only) */
 /* ================================================================= */
 
-/* 1. الإعدادات العامة للحاوية والنصوص */
-[data-theme="dark"] #fiqhPage {
-    --fiqh-bg-dark: #1e252b;       /* لون خلفية البطاقات */
-    --fiqh-bg-darker: #161b20;     /* لون خلفية المحتوى */
-    --text-bright: #f0f6fc;        /* لون النص الأبيض الساطع */
-    --text-dim: #b0b8c4;           /* لون النص الرمادي الفاتح */
-    --border-dark: #30363d;        /* لون الحدود */
+/* 1. خلفية البطاقة والنصوص الأساسية */
+[data-theme="dark"] #fiqhPage .card {
+    background-color: #1e1e1e !important; /* لون خلفية البطاقة رمادي غامق */
+    border: 1px solid #333 !important;
+    color: #e0e0e0 !important; /* لون النص الأساسي أبيض مائل للرمادي */
 }
 
-/* 2. الأكوردين (القائمة المنسدلة) */
+/* 2. الأكوردين (القوائم المنسدلة) */
 [data-theme="dark"] #fiqhPage .accordion-header {
-    background-color: var(--fiqh-bg-dark) !important;
-    color: var(--text-bright) !important;
-    border-color: var(--border-dark) !important;
+    background-color: #252525 !important; /* خلفية الهيدر */
+    color: #ffffff !important;
+    border-bottom: 1px solid #333 !important;
 }
 
 [data-theme="dark"] #fiqhPage .accordion-header:hover {
-    background-color: #2a323b !important;
+    background-color: #303030 !important;
 }
 
 [data-theme="dark"] #fiqhPage .accordion-header.active {
-    background: linear-gradient(135deg, rgba(13, 124, 102, 0.8), rgba(65, 184, 166, 0.8)) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, #0d7c66, #084135) !important; /* أخضر غامق عند الفتح */
+    color: #fff !important;
 }
 
 [data-theme="dark"] #fiqhPage .accordion-content {
-    background-color: var(--fiqh-bg-darker) !important;
-    color: var(--text-dim) !important;
-    border-color: var(--border-dark) !important;
+    background-color: #1a1a1a !important; /* خلفية المحتوى الداخلي */
+    color: #d1d1d1 !important;
+    border-top: none !important;
 }
 
-/* 3. معالجة النصوص الملونة (Override Inline Styles) */
-/* هذا الجزء يحول الألوان الداكنة إلى ألوان فاتحة مضيئة */
-
-/* النصوص الخضراء الداكنة -> أخضر فاتح */
-[data-theme="dark"] #fiqhPage [style*="color: #0d7c66"],
-[data-theme="dark"] #fiqhPage [style*="color: var(--primary-color)"] {
-    color: #4db6ac !important;
-}
-
-/* النصوص السوداء -> أبيض */
-[data-theme="dark"] #fiqhPage [style*="color: #1a3a2e"],
-[data-theme="dark"] #fiqhPage [style*="color: #000"] {
-    color: #e6edf3 !important;
-}
-
-/* العناوين الفرعية الرمادية -> رمادي فاتح */
-[data-theme="dark"] #fiqhPage [style*="color: #4a6b5e"],
-[data-theme="dark"] #fiqhPage [style*="color: #666"] {
-    color: #8b949e !important;
-}
-
-/* 4. صناديق المذاهب والأدلة (تحويل الخلفيات الفاتحة إلى داكنة شفافة) */
-
-/* القاعدة العامة لجميع الصناديق */
+/* 3. إصلاح المربعات الملونة (تحويل الخلفيات الفاتحة إلى داكنة شفافة) */
+/* هذه الخطوة تلغي الخلفيات البيضاء الساطعة للمذاهب والأدلة */
 [data-theme="dark"] #fiqhPage div[style*="background"] {
-    background-color: rgba(255, 255, 255, 0.03) !important; /* خلفية شفافة جداً */
+    background-color: rgba(255, 255, 255, 0.05) !important; /* شفاف داكن */
     border-color: rgba(255, 255, 255, 0.1) !important;
     box-shadow: none !important;
+    color: #e0e0e0 !important;
 }
 
-/* تخصيص ألوان المذاهب لتكون مضيئة في الظلام */
-
-/* 🟢 الحنفية (أخضر) */
-[data-theme="dark"] #fiqhPage .madhab-box.hanafi,
+/* 4. الحفاظ على تمييز ألوان المذاهب (بشكل ليلي) */
+/* الحنفية (أخضر) */
 [data-theme="dark"] #fiqhPage div[style*="border-right: 4px solid #2ecc71"] {
-    background: linear-gradient(90deg, rgba(46, 204, 113, 0.15), transparent) !important;
+    background: linear-gradient(90deg, rgba(46, 204, 113, 0.1), transparent) !important;
     border-right-color: #2ecc71 !important;
 }
-[data-theme="dark"] #fiqhPage [style*="color: #2ecc71"] { color: #58d68d !important; }
-
-/* 🔵 المالكية (أزرق) */
-[data-theme="dark"] #fiqhPage .madhab-box.maliki,
+/* المالكية (أزرق) */
 [data-theme="dark"] #fiqhPage div[style*="border-right: 4px solid #3498db"] {
-    background: linear-gradient(90deg, rgba(52, 152, 219, 0.15), transparent) !important;
+    background: linear-gradient(90deg, rgba(52, 152, 219, 0.1), transparent) !important;
     border-right-color: #3498db !important;
 }
-[data-theme="dark"] #fiqhPage [style*="color: #3498db"] { color: #5dade2 !important; }
-
-/* 🔴 الشافعية (أحمر) */
-[data-theme="dark"] #fiqhPage .madhab-box.shafii,
+/* الشافعية (أحمر) */
 [data-theme="dark"] #fiqhPage div[style*="border-right: 4px solid #e74c3c"] {
-    background: linear-gradient(90deg, rgba(231, 76, 60, 0.15), transparent) !important;
+    background: linear-gradient(90deg, rgba(231, 76, 60, 0.1), transparent) !important;
     border-right-color: #e74c3c !important;
 }
-[data-theme="dark"] #fiqhPage [style*="color: #e74c3c"] { color: #ec7063 !important; }
-
-/* 🟠 الحنابلة (برتقالي) */
-[data-theme="dark"] #fiqhPage .madhab-box.hanbali,
+/* الحنابلة (برتقالي) */
 [data-theme="dark"] #fiqhPage div[style*="border-right: 4px solid #f39c12"] {
-    background: linear-gradient(90deg, rgba(243, 156, 18, 0.15), transparent) !important;
+    background: linear-gradient(90deg, rgba(243, 156, 18, 0.1), transparent) !important;
     border-right-color: #f39c12 !important;
 }
-[data-theme="dark"] #fiqhPage [style*="color: #f39c12"] { color: #f5b041 !important; }
 
-/* 🟣 صناديق التعريفات (بنفسجي) */
-[data-theme="dark"] #fiqhPage div[style*="border-right: 4px solid #9b59b6"],
-[data-theme="dark"] #fiqhPage div[style*="border-right: 4px solid #9c27b0"] {
-    background: linear-gradient(90deg, rgba(155, 89, 182, 0.15), transparent) !important;
+/* 5. تصحيح ألوان النصوص (جعل النصوص الداكنة مضيئة) */
+/* العناوين الخضراء */
+[data-theme="dark"] #fiqhPage [style*="color: #0d7c66"],
+[data-theme="dark"] #fiqhPage [style*="color: var(--primary-color)"] {
+    color: #80cbc4 !important; /* تيل فاتح */
 }
-[data-theme="dark"] #fiqhPage [style*="color: #9b59b6"],
-[data-theme="dark"] #fiqhPage [style*="color: #7b1fa2"] { color: #d2b4de !important; }
-
-/* 5. صناديق القرآن والحديث */
-[data-theme="dark"] #fiqhPage .quran-box,
-[data-theme="dark"] #fiqhPage div[style*="background: #f0f9f7"] {
-    background: rgba(13, 124, 102, 0.1) !important;
-    border: 1px solid rgba(13, 124, 102, 0.3) !important;
+/* النصوص السوداء */
+[data-theme="dark"] #fiqhPage [style*="color: #1a3a2e"],
+[data-theme="dark"] #fiqhPage [style*="color: #000"] {
+    color: #eeeeee !important; /* أبيض */
 }
-
-[data-theme="dark"] #fiqhPage div[style*="background: #fff8e1"] { /* الحديث */
-    background: rgba(255, 193, 7, 0.08) !important;
-    border-right: 4px solid #ffc107 !important;
+/* النصوص الرمادية */
+[data-theme="dark"] #fiqhPage [style*="color: #4a6b5e"],
+[data-theme="dark"] #fiqhPage [style*="color: #666"] {
+    color: #b0bec5 !important; /* رمادي فاتح */
 }
+/* العناوين الملونة الأخرى */
+[data-theme="dark"] #fiqhPage [style*="color: #2ecc71"] { color: #69f0ae !important; }
+[data-theme="dark"] #fiqhPage [style*="color: #3498db"] { color: #64b5f6 !important; }
+[data-theme="dark"] #fiqhPage [style*="color: #e74c3c"] { color: #e57373 !important; }
+[data-theme="dark"] #fiqhPage [style*="color: #f39c12"] { color: #ffb74d !important; }
 
 /* 6. الجداول (Tables) */
 [data-theme="dark"] #fiqhPage table {
-    background-color: var(--fiqh-bg-dark) !important;
-    border: 1px solid var(--border-dark) !important;
+    background-color: #252525 !important;
+    border: 1px solid #444 !important;
 }
-
 [data-theme="dark"] #fiqhPage th {
-    background: linear-gradient(135deg, rgba(13, 124, 102, 0.6), rgba(13, 124, 102, 0.4)) !important;
+    background-color: #0d7c66 !important; /* رأس الجدول أخضر غامق */
     color: white !important;
-    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    border-bottom: 1px solid #444 !important;
 }
-
 [data-theme="dark"] #fiqhPage td {
-    color: var(--text-dim) !important;
-    border-bottom: 1px solid var(--border-dark) !important;
     background-color: transparent !important;
+    color: #ddd !important;
+    border-bottom: 1px solid #333 !important;
 }
-
 [data-theme="dark"] #fiqhPage tr:hover td {
-    background-color: rgba(255,255,255,0.03) !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 /* 7. القوائم (Lists) */
-[data-theme="dark"] #fiqhPage ul li,
-[data-theme="dark"] #fiqhPage ol li {
-    color: var(--text-dim) !important;
-}
-
 [data-theme="dark"] #fiqhPage .custom-list li {
-    background-color: rgba(255,255,255,0.03) !important;
-    border-right-color: var(--secondary-color) !important;
+    background-color: rgba(255, 255, 255, 0.03) !important;
+    color: #e0e0e0 !important;
+    border-right: 3px solid #80cbc4 !important;
 }
 
-/* 8. تحسينات إضافية للأيقونات والأزرار */
+/* 8. الأزرار داخل البطاقة */
 [data-theme="dark"] #fiqhPage .action-btn {
-    background-color: rgba(255,255,255,0.1) !important;
-    color: white !important;
-    border-color: rgba(255,255,255,0.2) !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
-
 [data-theme="dark"] #fiqhPage .action-btn:hover {
-    background-color: var(--primary-color) !important;
+    background-color: #0d7c66 !important;
+    border-color: #0d7c66 !important;
 }
 
-/* تصحيح الخط الفاصل */
-[data-theme="dark"] #fiqhPage hr,
-[data-theme="dark"] #fiqhPage div[style*="height: 1px"] {
-    background-color: var(--border-dark) !important;
-}
 
 
         
@@ -18717,6 +18672,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
