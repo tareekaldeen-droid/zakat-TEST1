@@ -1,7 +1,7 @@
 {
   "name": "حاسبة الزكاة",
   "short_name": "الزكاة",
-  "start_url": "./index.html?lang=ar",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0d7c66",
