@@ -18729,58 +18729,34 @@ if ('serviceWorker' in navigator) {
 
 
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').then(registration => {
-        
-        // التحقق من وجود تحديث أثناء عمل التطبيق
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // تم تحميل تحديث جديد في الخلفية!
-              // نظهر رسالة للمستخدم
-              showUpdateNotification();
-            }
-          });
+    // تسجيل الـ Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').then(registration => {
+                console.log('SW Registered');
+
+                // كود التحديث التلقائي
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // تم تحميل تحديث جديد في الخلفية
+                            // نظهر رسالة للمستخدم أو نحدث الصفحة تلقائياً
+                            // هنا سنقوم بتحديث الصفحة تلقائياً لضمان الحصول على النسخة الجديدة
+                            console.log('New update available, reloading...');
+                            // window.location.reload(); // يمكنك تفعيل هذا للتحديث الإجباري
+                            
+                            // أو إظهار رسالة (أفضل)
+                            const msg = localStorage.getItem('appLanguage') === 'tr' ? 'Güncelleme mevcut!' : 'تحديث جديد متوفر!';
+                            if(confirm(msg)) {
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+            }).catch(err => console.log('SW Registration Failed', err));
         });
-      });
-    });
-  }
-
-  function showUpdateNotification() {
-    // إنشاء رسالة منبثقة (Toast)
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      background: #333; color: white; padding: 15px 25px; border-radius: 30px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 10000;
-      display: flex; align-items: center; gap: 15px; font-family: sans-serif;
-    `;
-    
-    const msg = localStorage.getItem('appLanguage') === 'tr' 
-      ? 'Yeni güncelleme mevcut!' 
-      : 'تحديث جديد متوفر!';
-      
-    const btnText = localStorage.getItem('appLanguage') === 'tr' 
-      ? 'Yenile' 
-      : 'تحديث';
-
-    toast.innerHTML = `
-      <span>${msg}</span>
-      <button id="reloadBtn" style="
-        background: #0d7c66; color: white; border: none; 
-        padding: 5px 15px; border-radius: 15px; cursor: pointer; font-weight: bold;
-      ">${btnText}</button>
-    `;
-
-    document.body.appendChild(toast);
-
-    document.getElementById('reloadBtn').addEventListener('click', () => {
-      window.location.reload();
-    });
-  }
+    }
 </script>
 
 
@@ -18789,6 +18765,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
