@@ -1,8 +1,9 @@
-const CACHE_NAME = 'zakat-app-v13-final-offline'; // تغيير الرقم ضروري
+const CACHE_NAME = 'zakat-app-v14-final'; // تغيير الرقم مهم جداً
+const OFFLINE_URL = './index.html';
 
 const ASSETS_TO_CACHE = [
   './',
-  './index.html', // هذا هو أهم ملف
+  OFFLINE_URL, // الصفحة الرئيسية
   './manifest_ar.json',
   './manifest_tr.json',
   // المكتبات
@@ -18,16 +19,15 @@ const ASSETS_TO_CACHE = [
 
 // 1. التثبيت: تخزين الملفات بقوة
 self.addEventListener('install', (event) => {
-  self.skipWaiting();
+  self.skipWaiting(); // تفعيل فوراً
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('Caching App Shell...');
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
 });
 
-// 2. التفعيل: تنظيف القديم
+// 2. التفعيل: السيطرة الفورية
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -40,43 +40,36 @@ self.addEventListener('activate', (event) => {
       );
     })
   );
-  self.clients.claim();
+  self.clients.claim(); // السيطرة على الصفحات المفتوحة حالاً
 });
 
-// 3. الجلب: الاستراتيجية الصارمة (Cache First for Navigation)
+// 3. الجلب: الحل السحري لمشكلة الأوفلاين
 self.addEventListener('fetch', (event) => {
   
-  // أ) إذا كان الطلب هو "فتح الصفحة" أو "إعادة التحميل" (Navigation)
+  // 🔥 الحالة الأولى: طلب فتح صفحة أو إعادة تحميل (Navigation)
+  // هنا نجبره على استخدام index.html من الكاش مهما كان الرابط
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      caches.match('./index.html').then((response) => {
-        // إذا وجدنا الصفحة في الكاش، نرجعها فوراً ولا نحاول الاتصال بالنت
-        // هذا يمنع ظهور صفحة "لا يوجد اتصال"
-        return response || fetch(event.request);
+      caches.match(OFFLINE_URL).then((cachedResponse) => {
+        // إذا وجدنا index.html في الكاش، نرجعه فوراً
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        // إذا لم نجده (حالة نادرة)، نحاول النت
+        return fetch(event.request);
       }).catch(() => {
-        // خط الأمان الأخير
-        return caches.match('./index.html');
+        // إذا فشل كل شيء، ارجع للكاش مرة أخرى (أمان إضافي)
+        return caches.match(OFFLINE_URL);
       })
     );
-    return; // انتهى هنا، لا تكمل الكود
+    return;
   }
 
-  // ب) لباقي الملفات (صور، سكربتات) - استراتيجية Stale-While-Revalidate
-  // نعرض القديم فوراً، ونحدث في الخلفية إذا كان هناك نت
+  // 🔥 الحالة الثانية: باقي الملفات (صور، سكربتات)
+  // استراتيجية: الكاش أولاً، ثم التحديث في الخلفية
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      const fetchPromise = fetch(event.request).then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return networkResponse;
-      }).catch(() => {}); // تجاهل أخطاء النت
-
-      return cachedResponse || fetchPromise;
+      return cachedResponse || fetch(event.request);
     })
   );
-
 });
