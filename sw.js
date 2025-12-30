@@ -1,7 +1,7 @@
 
 
 // قمنا بتغيير الإصدار إلى v5.0 لإجبار المتصفح على إعادة التخزين
-const CACHE_NAME = 'zakat-app-v5.9'; 
+const CACHE_NAME = 'zakat-app-v6.0'; 
 
 const ASSETS_TO_CACHE = [
   './',
@@ -74,6 +74,7 @@ self.addEventListener('fetch', (event) => {
       })
   );
 });
+
 
 
 
