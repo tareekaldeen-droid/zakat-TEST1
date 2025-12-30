@@ -1,76 +1,60 @@
-const CACHE_NAME = 'zakat-app-v15-final'; // تغيير الرقم مهم جداً
+const CACHE_NAME = 'zakat-app-v16-hybrid'; // تحديث الرقم
 const OFFLINE_URL = './index.html';
 
 const ASSETS_TO_CACHE = [
   './',
-  OFFLINE_URL, // الصفحة الرئيسية
+  OFFLINE_URL,
   './manifest_ar.json',
   './manifest_tr.json',
-  // المكتبات
   'https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
   'https://cdn.jsdelivr.net/npm/jspdf-arabic@1.0.1/dist/jspdf-arabic.min.js',
   'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap',
-  // الصور
   'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png',
   'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/__gemini_generated_image_l7bj58l7bj58l7bj---uo3o-r-o-c-1-Egn1jwHegFrVqeor.png'
 ];
 
-// 1. التثبيت: تخزين الملفات بقوة
 self.addEventListener('install', (event) => {
-  self.skipWaiting(); // تفعيل فوراً
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
   );
 });
 
-// 2. التفعيل: السيطرة الفورية
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
-        })
-      );
+    caches.keys().then((keyList) => {
+      return Promise.all(keyList.map((key) => {
+        if (key !== CACHE_NAME) return caches.delete(key);
+      }));
     })
   );
-  self.clients.claim(); // السيطرة على الصفحات المفتوحة حالاً
+  self.clients.claim();
 });
 
-// 3. الجلب: الحل السحري لمشكلة الأوفلاين
 self.addEventListener('fetch', (event) => {
-  
-  // 🔥 الحالة الأولى: طلب فتح صفحة أو إعادة تحميل (Navigation)
-  // هنا نجبره على استخدام index.html من الكاش مهما كان الرابط
-  if (event.request.mode === 'navigate') {
-    event.respondWith(
-      caches.match(OFFLINE_URL).then((cachedResponse) => {
-        // إذا وجدنا index.html في الكاش، نرجعه فوراً
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        // إذا لم نجده (حالة نادرة)، نحاول النت
-        return fetch(event.request);
-      }).catch(() => {
-        // إذا فشل كل شيء، ارجع للكاش مرة أخرى (أمان إضافي)
-        return caches.match(OFFLINE_URL);
-      })
-    );
-    return;
-  }
-
-  // 🔥 الحالة الثانية: باقي الملفات (صور، سكربتات)
-  // استراتيجية: الكاش أولاً، ثم التحديث في الخلفية
+  // استراتيجية: اعرض الكاش فوراً، وحدث من النت في الخلفية
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request);
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.match(event.request).then((cachedResponse) => {
+        
+        // 1. منطق التحديث (يعمل دائماً في الخلفية إذا وجد نت)
+        const fetchPromise = fetch(event.request).then((networkResponse) => {
+          // تحديث الكاش فقط إذا كان الرد سليماً
+          if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+            cache.put(event.request, networkResponse.clone());
+          }
+          return networkResponse;
+        }).catch(() => {
+          // فشل النت؟ لا مشكلة، لا تفعل شيئاً
+        });
+
+        // 2. منطق العرض (الأولوية للكاش)
+        // إذا وجدنا الملف في الكاش، نرجعه فوراً (لسرعة الأوفلاين)
+        // وإلا ننتظر النت
+        return cachedResponse || fetchPromise;
+      });
     })
   );
 });
-
