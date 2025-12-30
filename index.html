@@ -18752,9 +18752,49 @@ if ('serviceWorker' in navigator) {
 
 
 
+<div id="updateToast" style="display:none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; padding: 15px 25px; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; align-items: center; gap: 10px; font-family: sans-serif;">
+  <span id="updateMsg">تحديث جديد متوفر</span>
+  <button onclick="window.location.reload()" style="background: #0d7c66; color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer;">تحديث</button>
+</div>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').then(reg => {
+        
+        // الاستماع للتحديثات
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // تم تحميل التحديث في الخلفية!
+              // إظهار الإشعار للمستخدم
+              const isAr = localStorage.getItem('appLanguage') !== 'tr';
+              document.getElementById('updateMsg').innerText = isAr ? 'تحديث جديد متوفر!' : 'Yeni güncelleme mevcut!';
+              document.getElementById('updateToast').querySelector('button').innerText = isAr ? 'تحديث' : 'Yenile';
+              document.getElementById('updateToast').style.display = 'flex';
+            }
+          });
+        });
+      });
+    });
+  }
+  
+  // كود تغيير اللغة (نظيف)
+  document.getElementById('languageSelect').addEventListener('change', function(e) {
+      localStorage.setItem('appLanguage', e.target.value);
+      // استخدام replace لمنع الرجوع للخلف، والذهاب لصفحة نظيفة
+      window.location.replace('./index.html'); 
+  });
+</script>
+
+
+    
+
     
 </body>
 </html>
+
 
 
 
