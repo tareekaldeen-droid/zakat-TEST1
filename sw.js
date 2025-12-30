@@ -1,39 +1,38 @@
 
 
-// قمنا بتغيير الإصدار إلى v5.0 لإجبار المتصفح على إعادة التخزين
-const CACHE_NAME = 'zakat-app-v6.0'; 
-
+const CACHE_NAME = 'zakat-app-v 6.1';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest_ar.json',
-  './manifest_tr.json', // ضروري جداً وجود هذا الملف هنا
+  './manifest_tr.json',
   './notifications.json',
-  'https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js',
+ 'https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
   'https://cdn.jsdelivr.net/npm/jspdf-arabic@1.0.1/dist/jspdf-arabic.min.js'
 
 ];
 
-// تثبيت Service Worker
+// 1. تثبيت Service Worker وتخزين الملفات الأساسية
 self.addEventListener('install', (event) => {
-  self.skipWaiting();
+  self.skipWaiting(); // تفعيل التحديث فوراً
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('جاري تخزين ملفات التطبيق (عربي وتركي)...');
+      console.log('تم فتح الكاش وتخزين الملفات');
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
 });
 
-// تفعيل وتنظيف القديم
+// 2. تفعيل Service Worker وتنظيف الكاش القديم
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
+            console.log('حذف الكاش القديم:', cache);
             return caches.delete(cache);
           }
         })
@@ -43,14 +42,13 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
-// استراتيجية جلب البيانات (Network First, then Cache)
+// 3. استراتيجية الشبكة أولاً، ثم الكاش (Network First, falling back to Cache)
+// هذا يضمن حصول المستخدم على أحدث نسخة إذا كان متصلاً، والنسخة المحفوظة إذا لم يكن متصلاً
 self.addEventListener('fetch', (event) => {
-  // استثناء طلبات الويب الخارجية إذا أردت، أو تركها كما هي
-  
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // إذا نجح الاتصال، نحدث الكاش
+        // إذا نجح الاتصال بالإنترنت، قم بتحديث النسخة في الكاش
         if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
         }
@@ -61,12 +59,12 @@ self.addEventListener('fetch', (event) => {
         return response;
       })
       .catch(() => {
-        // إذا فشل النت، نلجأ للكاش
+        // إذا فشل الاتصال (لا يوجد إنترنت)، ابحث في الكاش
         return caches.match(event.request).then((response) => {
           if (response) {
             return response;
           }
-          // إذا طلب المستخدم الصفحة الرئيسية أو أي صفحة فرعية، نعيد له index.html
+          // إذا كان الطلب هو الصفحة الرئيسية ولم تكن موجودة (حالة نادرة)
           if (event.request.mode === 'navigate') {
             return caches.match('./index.html');
           }
@@ -74,8 +72,6 @@ self.addEventListener('fetch', (event) => {
       })
   );
 });
-
-
 
 
 
