@@ -112,6 +112,45 @@
             padding: var(--spacing-md);
         }
 
+
+
+
+
+/* تنسيق رسالة انقطاع الإنترنت */
+.offline-toast {
+    position: fixed;
+    bottom: -100px; /* مخفي في البداية */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 9999;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: bottom 0.5s ease;
+}
+
+.offline-toast.show {
+    bottom: 80px; /* يظهر فوق القائمة السفلية */
+}
+
+.offline-toast.disconnected {
+    background-color: #e74c3c; /* لون أحمر عند الانقطاع */
+}
+
+.offline-toast.connected {
+    background-color: #27ae60; /* لون أخضر عند العودة */
+}
+
+
+
+
+        
         /* ============================================ */
         /* شريط التنقل العلوي */
         /* ============================================ */
@@ -18719,8 +18758,63 @@ if ('serviceWorker' in navigator) {
   }
 </script>
 
+<!-- عنصر التنبيه -->
+<div id="connection-status" class="offline-toast">
+    <span id="status-icon">📡</span>
+    <span id="status-text">جاري التحقق...</span>
+</div>
+
+<script>
+    // 1. تسجيل Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('Service Worker Registered'))
+                .catch(err => console.log('Service Worker Error:', err));
+        });
+    }
+
+    // 2. كود مراقبة حالة الاتصال
+    const statusToast = document.getElementById('connection-status');
+    const statusText = document.getElementById('status-text');
+    const statusIcon = document.getElementById('status-icon');
+
+    function updateConnectionStatus() {
+        if (navigator.onLine) {
+            // إذا عاد الإنترنت
+            if (statusToast.classList.contains('disconnected')) {
+                statusToast.className = 'offline-toast show connected';
+                statusText.innerText = (document.documentElement.lang === 'tr') ? 'İnternet Bağlantısı Geri Geldi' : 'عاد الاتصال بالإنترنت';
+                statusIcon.innerText = '✅';
+                
+                // إخفاء الرسالة بعد 3 ثواني
+                setTimeout(() => {
+                    statusToast.classList.remove('show');
+                }, 3000);
+            }
+        } else {
+            // إذا انقطع الإنترنت
+            statusToast.className = 'offline-toast show disconnected';
+            statusText.innerText = (document.documentElement.lang === 'tr') ? 'İnternet Bağlantısı Yok' : 'لا يوجد اتصال بالإنترنت';
+            statusIcon.innerText = '⚠️';
+        }
+    }
+
+    // الاستماع لأحداث المتصفح
+    window.addEventListener('online', updateConnectionStatus);
+    window.addEventListener('offline', updateConnectionStatus);
+
+    // التحقق عند بدء التشغيل (اختياري، لإخفاء التنبيه إذا كان متصلاً)
+    if (!navigator.onLine) {
+        updateConnectionStatus();
+    }
+</script>
+
+
+    
 </body>
 </html>
+
 
 
 
