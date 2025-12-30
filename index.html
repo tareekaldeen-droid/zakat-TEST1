@@ -18760,12 +18760,11 @@ if ('serviceWorker' in navigator) {
 
 <!-- عنصر التنبيه -->
 <div id="connection-status" class="offline-toast">
-    <span id="status-icon">📡</span>
-    <span id="status-text">جاري التحقق...</span>
+    <span id="status-text"></span>
 </div>
 
 <script>
-    // 1. تسجيل Service Worker
+    // 1. تسجيل Service Worker (لضمان عمل التطبيق بدون نت)
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./sw.js')
@@ -18774,37 +18773,54 @@ if ('serviceWorker' in navigator) {
         });
     }
 
-    // 2. كود مراقبة حالة الاتصال
-    const statusToast = document.getElementById('connection-status');
-    const statusText = document.getElementById('status-text');
-    const statusIcon = document.getElementById('status-icon');
-
+    // 2. دالة التعامل مع حالة الاتصال
     function updateConnectionStatus() {
+        const statusToast = document.getElementById('connection-status');
+        const statusText = document.getElementById('status-text');
+        
+        // جلب اللغة الحالية من الذاكرة، وإذا لم توجد نعتبرها عربية
+        const currentLang = localStorage.getItem('appLanguage') || 'ar';
+
+        // نصوص الرسائل حسب اللغة
+        const messages = {
+            ar: {
+                offline: "لا يوجد اتصال بالإنترنت ⚠️",
+                online: "عاد الاتصال بالإنترنت ✅"
+            },
+            tr: {
+                offline: "İnternet Bağlantısı Yok ⚠️",
+                online: "İnternet Bağlantısı Geri Geldi ✅"
+            }
+        };
+
         if (navigator.onLine) {
-            // إذا عاد الإنترنت
+            // --- حالة عودة الاتصال ---
+            // نظهر الرسالة فقط إذا كانت ظاهرة مسبقاً (أي كان مقطوعاً وعاد)
             if (statusToast.classList.contains('disconnected')) {
                 statusToast.className = 'offline-toast show connected';
-                statusText.innerText = (document.documentElement.lang === 'tr') ? 'İnternet Bağlantısı Geri Geldi' : 'عاد الاتصال بالإنترنت';
-                statusIcon.innerText = '✅';
+                statusText.innerText = (currentLang === 'tr') ? messages.tr.online : messages.ar.online;
                 
                 // إخفاء الرسالة بعد 3 ثواني
                 setTimeout(() => {
                     statusToast.classList.remove('show');
+                    // إزالة الكلاسات ليعود لحالته الطبيعية
+                    setTimeout(() => {
+                        statusToast.classList.remove('connected');
+                    }, 500); 
                 }, 3000);
             }
         } else {
-            // إذا انقطع الإنترنت
+            // --- حالة انقطاع الاتصال ---
             statusToast.className = 'offline-toast show disconnected';
-            statusText.innerText = (document.documentElement.lang === 'tr') ? 'İnternet Bağlantısı Yok' : 'لا يوجد اتصال بالإنترنت';
-            statusIcon.innerText = '⚠️';
+            statusText.innerText = (currentLang === 'tr') ? messages.tr.offline : messages.ar.offline;
         }
     }
 
-    // الاستماع لأحداث المتصفح
+    // الاستماع لأحداث الشبكة
     window.addEventListener('online', updateConnectionStatus);
     window.addEventListener('offline', updateConnectionStatus);
 
-    // التحقق عند بدء التشغيل (اختياري، لإخفاء التنبيه إذا كان متصلاً)
+    // التحقق عند فتح التطبيق
     if (!navigator.onLine) {
         updateConnectionStatus();
     }
@@ -18814,6 +18830,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
