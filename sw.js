@@ -1,5 +1,5 @@
 // تحديث رقم الإصدار لضمان تفعيل التغييرات عند المستخدمين
-const CACHE_NAME = 'zakat-app-v 22.1';
+const CACHE_NAME = 'zakat-app-v 22.2';
 
 // الملفات التي سيتم تخزينها مؤقتاً (CSS, JS, Images)
 const ASSETS_TO_CACHE = [
@@ -63,3 +63,4 @@ self.addEventListener('fetch', (event) => {
     );
   }
 });
+
