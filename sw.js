@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zakat-app-v12-final-offline'; // تغيير الرقم ضروري
+const CACHE_NAME = 'zakat-app-v13-final-offline'; // تغيير الرقم ضروري
 
 const ASSETS_TO_CACHE = [
   './',
@@ -78,4 +78,5 @@ self.addEventListener('fetch', (event) => {
       return cachedResponse || fetchPromise;
     })
   );
+
 });
