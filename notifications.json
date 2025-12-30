@@ -1,29 +1,17 @@
 {
   "latest": {
-    "id": "update_v 4.7",
-    "date": "2025-412-233",
-    "time": "10:30 AM",
+    "id": "v3.0.0",
+    "date": "2025-01-01",
+    "time": "12:00 PM",
     "ar": {
-      "title": "تحديث جديد متوفر!",
-      "body": "تم إضافة ميزة حساب زكاة الأسهم والعملاتوووووووو الرقمية بدقة عالية.",
+      "title": "إطلاق الإصدار الثالث!",
+      "body": "تم تحديث التطبيق بالكامل ليشمل زكاة الأسهم، العملات الرقمية، والشركات، مع دعم كامل للغة التركية وتوليد تقارير PDF متطورة.",
       "image": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png"
     },
     "tr": {
-      "title": "Yeni Güncelleme Mevcut!",
-      "body": "Hisse senedi ve kripto para zekâtı hesaplama özelliği yüksek hassasiyetle eklendi.",
+      "title": "Sürüm 3.0.0 Yayında!",
+      "body": "Uygulama; hisse senedi, kripto para ve şirket zekâtını içerecek şekilde tamamen güncellendi. Türkçe dil desteği ve gelişmiş PDF raporlama eklendi.",
       "image": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/__gemini_generated_image_l7bj58l7bj58l7bj---uo3o-r-o-c-1-Egn1jwHegFrVqeor.png"
     }
-  },
-  "history": []
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
