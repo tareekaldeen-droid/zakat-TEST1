@@ -18709,23 +18709,18 @@ if ('serviceWorker' in navigator) {
 <link rel="apple-touch-icon" href="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=192,h=192,fit=crop/a5oqci6YCwpNHTpH/whatsapp-image-2025-12-19-at-11.11.04-am-fDCDqijtAhLk7CFm.png">
 
 <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then((registration) => {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                })
-                .catch((error) => {
-                    console.log('Service Worker registration failed:', error);
-                });
-        });
-    }
+  // تسجيل الـ Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('✅ تم تفعيل وضع العمل بدون اتصال بنجاح!'))
+        .catch(err => console.log('❌ فشل تفعيل وضع العمل بدون اتصال', err));
+    });
+  }
 </script>
-
 
 </body>
 </html>
-
 
 
 
