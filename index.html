@@ -234,6 +234,114 @@
             color: var(--primary-color);
         }
 
+
+
+
+
+/* ============================================ */
+/* شريط الوضع غير المتصل (Offline Banner) */
+/* ============================================ */
+.offline-banner {
+    position: fixed;
+    bottom: -100px; /* مخفي في البداية */
+    left: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #2c3e50, #000000);
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 99999;
+    transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.offline-banner.show {
+    bottom: 80px; /* يظهر فوق شريط التنقل السفلي */
+}
+
+.offline-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.offline-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,87,87,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #ff5757;
+    animation: pulse-red 2s infinite;
+}
+
+.offline-text h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.offline-text p {
+    margin: 2px 0 0;
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+.offline-btn {
+    background: white;
+    color: #2c3e50;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.2s;
+}
+
+.offline-btn:active {
+    transform: scale(0.95);
+}
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(255, 87, 87, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 87, 87, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 87, 87, 0); }
+}
+
+/* تعديل للموبايل */
+@media (max-width: 480px) {
+    .offline-banner {
+        flex-direction: column;
+        text-align: center;
+    }
+    .offline-content {
+        flex-direction: column;
+    }
+    .offline-btn {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+        
         /* ============================================ */
         /* نموذج الإدخال */
         /* ============================================ */
@@ -13729,6 +13837,24 @@ body.dark-mode .smart-logo-box {
 </div>
 
 
+
+<!-- شريط التنبيه الذكي عند انقطاع الإنترنت -->
+<div id="offline-banner" class="offline-banner">
+    <div class="offline-content">
+        <div class="offline-icon">📡</div>
+        <div class="offline-text">
+            <h4 data-ar="لا يوجد اتصال بالإنترنت" data-tr="İnternet Bağlantısı Yok">لا يوجد اتصال بالإنترنت</h4>
+            <p data-ar="أنت تستخدم النسخة المحفوظة من التطبيق" data-tr="Uygulamanın kayıtlı sürümünü kullanıyorsunuz">أنت تستخدم النسخة المحفوظة من التطبيق</p>
+        </div>
+    </div>
+    <button onclick="hideOfflineBanner()" class="offline-btn" data-ar="متابعة بدون نت" data-tr="Çevrimdışı Devam Et">
+        متابعة بدون نت
+    </button>
+</div>
+
+
+
+    
     <!-- ============================================ -->
     <!-- شريط التنقل السفلي -->
     <!-- ============================================ -->
@@ -18685,6 +18811,59 @@ if ('serviceWorker' in navigator) {
 
 
 
+// ============================================
+// مراقبة حالة الاتصال بالإنترنت
+// ============================================
+
+// دالة لتحديث حالة الاتصال
+function updateOnlineStatus() {
+    const banner = document.getElementById('offline-banner');
+    const icon = document.querySelector('.offline-icon');
+    const title = document.querySelector('.offline-text h4');
+    
+    if (!navigator.onLine) {
+        // حالة انقطاع النت
+        banner.classList.add('show');
+        // تفعيل وضع "الأوفلاين" في التطبيق إذا لزم الأمر
+        document.body.classList.add('offline-mode');
+        
+        showToast(
+            currentLanguage === 'ar' ? '⚠️ انقطع الاتصال بالإنترنت' : '⚠️ İnternet bağlantısı kesildi',
+            'warning'
+        );
+    } else {
+        // حالة عودة النت
+        banner.classList.remove('show');
+        document.body.classList.remove('offline-mode');
+        
+        showToast(
+            currentLanguage === 'ar' ? '✅ عاد الاتصال بالإنترنت' : '✅ İnternet bağlantısı geri geldi',
+            'success'
+        );
+    }
+}
+
+// دالة إخفاء الشريط يدوياً (عند الضغط على الزر)
+function hideOfflineBanner() {
+    const banner = document.getElementById('offline-banner');
+    banner.classList.remove('show');
+    
+    // توجيه المستخدم للحاسبة أو السجل لأنها تعمل بدون نت
+    // يمكنك تغيير 'calculator' إلى 'history' حسب رغبتك
+    navigateTo('calculator'); 
+    
+    showToast(
+        currentLanguage === 'ar' ? 'تم تفعيل الوضع غير المتصل' : 'Çevrimdışı mod etkinleştirildi',
+        'info'
+    );
+}
+
+// إضافة المستمعين للأحداث عند تحميل الصفحة
+window.addEventListener('load', () => {
+    updateOnlineStatus(); // فحص أولي
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+});
 
 
 
@@ -18726,6 +18905,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
