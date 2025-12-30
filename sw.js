@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zakat-app-v6.8-offline-fix'; // قمت بتغيير الاسم لتحديث الكاش
+const CACHE_NAME = 'zakat-app-v6.9-offline-fix'; // قمت بتغيير الاسم لتحديث الكاش
 
 // قائمة الملفات التي يجب تخزينها ليعمل التطبيق بدون نت
 const ASSETS_TO_CACHE = [
@@ -63,3 +63,4 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
