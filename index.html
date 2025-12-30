@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- هذا الكود هو المسؤول عن تحديد المانيفست الصحيح (الاسم واللوجو) قبل التحميل -->
-    <script>
-        (function() {
-            // 1. تحديد اللغة المحفوظة أو لغة المتصفح
-            var savedLang = localStorage.getItem('appLanguage') || (navigator.language.startsWith('tr') ? 'tr' : 'ar');
-            
-            // 2. إنشاء رابط المانيفست ديناميكياً
-            var link = document.createElement('link');
-            link.rel = 'manifest';
-            // تحديد الملف بناءً على اللغة
-            link.href = savedLang === 'tr' ? 'manifest_tr.json' : 'manifest_ar.json';
-            document.head.appendChild(link);
-        })();
-
-
+  <script>
+    (function() {
+        // 1. تحديد اللغة المحفوظة أو لغة المتصفح
+        var savedLang = localStorage.getItem('appLanguage') || (navigator.language.startsWith('tr') ? 'tr' : 'ar');
         
-    </script>
+        // 2. إنشاء رابط المانيفست ديناميكياً
+        var link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = savedLang === 'tr' ? 'manifest_tr.json' : 'manifest_ar.json';
+        document.head.appendChild(link);
+        
+        // 3. تعيين اتجاه الصفحة ولغتها فوراً لمنع الوميض
+        document.documentElement.lang = savedLang;
+        document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+    })();
+</script>
+
 
    
 
@@ -13822,36 +13822,25 @@ body.dark-mode .smart-logo-box {
         // كشف لغة المتصفح أو استرجاع اللغة المحفوظة
         // ============================================
 function detectBrowserLanguage() {
-    // 1. التحقق من رابط URL (عند فتح التطبيق المثبت)
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlLang = urlParams.get('lang');
-
-    // 2. التحقق من الذاكرة المحلية
+    // 1. الأولوية للغة المحفوظة في ذاكرة الجهاز
     const savedLang = localStorage.getItem('appLanguage');
+    
+    // 2. إذا لم توجد، نأخذ لغة المتصفح
+    const browserLang = navigator.language.startsWith('tr') ? 'tr' : 'ar';
+    
+    // 3. تعيين اللغة الحالية
+    currentLanguage = savedLang || browserLang;
 
-    if (urlLang && (urlLang === 'ar' || urlLang === 'tr')) {
-        // إذا تم فتح التطبيق من الأيقونة المثبتة، نعتمد لغة المانيفست
-        currentLanguage = urlLang;
-    } else if (savedLang) {
-        // إذا كان هناك لغة محفوظة سابقاً
-        currentLanguage = savedLang;
-    } else {
-        // الافتراضي حسب لغة المتصفح
-        const browserLang = navigator.language || navigator.userLanguage;
-        if (browserLang.startsWith('tr')) {
-            currentLanguage = 'tr';
-        } else {
-            currentLanguage = 'ar';
-        }
-    }
-
-    // حفظ اللغة للتأكيد
+    // 4. حفظ اللغة للتأكيد (في حال كانت أول زيارة)
     localStorage.setItem('appLanguage', currentLanguage);
 
-    // تطبيق اللغة وتحديث القائمة المنسدلة
+    // 5. تحديث القائمة المنسدلة في الواجهة
     const langSelect = document.getElementById('languageSelect');
-    if(langSelect) langSelect.value = currentLanguage;
+    if(langSelect) {
+        langSelect.value = currentLanguage;
+    }
     
+    // 6. تطبيق الاتجاه واللغة على الصفحة
     if (currentLanguage === 'ar') {
         document.documentElement.setAttribute('lang', 'ar');
         document.documentElement.setAttribute('dir', 'rtl');
@@ -13862,33 +13851,44 @@ function detectBrowserLanguage() {
 }
 
 
+
         // ============================================
         // تغيير اللغة وحفظها
         // ============================================
-        document.getElementById('languageSelect').addEventListener('change', function(e) {
-            currentLanguage = e.target.value;
-            
-            // حفظ اللغة المختارة في ذاكرة المتصفح
-            localStorage.setItem('appLanguage', currentLanguage);
-            
-            if (currentLanguage === 'ar') {
-                document.documentElement.setAttribute('lang', 'ar');
-                document.documentElement.setAttribute('dir', 'rtl');
-            } else {
-                document.documentElement.setAttribute('lang', 'tr');
-                document.documentElement.setAttribute('dir', 'ltr');
-            }
-            
-            applyTranslation();
-            
-            const activePage = document.querySelector('.page.active');
-            if (activePage) {
-                const pageId = activePage.id.replace('Page', '');
-                updatePageTitle(pageId);
-            }
-            
-            showToast(currentLanguage === 'ar' ? 'تم حفظ اللغة المفضلة' : 'Dil tercihi kaydedildi', 'success');
-        });
+document.getElementById('languageSelect').addEventListener('change', function(e) {
+    const newLang = e.target.value;
+    
+    // 1. حفظ اللغة الجديدة
+    localStorage.setItem('appLanguage', newLang);
+    currentLanguage = newLang;
+
+    // 2. تطبيق التغييرات البصرية فوراً
+    if (currentLanguage === 'ar') {
+        document.documentElement.setAttribute('lang', 'ar');
+        document.documentElement.setAttribute('dir', 'rtl');
+    } else {
+        document.documentElement.setAttribute('lang', 'tr');
+        document.documentElement.setAttribute('dir', 'ltr');
+    }
+    
+    // 3. تطبيق الترجمة
+    applyTranslation();
+    
+    // 4. تحديث العناوين والشعارات
+    const activePage = document.querySelector('.page.active');
+    if (activePage) {
+        const pageId = activePage.id.replace('Page', '');
+        updatePageTitle(pageId);
+    }
+    
+    // 5. إشعار المستخدم (اختياري: إعادة التحميل لتحميل المانيفست الجديد)
+    // ملاحظة: المانيفست لا يتغير إلا بإعادة تحميل الصفحة، لذا هذا السطر مفيد للتطبيقات المثبتة
+    if(confirm(currentLanguage === 'ar' ? 'تم تغيير اللغة. هل تريد إعادة تحميل التطبيق لتطبيق كافة الإعدادات؟' : 'Dil değiştirildi. Tüm ayarları uygulamak için uygulamayı yeniden yüklemek ister misiniz?')) {
+        window.location.reload();
+    } else {
+        showToast(currentLanguage === 'ar' ? 'تم حفظ اللغة' : 'Dil kaydedildi', 'success');
+    }
+});
 
 
         // ============================================
@@ -18721,6 +18721,7 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
 
 
 
