@@ -1,11 +1,11 @@
 {
   "latest": {
-    "id": "v50.1_release",
-    "date": "2025-01-01",
-    "time": "12:00 PM",
+    "id": "v50.2_release",
+    "date": "2025-30-12",
+    "time": "19:00 PM",
     "ar": {
       "title": "تم إطلاق الإصدار الثالث!",
-      "body": "تم تحديث حاسبة الزكاة الذكية بتصميم جديد كلياً، ودعم كامل للعمل بدون إنترنت، وإضافة زكاة الأسهم والعملات الرقمية.",
+      "body": ".تم تحديث حاسبة الزكاة الذكية لتعمل بدون انترنت  بيبي  زعتر اتمنى منك التدقيق والتوفيق والنجاح",
       "image": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png"
     },
     "tr": {
@@ -15,5 +15,6 @@
     }
   }
 }
+
 
 
