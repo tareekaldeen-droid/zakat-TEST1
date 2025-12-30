@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-  <script>
-    (function() {
-        // 1. تحديد اللغة المحفوظة أو لغة المتصفح
-        var savedLang = localStorage.getItem('appLanguage') || (navigator.language.startsWith('tr') ? 'tr' : 'ar');
-        
-        // 2. إنشاء رابط المانيفست ديناميكياً
-        var link = document.createElement('link');
-        link.rel = 'manifest';
-        link.href = savedLang === 'tr' ? 'manifest_tr.json' : 'manifest_ar.json';
-        document.head.appendChild(link);
-        
-        // 3. تعيين اتجاه الصفحة ولغتها فوراً لمنع الوميض
-        document.documentElement.lang = savedLang;
-        document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
-    })();
-</script>
+    <!-- هذا الكود هو المسؤول عن تحديد المانيفست الصحيح (الاسم واللوجو) قبل التحميل -->
+    <script>
+        (function() {
+            // 1. تحديد اللغة المحفوظة أو لغة المتصفح
+            var savedLang = localStorage.getItem('appLanguage') || (navigator.language.startsWith('tr') ? 'tr' : 'ar');
+            
+            // 2. إنشاء رابط المانيفست ديناميكياً
+            var link = document.createElement('link');
+            link.rel = 'manifest';
+            // تحديد الملف بناءً على اللغة
+            link.href = savedLang === 'tr' ? 'manifest_tr.json' : 'manifest_ar.json';
+            document.head.appendChild(link);
+        })();
 
+
+        
+    </script>
 
    
 
@@ -13822,25 +13822,36 @@ body.dark-mode .smart-logo-box {
         // كشف لغة المتصفح أو استرجاع اللغة المحفوظة
         // ============================================
 function detectBrowserLanguage() {
-    // 1. الأولوية للغة المحفوظة في ذاكرة الجهاز
-    const savedLang = localStorage.getItem('appLanguage');
-    
-    // 2. إذا لم توجد، نأخذ لغة المتصفح
-    const browserLang = navigator.language.startsWith('tr') ? 'tr' : 'ar';
-    
-    // 3. تعيين اللغة الحالية
-    currentLanguage = savedLang || browserLang;
+    // 1. التحقق من رابط URL (عند فتح التطبيق المثبت)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlLang = urlParams.get('lang');
 
-    // 4. حفظ اللغة للتأكيد (في حال كانت أول زيارة)
+    // 2. التحقق من الذاكرة المحلية
+    const savedLang = localStorage.getItem('appLanguage');
+
+    if (urlLang && (urlLang === 'ar' || urlLang === 'tr')) {
+        // إذا تم فتح التطبيق من الأيقونة المثبتة، نعتمد لغة المانيفست
+        currentLanguage = urlLang;
+    } else if (savedLang) {
+        // إذا كان هناك لغة محفوظة سابقاً
+        currentLanguage = savedLang;
+    } else {
+        // الافتراضي حسب لغة المتصفح
+        const browserLang = navigator.language || navigator.userLanguage;
+        if (browserLang.startsWith('tr')) {
+            currentLanguage = 'tr';
+        } else {
+            currentLanguage = 'ar';
+        }
+    }
+
+    // حفظ اللغة للتأكيد
     localStorage.setItem('appLanguage', currentLanguage);
 
-    // 5. تحديث القائمة المنسدلة في الواجهة
+    // تطبيق اللغة وتحديث القائمة المنسدلة
     const langSelect = document.getElementById('languageSelect');
-    if(langSelect) {
-        langSelect.value = currentLanguage;
-    }
+    if(langSelect) langSelect.value = currentLanguage;
     
-    // 6. تطبيق الاتجاه واللغة على الصفحة
     if (currentLanguage === 'ar') {
         document.documentElement.setAttribute('lang', 'ar');
         document.documentElement.setAttribute('dir', 'rtl');
@@ -13851,48 +13862,33 @@ function detectBrowserLanguage() {
 }
 
 
-
         // ============================================
         // تغيير اللغة وحفظها
         // ============================================
-document.getElementById('languageSelect').addEventListener('change', function(e) {
-    const newLang = e.target.value;
-    
-    // 1. حفظ اللغة
-    localStorage.setItem('appLanguage', newLang);
-    
-    // 2. التوجيه لصفحة نظيفة (بدون بارامترات تسبب مشاكل للكاش)
-    // هذا سيجبر الـ Service Worker على تسليم index.html من الكاش فوراً
-    window.location.href = './index.html'; 
-
-
-    // 2. تطبيق التغييرات البصرية فوراً
-    if (currentLanguage === 'ar') {
-        document.documentElement.setAttribute('lang', 'ar');
-        document.documentElement.setAttribute('dir', 'rtl');
-    } else {
-        document.documentElement.setAttribute('lang', 'tr');
-        document.documentElement.setAttribute('dir', 'ltr');
-    }
-    
-    // 3. تطبيق الترجمة
-    applyTranslation();
-    
-    // 4. تحديث العناوين والشعارات
-    const activePage = document.querySelector('.page.active');
-    if (activePage) {
-        const pageId = activePage.id.replace('Page', '');
-        updatePageTitle(pageId);
-    }
-    
-    // 5. إشعار المستخدم (اختياري: إعادة التحميل لتحميل المانيفست الجديد)
-    // ملاحظة: المانيفست لا يتغير إلا بإعادة تحميل الصفحة، لذا هذا السطر مفيد للتطبيقات المثبتة
-    if(confirm(currentLanguage === 'ar' ? 'تم تغيير اللغة. هل تريد إعادة تحميل التطبيق لتطبيق كافة الإعدادات؟' : 'Dil değiştirildi. Tüm ayarları uygulamak için uygulamayı yeniden yüklemek ister misiniz?')) {
-        window.location.reload();
-    } else {
-        showToast(currentLanguage === 'ar' ? 'تم حفظ اللغة' : 'Dil kaydedildi', 'success');
-    }
-});
+        document.getElementById('languageSelect').addEventListener('change', function(e) {
+            currentLanguage = e.target.value;
+            
+            // حفظ اللغة المختارة في ذاكرة المتصفح
+            localStorage.setItem('appLanguage', currentLanguage);
+            
+            if (currentLanguage === 'ar') {
+                document.documentElement.setAttribute('lang', 'ar');
+                document.documentElement.setAttribute('dir', 'rtl');
+            } else {
+                document.documentElement.setAttribute('lang', 'tr');
+                document.documentElement.setAttribute('dir', 'ltr');
+            }
+            
+            applyTranslation();
+            
+            const activePage = document.querySelector('.page.active');
+            if (activePage) {
+                const pageId = activePage.id.replace('Page', '');
+                updatePageTitle(pageId);
+            }
+            
+            showToast(currentLanguage === 'ar' ? 'تم حفظ اللغة المفضلة' : 'Dil tercihi kaydedildi', 'success');
+        });
 
 
         // ============================================
@@ -18703,9 +18699,7 @@ if ('serviceWorker' in navigator) {
 
 
 
-  
-
- </script>
+    </script>
    <!-- ربط ملف المانيفست -->
 <link rel="manifest" href="manifest.json">
 <!-- دعم هواتف آيفون -->
@@ -18715,93 +18709,18 @@ if ('serviceWorker' in navigator) {
 <link rel="apple-touch-icon" href="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=192,h=192,fit=crop/a5oqci6YCwpNHTpH/whatsapp-image-2025-12-19-at-11.11.04-am-fDCDqijtAhLk7CFm.png">
 
 <script>
-
-
-
-<script>
-    // تسجيل الـ Service Worker
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').then(registration => {
-                console.log('SW Registered');
-
-                // كود التحديث التلقائي
-                registration.addEventListener('updatefound', () => {
-                    const newWorker = registration.installing;
-                    newWorker.addEventListener('statechange', () => {
-                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            // تم تحميل تحديث جديد في الخلفية
-                            // نظهر رسالة للمستخدم أو نحدث الصفحة تلقائياً
-                            // هنا سنقوم بتحديث الصفحة تلقائياً لضمان الحصول على النسخة الجديدة
-                            console.log('New update available, reloading...');
-                            // window.location.reload(); // يمكنك تفعيل هذا للتحديث الإجباري
-                            
-                            // أو إظهار رسالة (أفضل)
-                            const msg = localStorage.getItem('appLanguage') === 'tr' ? 'Güncelleme mevcut!' : 'تحديث جديد متوفر!';
-                            if(confirm(msg)) {
-                                window.location.reload();
-                            }
-                        }
-                    });
-                });
-            }).catch(err => console.log('SW Registration Failed', err));
-        });
-    }
-</script>
-
-
-
-
-<div id="updateToast" style="display:none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; padding: 15px 25px; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; align-items: center; gap: 10px; font-family: sans-serif;">
-  <span id="updateMsg">تحديث جديد متوفر</span>
-  <button onclick="window.location.reload()" style="background: #0d7c66; color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer;">تحديث</button>
-</div>
-
-<script>
+  // تسجيل الـ Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').then(reg => {
-        
-        // الاستماع للتحديثات
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // تم تحميل التحديث في الخلفية!
-              // إظهار الإشعار للمستخدم
-              const isAr = localStorage.getItem('appLanguage') !== 'tr';
-              document.getElementById('updateMsg').innerText = isAr ? 'تحديث جديد متوفر!' : 'Yeni güncelleme mevcut!';
-              document.getElementById('updateToast').querySelector('button').innerText = isAr ? 'تحديث' : 'Yenile';
-              document.getElementById('updateToast').style.display = 'flex';
-            }
-          });
-        });
-      });
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('✅ تم تفعيل وضع العمل بدون اتصال بنجاح!'))
+        .catch(err => console.log('❌ فشل تفعيل وضع العمل بدون اتصال', err));
     });
   }
-  
-  // كود تغيير اللغة (نظيف)
-  document.getElementById('languageSelect').addEventListener('change', function(e) {
-      localStorage.setItem('appLanguage', e.target.value);
-      // استخدام replace لمنع الرجوع للخلف، والذهاب لصفحة نظيفة
-      window.location.replace('./index.html'); 
-  });
 </script>
 
-
-    
-
-    
 </body>
 </html>
-
-
-
-
-
-
-
-
 
 
 
