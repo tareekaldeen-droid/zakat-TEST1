@@ -233,6 +233,157 @@
             color: var(--primary-color);
         }
 
+
+
+
+
+
+
+/* ============================================ */
+/* 🌙 تصحيح الوضع الليلي لقسم الأحكام الفقهية */
+/* ============================================ */
+
+[data-theme="dark"] #fiqhPage .accordion-header {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] #fiqhPage .accordion-header:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] #fiqhPage .accordion-header.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+[data-theme="dark"] #fiqhPage .accordion-content {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* --- تصحيح صناديق المذاهب والأدلة (جعل الخلفيات داكنة شفافة) --- */
+
+/* الصناديق العامة */
+[data-theme="dark"] #fiqhPage .madhab-box,
+[data-theme="dark"] #fiqhPage .info-box,
+[data-theme="dark"] #fiqhPage .tip-box,
+[data-theme="dark"] #fiqhPage .warning-box,
+[data-theme="dark"] #fiqhPage .example-box,
+[data-theme="dark"] #fiqhPage .condition-box,
+[data-theme="dark"] #fiqhPage .quran-box,
+[data-theme="dark"] #fiqhPage .hadith-box,
+[data-theme="dark"] #fiqhPage .masrif-box {
+    background: rgba(255, 255, 255, 0.05) !important; /* خلفية شفافة داكنة */
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    box-shadow: none;
+}
+
+/* تخصيص ألوان خفيفة لكل مذهب في الوضع الليلي */
+[data-theme="dark"] #fiqhPage .madhab-box.hanafi {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.15), rgba(46, 204, 113, 0.05)) !important;
+    border-right-color: #2ecc71;
+}
+
+[data-theme="dark"] #fiqhPage .madhab-box.maliki {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.15), rgba(52, 152, 219, 0.05)) !important;
+    border-right-color: #3498db;
+}
+
+[data-theme="dark"] #fiqhPage .madhab-box.shafii {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.05)) !important;
+    border-right-color: #e74c3c;
+}
+
+[data-theme="dark"] #fiqhPage .madhab-box.hanbali {
+    background: linear-gradient(135deg, rgba(243, 156, 18, 0.15), rgba(243, 156, 18, 0.05)) !important;
+    border-right-color: #f39c12;
+}
+
+/* تصحيح صندوق القرآن والحديث */
+[data-theme="dark"] #fiqhPage .quran-box {
+    background: linear-gradient(135deg, rgba(13, 124, 102, 0.2), rgba(13, 124, 102, 0.05)) !important;
+    border: 1px solid rgba(13, 124, 102, 0.3) !important;
+}
+
+[data-theme="dark"] #fiqhPage .hadith-box {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 193, 7, 0.05)) !important;
+}
+
+/* --- تصحيح النصوص الملونة (Inline Styles Override) --- */
+/* هذا الجزء مهم جداً لأنك تستخدم style="color: #..." في HTML */
+
+/* تحويل النصوص الخضراء الداكنة إلى خضراء فاتحة */
+[data-theme="dark"] #fiqhPage [style*="color: #0d7c66"],
+[data-theme="dark"] #fiqhPage [style*="color: var(--primary-color)"] {
+    color: #4db6ac !important; /* أخضر فاتح مضيء */
+}
+
+/* تحويل النصوص السوداء/الرمادية إلى بيضاء/رمادية فاتحة */
+[data-theme="dark"] #fiqhPage [style*="color: #1a3a2e"],
+[data-theme="dark"] #fiqhPage [style*="color: #000"] {
+    color: #e0e0e0 !important;
+}
+
+/* تحويل نصوص العناوين الملونة */
+[data-theme="dark"] #fiqhPage [style*="color: #2ecc71"] { color: #58d68d !important; } /* حنفي أفتح */
+[data-theme="dark"] #fiqhPage [style*="color: #3498db"] { color: #5dade2 !important; } /* مالكي أفتح */
+[data-theme="dark"] #fiqhPage [style*="color: #e74c3c"] { color: #ec7063 !important; } /* شافعي أفتح */
+[data-theme="dark"] #fiqhPage [style*="color: #f39c12"] { color: #f5b041 !important; } /* حنبلي أفتح */
+[data-theme="dark"] #fiqhPage [style*="color: #7b1fa2"] { color: #ce93d8 !important; } /* بنفسجي أفتح */
+[data-theme="dark"] #fiqhPage [style*="color: #c62828"] { color: #ef9a9a !important; } /* أحمر أفتح */
+
+/* --- تصحيح الجداول والقوائم --- */
+
+[data-theme="dark"] #fiqhPage table {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] #fiqhPage th {
+    background: linear-gradient(135deg, rgba(13, 124, 102, 0.8), rgba(65, 184, 166, 0.8));
+    color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+[data-theme="dark"] #fiqhPage td {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #d1d1d1;
+}
+
+[data-theme="dark"] #fiqhPage tbody tr:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+
+/* القوائم المخصصة */
+[data-theme="dark"] #fiqhPage .custom-list li {
+    background-color: rgba(255,255,255,0.05);
+    border-right: 3px solid var(--secondary-color);
+    color: #e0e0e0;
+}
+
+/* تصحيح العناصر ذات الخلفيات المضمنة (style="background: ...") */
+[data-theme="dark"] #fiqhPage div[style*="background: #f0f9f7"],
+[data-theme="dark"] #fiqhPage div[style*="background: #fff8e1"],
+[data-theme="dark"] #fiqhPage div[style*="background: #f3e5f5"],
+[data-theme="dark"] #fiqhPage div[style*="background: #fff3e0"],
+[data-theme="dark"] #fiqhPage div[style*="background: #e1f5fe"],
+[data-theme="dark"] #fiqhPage div[style*="background: #ffebee"],
+[data-theme="dark"] #fiqhPage div[style*="background: #e8f5e9"] {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #e0e0e0 !important;
+}
+
+
+
+
+
+
+
+        
         /* ============================================ */
         /* نموذج الإدخال */
         /* ============================================ */
@@ -18535,6 +18686,7 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
 
 
 
