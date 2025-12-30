@@ -1,21 +1,27 @@
 {
   "name": "حاسبة الزكاة الذكية",
-  "short_name": "الزكاة",
+  "short_name": "زكاتي",
+  "description": "أدِّ فريضتك.. طهرةً لمالك ونماءً لرزقك.",
   "start_url": "./index.html?lang=ar",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#f5f9f7",
   "theme_color": "#0d7c66",
-  "orientation": "portrait",
   "icons": [
     {
-      "src": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=192,h=192,fit=crop/a5oqci6YCwpNHTpH/whatsapp-image-2025-12-19-at-11.11.04-am-fDCDqijtAhLk7CFm.png",
+      "src": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=512,h=512,fit=crop/a5oqci6YCwpNHTpH/whatsapp-image-2025-12-19-at-11.11.04-am-fDCDqijtAhLk7CFm.png",
+      "src": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "categories": ["finance", "productivity", "utilities"],
+  "lang": "ar",
+  "dir": "rtl"
 }
