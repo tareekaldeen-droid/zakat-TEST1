@@ -13855,8 +13855,16 @@ function detectBrowserLanguage() {
         // ============================================
         // تغيير اللغة وحفظها
         // ============================================
+// كود تغيير اللغة في index.html
 document.getElementById('languageSelect').addEventListener('change', function(e) {
     const newLang = e.target.value;
+    localStorage.setItem('appLanguage', newLang);
+    
+    // إعادة تحميل الصفحة لتطبيق المانيفست الجديد واللغة
+    // بما أن الصفحة مخزنة (Cached)، ستعمل إعادة التحميل بدون نت
+    window.location.reload(); 
+});
+
     
     // 1. حفظ اللغة الجديدة
     localStorage.setItem('appLanguage', newLang);
@@ -18721,6 +18729,7 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
 
 
 
