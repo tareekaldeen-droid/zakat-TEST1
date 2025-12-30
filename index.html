@@ -1,25 +1,23 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- هذا الكود هو المسؤول عن تحديد المانيفست الصحيح (الاسم واللوجو) قبل التحميل -->
+    <!-- كود تحديد اللغة والمانيفست الفوري -->
     <script>
         (function() {
-            // 1. تحديد اللغة المحفوظة أو لغة المتصفح
+            // 1. استرجاع اللغة المحفوظة أو تحديد لغة المتصفح
             var savedLang = localStorage.getItem('appLanguage') || (navigator.language.startsWith('tr') ? 'tr' : 'ar');
             
-            // 2. إنشاء رابط المانيفست ديناميكياً
+            // 2. ضبط اتجاه الصفحة ولغتها فوراً
+            document.documentElement.setAttribute('lang', savedLang);
+            document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+
+            // 3. إنشاء رابط المانيفست ديناميكياً بناءً على اللغة
             var link = document.createElement('link');
             link.rel = 'manifest';
-            // تحديد الملف بناءً على اللغة
             link.href = savedLang === 'tr' ? 'manifest_tr.json' : 'manifest_ar.json';
             document.head.appendChild(link);
         })();
-
-
-        
     </script>
 
    
@@ -18700,27 +18698,54 @@ if ('serviceWorker' in navigator) {
 
 
     </script>
-   <!-- ربط ملف المانيفست -->
-<link rel="manifest" href="manifest.json">
-<!-- دعم هواتف آيفون -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="حاسبة الزكاة">
-<link rel="apple-touch-icon" href="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=192,h=192,fit=crop/a5oqci6YCwpNHTpH/whatsapp-image-2025-12-19-at-11.11.04-am-fDCDqijtAhLk7CFm.png">
+  // ... داخل وسم <script> في نهاية الصفحة ...
 
-<script>
-  // تسجيل الـ Service Worker
-  if ('serviceWorker' in navigator) {
+// دالة تهيئة اللغة عند اكتمال التحميل
+document.addEventListener('DOMContentLoaded', function() {
+    // تحديد القيمة الصحيحة في القائمة المنسدلة
+    const savedLang = localStorage.getItem('appLanguage') || (navigator.language.startsWith('tr') ? 'tr' : 'ar');
+    const langSelect = document.getElementById('languageSelect');
+    if(langSelect) {
+        langSelect.value = savedLang;
+    }
+    
+    // تطبيق النصوص المترجمة
+    currentLanguage = savedLang;
+    applyTranslation();
+});
+
+// مستمع حدث تغيير اللغة
+document.getElementById('languageSelect').addEventListener('change', function(e) {
+    const newLang = e.target.value;
+    
+    // 1. حفظ اللغة في الذاكرة الدائمة
+    localStorage.setItem('appLanguage', newLang);
+    
+    // 2. تحديث المانيفست (للمتصفحات التي تدعم التحديث الديناميكي)
+    const manifestLink = document.querySelector('link[rel="manifest"]');
+    if (manifestLink) {
+        manifestLink.href = newLang === 'tr' ? 'manifest_tr.json' : 'manifest_ar.json';
+    }
+
+    // 3. إعادة تحميل الصفحة لتطبيق التغييرات (الاتجاه، المانيفست، النصوص) بشكل كامل
+    // هذا أفضل خيار في تطبيقات PWA لضمان تحميل الموارد الصحيحة
+    window.location.reload();
+});
+
+// تسجيل الـ Service Worker
+if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('✅ تم تفعيل وضع العمل بدون اتصال بنجاح!'))
-        .catch(err => console.log('❌ فشل تفعيل وضع العمل بدون اتصال', err));
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('✅ Service Worker Registered'))
+            .catch(err => console.log('❌ Service Worker Error', err));
     });
-  }
+}
+
 </script>
 
 </body>
 </html>
+
 
 
 
