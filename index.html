@@ -936,90 +936,6 @@
 
 
 
-/* ============================================================ */
-/* 🛠️ تحسينات ألوان الخط لقسم الأحكام الفقهية (Fiqh Section) */
-/* ============================================================ */
-
-/* 1. تحسين النص العام خارج الصناديق */
-#fiqhPage .accordion-content {
-    line-height: 1.9;        /* زيادة المسافة بين الأسطر لراحة العين */
-    font-size: 1.05rem;      /* تكبير طفيف لحجم الخط */
-    font-weight: 500;        /* جعل الخط أكثر وضوحاً */
-}
-
-/* الوضع النهاري: نص غامق */
-#fiqhPage .accordion-content {
-    color: #1a3a2e; 
-}
-
-/* الوضع الليلي: نص فاتح (للخلفية الداكنة العامة) */
-[data-theme="dark"] #fiqhPage .accordion-content {
-    color: #e0e0e0;
-}
-
-/* 2. 🚨 إصلاح هام جداً: المربعات الملونة (المذاهب، تنبيهات، معلومات) */
-/* بما أن خلفيات هذه المربعات فاتحة (Gradient)، يجب أن يكون الخط بداخلها داكناً دائماً حتى في الوضع الليلي */
-#fiqhPage .madhab-box,
-#fiqhPage .info-box,
-#fiqhPage .tip-box,
-#fiqhPage .warning-box,
-#fiqhPage .example-box,
-#fiqhPage .condition-box,
-#fiqhPage .quran-box,
-#fiqhPage .hadith-box,
-#fiqhPage .masrif-box,
-#fiqhPage .madhab-agreement {
-    color: #0f1e1a !important; /* لون داكن إجباري لضمان القراءة */
-}
-
-/* 3. تحسين العناوين داخل المربعات */
-#fiqhPage .madhab-box h5,
-#fiqhPage .madhab-box h6,
-#fiqhPage .info-box h5,
-#fiqhPage .warning-box h4,
-#fiqhPage h4 {
-    font-weight: 800;
-    margin-bottom: 0.8rem;
-}
-
-/* الوضع الليلي: تحسين لون العناوين الرئيسية خارج الصناديق */
-[data-theme="dark"] #fiqhPage h4 {
-    color: #4db6ac; /* أخضر فاتح مضيء */
-}
-
-/* 4. تمييز الآيات والأحاديث */
-#fiqhPage .quran-box,
-#fiqhPage .hadith-box {
-    font-family: 'Amiri', serif; /* خط مميز للنصوص الشرعية */
-    font-size: 1.2rem;
-    line-height: 2;
-    font-weight: 600;
-    color: #004d40 !important; /* أخضر غامق جداً */
-}
-
-/* 5. تحسين القوائم النقطية داخل الأحكام */
-#fiqhPage .custom-list li {
-    font-weight: 600;
-}
-
-/* في الوضع الليلي، اجعل خلفية عناصر القائمة أغمق قليلاً لراحة العين */
-[data-theme="dark"] #fiqhPage .custom-list li {
-    background: rgba(255, 255, 255, 0.05);
-    color: #e0e0e0;
-    border-right-color: var(--secondary-color);
-}
-
-/* 6. تحسين الجداول في الوضع الليلي */
-[data-theme="dark"] #fiqhPage table {
-    background: #1e1e1e;
-    color: #e0e0e0;
-}
-[data-theme="dark"] #fiqhPage tbody tr:hover {
-    background: rgba(255,255,255,0.05);
-}
-[data-theme="dark"] #fiqhPage th {
-    color: #ffffff;
-}
 
 
 
@@ -18805,6 +18721,7 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
 
 
 
