@@ -18713,40 +18713,12 @@ if ('serviceWorker' in navigator) {
     }
 
 
-        
-    // 1. العثور على عنصر اختيار اللغة
-    const langSelector = document.querySelector('.language-selector');
-
-    // 2. ضبط القيمة الحالية بناءً على ما هو محفوظ
-    // إذا لم يكن هناك شيء محفوظ، نستخدم العربية كافتراضي
-    const currentLang = localStorage.getItem('appLanguage') || 'ar';
-    if(langSelector) {
-        langSelector.value = currentLang;
-        
-        // تغيير اتجاه الصفحة والنصوص بناءً على اللغة المحفوظة فوراً
-        if(currentLang === 'tr') {
-            document.documentElement.lang = 'tr';
-            document.documentElement.dir = 'ltr';
-        } else {
-            document.documentElement.lang = 'ar';
-            document.documentElement.dir = 'rtl';
-        }
-
-        // 3. الاستماع لحدث التغيير (عندما يختار المستخدم لغة جديدة)
-        langSelector.addEventListener('change', function() {
-            const selectedLang = this.value;
-            
-            // حفظ اللغة الجديدة في الذاكرة الدائمة
-            localStorage.setItem('appLanguage', selectedLang);
-            
-            // إعادة تحميل الصفحة لتطبيق التغييرات (تغيير المانيفست والنصوص)
-            window.location.reload();
-        });
-    }
+   
 </script>
 
 </body>
 </html>
+
 
 
 
