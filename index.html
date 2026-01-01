@@ -5007,315 +5007,198 @@ body.dark-mode .smart-logo-box {
 <!-- ============================================ -->
 <!-- صفحة الأحكام الفقهية - النسخة الموسعة المحسّنة -->
 <!-- ============================================ -->
-<div id="fiqhPage" class="page">
-    <div class="card">
-        <div class="card-header">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
-            </svg>
-            <h2 class="card-title" data-ar="الأحكام الفقهية - المذاهب الأربعة" data-tr="Fıkhi Hükümler - Dört Mezhep">الأحكام الفقهية - المذاهب الأربعة</h2>
-        </div>
-
-        <p data-ar="موسوعة شاملة لأحكام الزكاة الشرعية مرتبة ومبسطة وفق آراء المذاهب الأربعة" 
-           data-tr="Dört mezhebin görüşlerine göre düzenlenmiş ve basitleştirilmiş kapsamlı zekât hükümleri ansiklopedisi">
-            موسوعة شاملة لأحكام الزكاة الشرعية مرتبة ومبسطة وفق آراء المذاهب الأربعة
-        </p>
-
-        <!-- الحكم 1: تعريف الزكاة -->
-        <div class="accordion">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-                <span>
-                    <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">1</span>
-                    <span data-ar="📖 تعريف الزكاة شرعاً" data-tr="📖 Zekâtın Şer'i Tanımı">📖 تعريف الزكاة شرعاً</span>
-                </span>
-                <span class="accordion-icon">▼</span>
+ <div id="fiqhPage" class="page">
+        <div class="card">
+            <div class="card-header">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                <h2 class="card-title">
+                    <span data-ar>الأحكام الفقهية - المذاهب الأربعة</span>
+                    <span data-tr>Fıkhi Hükümler - Dört Mezhep</span>
+                </h2>
             </div>
-            <div class="accordion-content">
-                
-                <!-- الدليل القرآني -->
-                <div class="quran-box" style="text-align: center; background: #f0f9f7; padding: 15px; border-radius: 10px; border: 1px solid #c8ddd4; margin-bottom: 15px;">
-                    <div style="color: #0d7c66; font-family: 'Amiri', serif; font-size: 1.2rem; margin-bottom: 8px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-                    <div style="font-size: 1.1rem; font-weight: bold; color: #1a3a2e; margin-bottom: 5px;">﴿خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِم بِهَا﴾</div>
-                    <div style="font-size: 0.9rem; color: #4a6b5e; margin-bottom: 8px;">[التوبة: 103]</div>
-                    <div style="font-size: 0.95rem; color: #555; font-style: italic; border-top: 1px solid #ddd; padding-top: 8px;">
-                        "Onların mallarından sadaka al ki, bununla onları temizleyesin ve arındırasın."
-                    </div>
-                </div>
 
-                <!-- التفسير التفصيلي - يظهر فقط بالتركية -->
-                <div class="tafsir-box show-tr">
-                    <div class="tafsir-title">
-                        <span>📚</span>
-                        <span>Ayetin Detaylı Tefsiri (Tevbe Suresi 103. Ayet)</span>
-                    </div>
-                    <div class="tafsir-content">
-                        <div class="tafsir-point">
-                            <strong>Ayetin Sebeb-i Nüzulü:</strong> Bu ayet, günahlarından dolayı pişman olan ve Tebük Gazvesi'ne katılmayan üç sahabi hakkında nazil olmuştur. Allah Teala, Resulullah'a (s.a.v) onların mallarından zekât almasını emretmiştir.
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>"خُذْ" (Khudh - Al):</strong> Bu emir, zekâtın toplanmasının meşruiyetine delalet eder. İmam veya onun temsilcisi, zekâtı toplamakla görevlidir.
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>"صَدَقَةً" (Sadaka):</strong> Burada zekât kastedilmektedir. Zekâta "sadaka" denilmesinin sebebi, malını vermenin kişinin imanının sıdkına (doğruluğuna) delalet etmesidir.
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>"تُطَهِّرُهُمْ" (Tutahhiruhum - Temizlersin):</strong> Zekât, malı haramdan, şüpheden ve cimrilikten temizler. Aynı zamanda nefsi günahlardan ve kötü ahlaktan arındırır.
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>"وَتُزَكِّيهِم" (Ve Tuzekkihim - Arındırırsın):</strong> Zekât, hem malı artırır hem de nefsi yükseltir ve faziletlerle süsler. İbn Abbas (r.a) dedi ki: "Onları günahlardan arındırırsın ve sevaplarını artırırsın."
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>Fıkhi Hüküm:</strong> Bu ayet, zekâtın farz oluşuna en açık delillerden biridir. Ayrıca zekâtın hikmetlerini açıklar: Temizlik ve arınma, hem maddi hem de manevi anlamda.
-                        </div>
-                    </div>
-                </div>
+            <p class="intro-text">
+                <span data-ar>موسوعة شاملة لأحكام الزكاة الشرعية مرتبة ومبسطة وفق آراء المذاهب الأربعة</span>
+                <span data-tr>Dört mezhebin görüşlerine göre düzenlenmiş ve basitleştirilmiş kapsamlı zekât hükümleri ansiklopedisi.</span>
+            </p>
 
-                <div style="margin-bottom: 1rem;">
-                    <h4 style="color: var(--primary-color); margin-bottom: 0.75rem;" data-ar="📚 التعريف عند المذاهب:" data-tr="📚 Mezheplere Göre Tanım:">📚 التعريف عند المذاهب:</h4>
+            <!-- الحكم 1: تعريف الزكاة -->
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span style="background: var(--primary-color); color: white; padding: 2px 10px; border-radius: 20px; font-weight: bold; margin-left: 10px;">1</span>
+                        <span data-ar>📖 تعريف الزكاة شرعاً</span>
+                        <span data-tr>📖 Zekâtın Şer'i Tanımı</span>
+                    </span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="quran-box">
+                        <div class="verse-ar">﴿خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِم بِهَا﴾</div>
+                        <div class="verse-ref">[التوبة: 103]</div>
+                        <div class="verse-tr-trans">"Onların mallarından sadaka al ki, bununla onları temizleyesin ve arındırasın."</div>
+                        
+                        <!-- التفسير التركي الموسع -->
+                        <div class="tafsir-tr-box">
+                            <span class="tafsir-title">💡 Ayet Tefsiri:</span>
+                            <p class="tafsir-text">
+                                Bu ayet, zekâtın farz olduğunun en büyük delilidir. "Al" emri, zekâtın bir tercih değil, devlet veya yetkili merci tarafından toplanması gereken bir yükümlülük olduğunu gösterir. "Temizlemek" (Tathir), mal sahibini cimrilik hastalığından ve günah kirlerinden arındırır. "Arındırmak" (Tezkiye) ise, kalan malın bereketlenmesini ve helal kılınmasını sağlar. Zekât, sadece fakirin hakkı değil, zenginin manevi arınma aracıdır.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--primary-color);" data-ar="📚 التعريف عند المذاهب:" data-tr="📚 Mezheplere Göre Tanım:">📚 التعريف عند المذاهب:</h4>
                     
-                    <div style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.08), rgba(39, 174, 96, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #2ecc71;">
-                        <strong style="color: #2ecc71; font-size: 1.05rem;">
-                            <span data-ar="🟢 الحنفية:" data-tr="🟢 Hanefi Mezhebi:">🟢 الحنفية:</span>
+                    <div class="madhab-box hanafi">
+                        <strong style="color: #2ecc71;">
+                            <span data-ar>🟢 الحنفية:</span><span data-tr>🟢 Hanefi:</span>
                         </strong>
-                        <p style="margin-top: 0.5rem; line-height: 1.8;" data-ar="تمليك جزء مال مخصوص من مال مخصوص لشخص مخصوص عينه الشارع لوجه الله تعالى." 
-                           data-tr="Allah rızası için, Şari'in belirlediği belirli bir kişiye (fakir, miskin vb.), belirli bir maldan (altın, gümüş, ticaret malı vb.) belirli bir kısmın (nisabın dörtte biri) mülkiyetini vermektir.">
-                            تمليك جزء مال مخصوص من مال مخصوص لشخص مخصوص عينه الشارع لوجه الله تعالى.
-                        </p>
-                        <p style="margin-top: 0.5rem; line-height: 1.8; font-size: 0.95rem; color: #555;" data-tr="<strong>Açıklama:</strong> Bu tanım, zekâtın üç temel unsurunun olduğunu gösterir: 1) Belirli bir mal (zekâta tabi mallar), 2) Belirli bir miktar (%2.5), 3) Belirli kişiler (sekiz sınıf).">
-                            <strong>الشرح:</strong> هذا التعريف يبين أن للزكاة ثلاثة أركان: مال معين، ومقدار معين، وأشخاص معينون.
-                        </p>
+                        <p data-ar="تمليك جزء مال مخصوص من مال مخصوص لشخص مخصوص عينه الشارع لوجه الله تعالى." data-tr="Allah rızası için, Şari'in (Allah ve Resulü) belirlediği belirli bir kişiye, belirli bir maldan belirli bir kısmın mülkiyetini vermektir.">تمليك جزء مال مخصوص...</p>
                     </div>
 
-                    <div style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.08), rgba(41, 128, 185, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #3498db;">
-                        <strong style="color: #3498db; font-size: 1.05rem;">
-                            <span data-ar="🔵 المالكية:" data-tr="🔵 Maliki Mezhebi:">🔵 المالكية:</span>
+                    <div class="madhab-box maliki">
+                        <strong style="color: #3498db;">
+                            <span data-ar>🔵 المالكية:</span><span data-tr>🔵 Maliki:</span>
                         </strong>
-                        <p style="margin-top: 0.5rem; line-height: 1.8;" data-ar="إخراج جزء مخصوص من مال مخصوص بلغ نصاباً لمستحقه إن تم الملك وحال الحول." 
-                           data-tr="Mülkiyet tamamlanıp yıl (havl) dolduğunda, nisaba ulaşan belirli bir maldan belirli bir kısmın hak sahibine (müstahik) çıkarılmasıdır.">
-                            إخراج جزء مخصوص من مال مخصوص بلغ نصاباً لمستحقه إن تم الملك وحال الحول.
-                        </p>
-                        <p style="margin-top: 0.5rem; line-height: 1.8; font-size: 0.95rem; color: #555;" data-tr="<strong>Önemli Not:</strong> Malikiler, nisap ve yılın dönmesi (havl) şartlarını tanımın içine dahil etmişlerdir. Bu, zekâtın vacip olması için gerekli şartların önemini vurgular.">
-                            <strong>فائدة:</strong> المالكية أدخلوا شرطي النصاب والحول في التعريف، مما يدل على أهميتهما.
-                        </p>
+                        <p data-ar="إخراج جزء مخصوص من مال مخصوص بلغ نصاباً لمستحقه إن تم الملك وحال الحول." data-tr="Mülkiyet tamamlanıp yıl dolduğunda, nisaba ulaşan belirli bir maldan belirli bir kısmın hak sahibine çıkarılmasıdır.">إخراج جزء مخصوص...</p>
                     </div>
-
-                    <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.08), rgba(192, 57, 43, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #e74c3c;">
-                        <strong style="color: #e74c3c; font-size: 1.05rem;">
-                            <span data-ar="🔴 الشافعية:" data-tr="🔴 Şafii Mezhebi:">🔴 الشافعية:</span>
-                        </strong>
-                        <p style="margin-top: 0.5rem; line-height: 1.8;" data-ar="اسم لما يخرج من مال أو بدن على وجه مخصوص." 
-                           data-tr="Belirli bir şekilde maldan (mal zekâtı) veya bedenden (fıtır sadakası) çıkarılan şeye verilen isimdir.">
-                            اسم لما يخرج من مال أو بدن على وجه مخصوص.
-                        </p>
-                        <p style="margin-top: 0.5rem; line-height: 1.8; font-size: 0.95rem; color: #555;" data-tr="<strong>Şafiilerin Özelliği:</strong> Bu tanım hem mal zekâtını hem de fıtır sadakasını kapsar. 'Belirli bir şekilde' ifadesi, zekâtın şer'i şartlarına ve kurallarına uygun olarak verilmesi gerektiğini gösterir.">
-                            <strong>خصوصية:</strong> هذا التعريف يشمل زكاة المال وزكاة الفطر معاً.
-                        </p>
-                    </div>
-
-                    <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.08), rgba(211, 84, 0, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #f39c12;">
-                        <strong style="color: #f39c12; font-size: 1.05rem;">
-                            <span data-ar="🟠 الحنابلة:" data-tr="🟠 Hanbeli Mezhebi:">🟠 الحنابلة:</span>
-                        </strong>
-                        <p style="margin-top: 0.5rem; line-height: 1.8;" data-ar="حق واجب في مال خاص لطائفة مخصوصة في وقت مخصوص." 
-                           data-tr="Belirli bir zamanda (yıl dolduktan sonra), belirli bir grup (sekiz sınıf) için özel bir malda (nisaba ulaşan mal) vacip olan haktır.">
-                            حق واجب في مال خاص لطائفة مخصوصة في وقت مخصوص.
-                        </p>
-                        <p style="margin-top: 0.5rem; line-height: 1.8; font-size: 0.95rem; color: #555;" data-tr="<strong>Hanbelilerin Vurgusu:</strong> 'Vacip hak' ifadesi, zekâtın farz bir ibadet olduğunu ve fakirin malda hakkı olduğunu vurgular. Bu, sosyal dayanışma prensibini gösterir.">
-                            <strong>تأكيد:</strong> تعبير "حق واجب" يؤكد أن الزكاة فريضة وأن للفقير حقاً في مال الغني.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- صندوق الفوائد -->
-                <div class="benefit-box">
-                    <h4 style="color: #27ae60; margin-bottom: 0.75rem;" data-ar="💡 فوائد لغوية وشرعية:" data-tr="💡 Dilsel ve Şer'i Faydalar:">💡 فوائد لغوية وشرعية:</h4>
-                    <ul style="margin: 0; padding-right: 1.5rem; line-height: 1.8;">
-                        <li data-ar="الزكاة لغة: النماء والطهارة والبركة" data-tr="<strong>Zekât Lugatte:</strong> Büyüme, temizlik ve bereket anlamına gelir">الزكاة لغة: النماء والطهارة والبركة</li>
-                        <li data-ar="سميت زكاة لأنها تزكي المال وتنميه وتطهر النفس" data-tr="<strong>Neden Zekât Denildi:</strong> Çünkü malı artırır, büyütür ve nefsi temizler">سميت زكاة لأنها تزكي المال وتنميه وتطهر النفس</li>
-                        <li data-ar="الزكاة ركن من أركان الإسلام الخمسة" data-tr="<strong>Önemi:</strong> Zekât, İslam'ın beş rüknünden biridir">الزكاة ركن من أركان الإسلام الخمسة</li>
-                        <li data-ar="ذُكرت الزكاة في القرآن 30 مرة، 27 منها مقترنة بالصلاة" data-tr="<strong>Kur'an'da:</strong> Zekât 30 kez zikredilmiştir, 27'si namazla birlikte">ذُكرت الزكاة في القرآن 30 مرة، 27 منها مقترنة بالصلاة</li>
-                    </ul>
-                </div>
-                
-                <div class="action-buttons" style="margin-top: 1rem;">
-                    <button class="action-btn copy-btn" onclick="copyText(this)"></button>
-                    <button class="action-btn share-btn" onclick="shareText(this)"></button>
                 </div>
             </div>
-        </div>
 
-        <!-- الحكم 2: هل تجب الزكاة في الحلي -->
-        <div class="accordion">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-                <span>
-                    <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">2</span>
-                    <span data-ar="❓ هل تجب الزكاة في الحلي المعد للاستعمال الشخصي؟" data-tr="❓ Kişisel kullanım için hazırlanan mücevherlerde zekât vacip midir?">❓ هل تجب الزكاة في الحلي المعد للاستعمال الشخصي؟</span>
-                </span>
-                <span class="accordion-icon">▼</span>
-            </div>
-            <div class="accordion-content">
-                
-                <!-- الدليل القرآني -->
-                <div class="quran-box" style="text-align: center; background: #f0f9f7; padding: 15px; border-radius: 10px; border: 1px solid #c8ddd4; margin-bottom: 15px;">
-                    <div style="color: #0d7c66; font-family: 'Amiri', serif; font-size: 1.2rem; margin-bottom: 8px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-                    <div style="font-size: 1.1rem; font-weight: bold; color: #1a3a2e; margin-bottom: 5px;">﴿وَالَّذِينَ يَكْنِزُونَ الذَّهَبَ وَالْفِضَّةَ وَلَا يُنفِقُونَهَا فِي سَبِيلِ اللَّهِ فَبَشِّرْهُم بِعَذَابٍ أَلِيمٍ﴾</div>
-                    <div style="font-size: 0.9rem; color: #4a6b5e; margin-bottom: 8px;">[التوبة: 34]</div>
-                    <div style="font-size: 0.95rem; color: #555; font-style: italic; border-top: 1px solid #ddd; padding-top: 8px;">
-                        "Altın ve gümüşü biriktirip de Allah yolunda harcamayanlar var ya, işte onları acı bir azapla müjdele."
-                    </div>
+            <!-- الحكم 2: شروط وجوب الزكاة -->
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span style="background: var(--primary-color); color: white; padding: 2px 10px; border-radius: 20px; font-weight: bold; margin-left: 10px;">2</span>
+                        <span data-ar>✅ شروط وجوب الزكاة</span>
+                        <span data-tr>✅ Zekâtın Şartları</span>
+                    </span>
+                    <span class="accordion-icon">▼</span>
                 </div>
-
-                <!-- التفسير التفصيلي - يظهر فقط بالتركية -->
-                <div class="tafsir-box show-tr">
-                    <div class="tafsir-title">
-                        <span>📚</span>
-                        <span>Ayetin Detaylı Tefsiri (Tevbe Suresi 34. Ayet)</span>
-                    </div>
-                    <div class="tafsir-content">
-                        <div class="tafsir-point">
-                            <strong>Ayetin Bağlamı:</strong> Bu ayet, Tebük Gazvesi öncesinde nazil olmuştur. Allah Teala, mallarını biriktirip infak etmeyenleri uyarmaktadır.
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>"يَكْنِزُونَ" (Yeknizoune - Biriktirirler):</strong> Kenzetmek, malı saklamak ve ondan Allah'ın hakkını (zekâtı) vermemek demektir. İbn Abbas (r.a) dedi ki: "Zekâtı verilmiş her mal, yerin dibine gömülse bile kenz (saklanmış) değildir. Zekâtı verilmemiş her mal, açıkta dursa bile kenzdir."
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>"وَلَا يُنفِقُونَهَا" (Ve La Yunfikuneha - Harcamazlar):</strong> Burada infak, zekât ve vacip olan nafakalar kastedilmektedir. Bazı müfessirler, bunun özellikle zekât olduğunu söylemişlerdir.
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>"فِي سَبِيلِ اللَّهِ" (Fi Sebilillah - Allah Yolunda):</strong> Allah yolu, O'nun rızasını kazandıran her hayırlı işi kapsar. Zekât, Allah yolunda harcamanın en önemli türlerindendir.
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>Azabın Mahiyeti:</strong> Hadiste açıklanmıştır: "Altın ve gümüşün sahibi, onların hakkını vermezse, kıyamet gününde onlar ateş levhaları yapılır ve cehennem ateşinde kızdırılır, sonra onunla yanları, alınları ve sırtları dağlanır." (Müslim)
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>Mücevher Meselesi:</strong> Ulema bu ayetten hareketle ihtilaf etmiştir:
-                            <br>• Hanefiler: Ayet umumi olduğu için, kullanılan mücevherde de zekât vaciptir.
-                            <br>• Cumhur: "Yeknizoune" kelimesi, kullanılmayan ve biriktirilen malı ifade eder, dolayısıyla kullanılan mücevher zekâta tabi değildir.
-                        </div>
-                        <div class="tafsir-point">
-                            <strong>Hikmet ve İbret:</strong> Bu ayet, malın Allah'tan bir emanet olduğunu ve onun hakkının eda edilmesi gerektiğini öğretir. Zekât vermemek, hem dünyada hem ahirette cezayı gerektirir.
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 1rem;">
-                    <h4 style="color: var(--primary-color); margin-bottom: 0.75rem;" data-ar="📚 أقوال المذاهب:" data-tr="📚 Mezhep Görüşleri:">📚 أقوال المذاهب:</h4>
-                    
-                    <div style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.08), rgba(39, 174, 96, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #2ecc71;">
-                        <strong style="color: #2ecc71; font-size: 1.05rem;">
-                            <span data-ar="🟢 الحنفية:" data-tr="🟢 Hanefi Mezhebi:">🟢 الحنفية:</span>
-                        </strong>
-                        <p style="margin-top: 0.5rem; line-height: 1.8;" data-ar="تجب الزكاة في حلي الذهب والفضة مطلقاً، سواء كان معداً للاستعمال أو للتجارة أو للادخار. والدليل عموم الأحاديث الواردة في زكاة الذهب والفضة." 
-                           data-tr="Altın ve gümüş mücevherlerde, kullanım, ticaret veya tasarruf için olsun mutlaka zekât vaciptir. Delil, altın ve gümüş zekâtı hakkındaki hadislerin genelliğidir.">
-                            تجب الزكاة في حلي الذهب والفضة مطلقاً، سواء كان معداً للاستعمال أو للتجارة أو للادخار. والدليل عموم الأحاديث الواردة في زكاة الذهب والفضة.
-                        </p>
-                        <div class="hadith-box" style="margin-top: 0.75rem;">
-                            <strong style="color: #3498db;" data-tr="📖 Delilleri:">📖 أدلتهم:</strong>
-                            <p style="margin-top: 0.5rem; line-height: 1.8; font-size: 0.95rem;" data-tr="1. Hz. Aişe'den (r.a) rivayet edildi: Resulullah (s.a.v) yanıma girdi ve elimde gümüş bilezikler gördü. 'Bu nedir ya Aişe?' dedi. Dedim ki: 'Senin için süslenmek üzere yaptırdım.' Buyurdu: 'Bunun zekâtını veriyor musun?' Dedim: 'Hayır.' Buyurdu: 'Bu, sana cehennem ateşi için yeter.' (Ebu Davud)">
-                                <strong>1.</strong> عن عائشة رضي الله عنها أن النبي ﷺ دخل عليها فرأى في يديها فتخات من ورق، فقال: "ما هذا يا عائشة؟" فقالت: صنعتهن أتزين لك بهن. قال: "أتؤدين زكاتهن؟" قالت: لا. قال: "هو حسبك من النار" (أبو داود)
-                            </p>
-                            <p style="margin-top: 0.5rem; line-height: 1.8; font-size: 0.95rem;" data-tr="2. Amr bin Şuayb, babasından, o da dedesinden rivayet etti: Bir kadın, Resulullah'a (s.a.v) geldi, kızıyla birlikte. Kızının elinde iki kalın altın bilezik vardı. Resulullah (s.a.v) ona: 'Bunun zekâtını veriyor musun?' dedi. Kadın: 'Hayır' dedi. Resulullah (s.a.v) buyurdu: 'Allah'ın seni kıyamet günü onlarla ateşten iki bilezikle bileziklemesini ister misin?' (Ebu Davud, Tirmizi)">
-                                <strong>2.</strong> عن عمرو بن شعيب عن أبيه عن جده: أن امرأة أتت رسول الله ﷺ ومعها ابنة لها وفي يد ابنتها مسكتان غليظتان من ذهب، فقال لها: "أتعطين زكاة هذا؟" قالت: لا. قال: "أيسرك أن يسورك الله بهما يوم القيامة سوارين من نار؟" (أبو داود والترمذي)
+                <div class="accordion-content">
+                    <div class="quran-box">
+                        <div class="verse-ar">﴿وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ﴾</div>
+                        <div class="verse-ref">[البقرة: 43]</div>
+                        <div class="verse-tr-trans">"Namazı kılın, zekâtı verin."</div>
+                        
+                        <div class="tafsir-tr-box">
+                            <span class="tafsir-title">💡 Ayet Tefsiri:</span>
+                            <p class="tafsir-text">
+                                Kur'an-ı Kerim'de namaz ve zekât 82 yerde birlikte zikredilmiştir. Bu durum, bedeni ibadet (namaz) ile mali ibadetin (zekât) birbirinden ayrılamaz olduğunu gösterir. Namazı kılıp zekâtı vermemek, İslam binasının bir sütununu yıkmak gibidir. Hz. Ebu Bekir (r.a), "Namaz ile zekâtın arasını ayıranlarla savaşırım" diyerek bu şartın önemini vurgulamıştır.
                             </p>
                         </div>
-                        <p style="margin-top: 0.75rem; line-height: 1.8; font-size: 0.95rem; color: #555;" data-tr="<strong>Hanefi Mezhebinin Gerekçesi:</strong> Altın ve gümüş, aslı itibariyle zekâta tabi mallardandır. Onlardan mücevher yapılması, bu özelliği değiştirmez. Tıpkı altın paraların zekâta tabi olması gibi.">
-                            <strong>التعليل:</strong> الذهب والفضة من الأموال الزكوية بأصلها، وصياغتها حلياً لا تخرجها عن ذلك.
-                        </p>
                     </div>
 
-                    <div style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.08), rgba(41, 128, 185, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #3498db;">
-                        <strong style="color: #3498db; font-size: 1.05rem;">
-                            <span data-ar="🔵 المالكية:" data-tr="🔵 Maliki Mezhebi:">🔵 المالكية:</span>
-                        </strong>
-                        <p style="margin-top: 0.5rem; line-height: 1.8;" data-ar="لا تجب الزكاة في الحلي المباح المعد للاستعمال الشخصي أو الإعارة، وتجب في الحلي المحرم (كحلي الرجال) أو المعد للتجارة." 
-                           data-tr="Kişisel kullanım veya ödünç verme için hazırlanan mubah mücevherlerde zekât vacip değildir. Haram mücevherlerde (erkek mücevherleri gibi) veya ticaret için hazırlanan mücevherlerde zekât vaciptir.">
-                            لا تجب الزكاة في الحلي المباح المعد للاستعمال الشخصي أو الإعارة، وتجب في الحلي المحرم (كحلي الرجال) أو المعد للتجارة.
-                        </p>
-                        <div class="hadith-box" style="margin-top: 0.75rem;">
-                            <strong style="color: #3498db;" data-tr="📖 Delilleri:">📖 أدلتهم:</strong>
-                            <p style="margin-top: 0.5rem; line-height: 1.8; font-size: 0.95rem;" data-tr="1. Cabir bin Abdullah'tan (r.a): Resulullah (s.a.v) buyurdu: 'Mücevherde zekât yoktur.' (Darekutni - Zayıf olduğu söylense de, cumhur bununla istidlal etmiştir)">
-                                <strong>1.</strong> عن جابر بن عبد الله رضي الله عنه قال: قال رسول الله ﷺ: "ليس في الحلي زكاة" (الدارقطني)
-                            </p>
-                            <p style="margin-top: 0.5rem; line-height: 1.8; font-size: 0.95rem;" data-tr="2. Esma bint Ebu Bekir'den (r.a): 'Mücevherlerim vardı, Resulullah (s.a.v) onun zekâtını vermemi emretmedi.' (Darekutni)">
-                                <strong>2.</strong> عن أسماء بنت أبي بكر رضي الله عنها قالت: "كان لي حلي فلم يأمرني رسول الله ﷺ بزكاته" (الدارقطني)
-                            </p>
-                        </div>
-                        <p style="margin-top: 0.75rem; line-height: 1.8; font-size: 0.95rem; color: #555;" data-tr="<strong>Maliki Mezhebinin Gerekçesi:</strong> Kullanılan mücevher, büyüyen (nami) mal değildir. Zekât ise sadece büyüyen mallarda vaciptir. Ayrıca, kullanılan mücevher ihtiyaç malıdır, tıpkı giyim ve yiyecek gibi, bunlarda zekât yoktur.">
-                            <strong>التعليل:</strong> الحلي المستعمل ليس مالاً نامياً، والزكاة إنما تجب في الأموال النامية. كما أنه من الحاجات الأصلية كاللباس والطعام.
-                        </p>
-                    </div>
-
-                    <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.08), rgba(192, 57, 43, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #e74c3c;">
-                        <strong style="color: #e74c3c; font-size: 1.05rem;">
-                            <span data-ar="🔴 الشافعية:" data-tr="🔴 Şafii Mezhebi:">🔴 الشافعية:</span>
-                        </strong>
-                        <p style="margin-top: 0.5rem; line-height: 1.8;" data-ar="لا زكاة في الحلي المباح المعد للاستعمال، لأنه خرج عن كونه مالاً نامياً. وتجب الزكاة في الحلي المحرم والمعد للتجارة." 
-                           data-tr="Kullanım için hazırlanan mubah mücevherlerde zekât yoktur, çünkü büyüyen mal olmaktan çıkmıştır. Haram mücevherler ve ticaret için hazırlanan mücevherlerde zekât vaciptir.">
-                            لا زكاة في الحلي المباح المعد للاستعمال، لأنه خرج عن كونه مالاً نامياً. وتجب الزكاة في الحلي المحرم والمعد للتجارة.
-                        </p>
-                        <p style="margin-top: 0.75rem; line-height: 1.8; font-size: 0.95rem; color: #555;" data-tr="<strong>Şafii Mezhebinin İlavesi:</strong> Erkeklere haram olan mücevherlerde (altın yüzük, altın saat vb.) zekât vaciptir, çünkü bunlar kullanım için değil, sadece saklanmak içindir. Aynı şekilde, nisabı aşan aşırı mücevherlerde de zekât vaciptir.">
-                            <strong>إضافة:</strong> الحلي المحرم على الرجال (كالخاتم الذهب) تجب فيه الزكاة، لأنه ليس للاستعمال المشروع.
-                        </p>
-                    </div>
-
-                    <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.08), rgba(211, 84, 0, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #f39c12;">
-                        <strong style="color: #f39c12; font-size: 1.05rem;">
-                            <span data-ar="🟠 الحنابلة:" data-tr="🟠 Hanbeli Mezhebi:">🟠 الحنابلة:</span>
-                        </strong>
-                        <p style="margin-top: 0.5rem; line-height: 1.8;" data-ar="المشهور في المذهب: لا زكاة في الحلي المباح المعد للاستعمال أو الإعارة. وقول آخر: تجب الزكاة فيه مطلقاً." 
-                           data-tr="Mezhepte meşhur olan görüş: Kullanım veya ödünç verme için hazırlanan mubah mücevherlerde zekât yoktur. Başka bir görüş: Mutlaka zekât vaciptir (İmam Ahmed'den rivayet edilmiştir).">
-                            المشهور في المذهب: لا زكاة في الحلي المباح المعد للاستعمال أو الإعارة. وقول آخر: تجب الزكاة فيه مطلقاً.
-                        </p>
-                        <p style="margin-top: 0.75rem; line-height: 1.8; font-size: 0.95rem; color: #555;" data-tr="<strong>Hanbeli Mezhebinin Detayı:</strong> İmam Ahmed'den iki rivayet vardır. Meşhur olan, zekât olmadığıdır. İkinci rivayet, ihtiyaten zekât verilmesini tercih eder. İbn Kudame dedi ki: 'Zekât vermek daha ihtiyatlıdır ve ihtilaftan çıkmaktır.'">
-                            <strong>تفصيل:</strong> عن الإمام أحمد روايتان، والمشهور عدم الوجوب. والرواية الثانية تستحب الزكاة احتياطاً.
-                        </p>
-                    </div>
-                </div>
-
-                <div style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.08), rgba(142, 68, 173, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-right: 4px solid #9b59b6;">
-                    <h4 style="color: #9b59b6; margin-bottom: 0.75rem;" data-ar="🌟 آراء المعاصرين:" data-tr="🌟 Çağdaş Âlimlerin Görüşleri:">🌟 آراء المعاصرين:</h4>
-                    <p style="line-height: 1.8;" data-ar="اختلف المعاصرون: فمنهم من رجح عدم الوجوب (كالشيخ ابن باز وابن عثيمين)، ومنهم من رجح الوجوب احتياطاً (كالشيخ القرضاوي). والأحوط إخراج زكاتها خروجاً من الخلاف." 
-                       data-tr="Çağdaş âlimler ihtilaf etti: Bazıları vacip olmadığını tercih etti (Şeyh İbn Baz ve İbn Useymîn gibi), bazıları ihtiyaten vacip olduğunu tercih etti (Şeyh Karadavi gibi). En ihtiyatlı olanı, ihtilaftan çıkmak için zekâtını vermektir.">
-                        اختلف المعاصرون: فمنهم من رجح عدم الوجوب (كالشيخ ابن باز وابن عثيمين)، ومنهم من رجح الوجوب احتياطاً (كالشيخ القرضاوي). والأحوط إخراج زكاتها خروجاً من الخلاف.
-                    </p>
-                    <div style="margin-top: 0.75rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                        <strong style="color: #8e44ad;" data-tr="📌 Önemli Notlar:">📌 ملاحظات هامة:</strong>
-                        <ul style="margin: 0.5rem 0 0 0; padding-right: 1.5rem; line-height: 1.8; font-size: 0.95rem;">
-                            <li data-tr="1. Şeyh İbn Baz: 'Kullanılan mücevherde zekât yoktur, ancak çok fazla ise (örneğin 1 kg altın) zekât vermek daha ihtiyatlıdır.'">1. الشيخ ابن باز: لا زكاة في الحلي المستعمل، لكن إن كان كثيراً جداً فالأحوط إخراج زكاته.</li>
-                            <li data-tr="2. Şeyh İbn Useymîn: 'Doğru olan, kullanılan mücevherde zekât olmadığıdır, çünkü sahabe döneminde kadınların çok mücevheri vardı ve onlardan zekât alındığına dair sahih bir delil yoktur.'">2. الشيخ ابن عثيمين: الصحيح أنه لا زكاة في الحلي المستعمل، لأن نساء الصحابة كان عندهن حلي كثير ولم يثبت أخذ الزكاة منهن.</li>
-                            <li data-tr="3. Şeyh Karadavi: 'Günümüzde mücevher, tasarruf ve yatırım aracı haline gelmiştir, dolayısıyla zekât vermek daha uygun ve daha ihtiyatlıdır.'">3. الشيخ القرضاوي: الحلي اليوم أصبح وسيلة ادخار واستثمار، فالأولى إخراج زكاته والأحوط.</li>
+                    <div class="madhab-box general">
+                        <ul style="margin: 0; padding-inline-start: 1rem; line-height: 1.8;">
+                            <li data-ar="1️⃣ الإسلام: لا تقبل من الكافر." data-tr="1️⃣ Müslümanlık: Kâfirden kabul edilmez."></li>
+                            <li data-ar="2️⃣ الحرية: لا تجب على العبد." data-tr="2️⃣ Hürriyet: Köleye vacip değildir."></li>
+                            <li data-ar="3️⃣ الملك التام: أن يكون المال مملوكاً ومقدوراً عليه." data-tr="3️⃣ Tam Mülkiyet: Malın tam sahibi olunması."></li>
+                            <li data-ar="4️⃣ بلوغ النصاب: الحد الأدنى للمال." data-tr="4️⃣ Nisaba Ulaşma: Zenginlik sınırı."></li>
+                            <li data-ar="5️⃣ حولان الحول: مرور سنة قمرية." data-tr="5️⃣ Yılın Dönmesi: Üzerinden bir kameri yıl geçmesi."></li>
                         </ul>
                     </div>
                 </div>
+            </div>
 
-                <div style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.12), rgba(65, 184, 166, 0.12)); padding: 1rem; border-radius: 8px; border-right: 4px solid var(--primary-color);">
-                    <h4 style="color: var(--primary-color); margin-bottom: 0.75rem;" data-ar="⚖️ القول الراجح:" data-tr="⚖️ Tercih Edilen Görüş:">⚖️ القول الراجح:</h4>
-                    <p style="line-height: 1.8; font-weight: 600;" data-ar="الراجح - والله أعلم - أن الحلي المباح المعد للاستعمال الشخصي لا زكاة فيه، لكن الأحوط والأورع إخراج زكاته، خاصة إذا كان كثيراً أو بلغ قيمة كبيرة." 
-                       data-tr="<strong>Allah en iyi bilendir</strong>, tercih edilen görüş: Kişisel kullanım için hazırlanan mubah mücevherlerde zekât vacip değildir. Ancak, özellikle çok fazla ise veya büyük bir değere ulaşmışsa, zekâtını vermek daha ihtiyatlı ve daha takvalıdır.">
-                        الراجح - والله أعلم - أن الحلي المباح المعد للاستعمال الشخصي لا زكاة فيه، لكن الأحوط والأورع إخراج زكاته، خاصة إذا كان كثيراً أو بلغ قيمة كبيرة.
-                    </p>
-                    <div style="margin-top: 0.75rem; padding: 0.75rem; background: rgba(255,255,255,0.3); border-radius: 6px;">
-                        <strong style="color: var(--primary-color);" data-tr="💡 Pratik Uygulama:">💡 التطبيق العملي:</strong>
-                        <ul style="margin: 0.5rem 0 0 0; padding-right: 1.5rem; line-height: 1.8; font-size: 0.95rem;">
-                            <li data-tr="• Normal kullanım mücevheri (birkaç yüzük, kolye, küpe): Cumhurun görüşüne göre zekât yok, ancak vermek daha iyi.">• الحلي العادي (بضع خواتم وأساور): لا زكاة فيه على قول الجمهور، والإخراج أفضل.</li>
-                            <li data-tr="• Çok fazla mücevher (1 kg altın veya daha fazla): Zekât vermek daha ihtiyatlı ve daha uygun.">• الحلي الكثير (كيلو ذهب فأكثر): الأحوط والأولى إخراج الزكاة.</li>
-                            <li data-tr="• Ticaret veya yatırım için alınan mücevher: İttifakla zekât vaciptir.">• الحلي المعد للتجارة أو الاستثمار: تجب فيه الزكاة بالاتفاق.</li>
-                            <li data-tr="• Erkeklere haram olan mücevher: İttifakla zekât vaciptir.">• الحلي المحرم (للرجال): تجب فيه الزكاة بالاتفاق.</li>
-                        </ul>
+            <!-- الحكم 3: زكاة الذهب والفضة -->
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span style="background: var(--primary-color); color: white; padding: 2px 10px; border-radius: 20px; font-weight: bold; margin-left: 10px;">3</span>
+                        <span data-ar>🏆 زكاة الذهب والفضة</span>
+                        <span data-tr>🏆 Altın ve Gümüş Zekâtı</span>
+                    </span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="quran-box">
+                        <div class="verse-ar">﴿وَالَّذِينَ يَكْنِزُونَ الذَّهَبَ وَالْفِضَّةَ وَلَا يُنفِقُونَهَا فِي سَبِيلِ اللَّهِ فَبَشِّرْهُم بِعَذَابٍ أَلِيمٍ﴾</div>
+                        <div class="verse-ref">[التوبة: 34]</div>
+                        <div class="verse-tr-trans">"Altın ve gümüşü biriktirip de Allah yolunda harcamayanlar var ya, işte onları acı bir azapla müjdele."</div>
+                        
+                        <div class="tafsir-tr-box">
+                            <span class="tafsir-title">💡 Ayet Tefsiri:</span>
+                            <p class="tafsir-text">
+                                Ayette geçen "Kenz" (biriktirmek/gömü), fıkıh alimlerine göre zekâtı verilmemiş her türlü maldır. Eğer bir malın zekâtı verilmişse, o mal "kenz" sayılmaz ve sahibi bu tehdide muhatap olmaz. Ayet, paranın ve altının piyasadan çekilip atıl tutulmasını yasaklar; zira bu, ekonomiyi durdurur ve fakirin hakkını gasp etmektir.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="madhab-box hanafi">
+                        <strong style="color: #d4af37;">
+                            <span data-ar>⚜️ الذهب:</span><span data-tr>⚜️ Altın:</span>
+                        </strong>
+                        <p data-ar="النصاب: 20 مثقالاً = 85 جراماً من الذهب الخالص." data-tr="Nisap: 20 miskal = 85 gram saf altın (24 ayar).">النصاب: 85 جرام...</p>
                     </div>
                 </div>
+            </div>
 
-                <div class="action-buttons" style="margin-top: 1rem;">
-                    <button class="action-btn copy-btn" onclick="copyText(this)"></button>
-                    <button class="action-btn share-btn" onclick="shareText(this)"></button>
+            <!-- الحكم 5: زكاة الزروع -->
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span style="background: var(--primary-color); color: white; padding: 2px 10px; border-radius: 20px; font-weight: bold; margin-left: 10px;">5</span>
+                        <span data-ar>🌾 زكاة الزروع والثمار</span>
+                        <span data-tr>🌾 Ekin ve Meyve Zekâtı</span>
+                    </span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="quran-box">
+                        <div class="verse-ar">﴿وَآتُوا حَقَّهُ يَوْمَ حَصَادِهِ﴾</div>
+                        <div class="verse-ref">[الأنعام: 141]</div>
+                        <div class="verse-tr-trans">"Hasat günü hakkını (zekâtını) verin."</div>
+                        
+                        <div class="tafsir-tr-box">
+                            <span class="tafsir-title">💡 Ayet Tefsiri:</span>
+                            <p class="tafsir-text">
+                                Diğer zekât türlerinde "bir yıl geçmesi" (havl-i havelan) şartı varken, tarım ürünlerinde bu şart yoktur. Ayette "hasat günü" denilerek, ürün elde edildiği anda zekâtın vacip olduğu belirtilmiştir. Bu, Allah'ın topraktan verdiği nimete anında şükür ifadesidir. Masrafsız sulananda %10 (öşür), masraflı sulananda %5 verilmesi adaletin gereğidir.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="madhab-box hanafi">
+                        <strong style="color: #2ecc71;">
+                            <span data-ar>🟢 الحنفية:</span><span data-tr>🟢 Hanefi (İmam-ı Azam):</span>
+                        </strong>
+                        <p data-ar="لا يشترطون نصاباً، فالزكاة واجبة في القليل والكثير مما تخرجه الأرض." data-tr="Nisap şartı aramazlar. Topraktan çıkan ürün az da olsa çok da olsa zekâtı verilmelidir (sebzeler dahil).">لا يشترطون نصاباً...</p>
+                    </div>
                 </div>
             </div>
+
+            <!-- الحكم 9: تعجيل وتأخير الزكاة -->
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span style="background: var(--primary-color); color: white; padding: 2px 10px; border-radius: 20px; font-weight: bold; margin-left: 10px;">9</span>
+                        <span data-ar>⏳ تعجيل الزكاة وتأخيرها</span>
+                        <span data-tr>⏳ Zekâtı Öne Alma ve Geciktirme</span>
+                    </span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="quran-box">
+                        <div class="verse-ar">﴿فَاسْتَبِقُوا الْخَيْرَاتِ﴾</div>
+                        <div class="verse-ref">[البقرة: 148]</div>
+                        <div class="verse-tr-trans">"Hayırlarda yarışın."</div>
+                        
+                        <div class="tafsir-tr-box">
+                            <span class="tafsir-title">💡 Ayet Tefsiri:</span>
+                            <p class="tafsir-text">
+                                Allah Teâlâ, iyiliklerin ertelenmemesini, aksine yarışılmasını emreder. Zekât borcu, kulun zimmetinde fakirin hakkıdır. Geciktirmek, fakirin ihtiyacını ertelemek demektir ki bu zulümdür. Alimler bu ayete dayanarak, zekât vaktinin girdiği anda ödenmesinin "fevri" (hemen) bir zorunluluk olduğunu, mazeretsiz geciktirmenin günah olduğunu belirtmişlerdir.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="madhab-box general">
+                         <p data-ar="لا يجوز تأخير الزكاة عن وقت وجوبها بلا عذر شرعي، ويأثم المؤخر." data-tr="Şer'i bir mazeret olmaksızın zekâtı vaktinden sonraya bırakmak caiz değildir, geciktiren günahkâr olur.">لا يجوز تأخير الزكاة...</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-        <!-- يمكنك إضافة بقية الأحكام بنفس الطريقة... -->
-
     </div>
-</div>
 
 
 
@@ -16838,6 +16721,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
