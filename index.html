@@ -234,6 +234,321 @@
         }
 
 
+
+
+
+
+
+
+
+
+
+
+<!-- ============================================ -->
+<!-- صفحة الأحكام الفقهية - النسخة الكاملة -->
+<!-- ============================================ -->
+
+:root {
+    --primary-color: #0d7c66;
+    --secondary-color: #41b8a6;
+    --accent-color: #2ecc71;
+    --text-color: #e0e0e0;
+    --bg-color: #1a1a2e;
+    --card-bg: #16213e;
+    --border-color: #2d3561;
+    --hover-color: #0f3460;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.card-header svg {
+    width: 40px;
+    height: 40px;
+    fill: white;
+}
+
+.card-title {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.card > p {
+    padding: 1.5rem 2rem;
+    color: #b0b0b0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.accordion {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.accordion-header {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    background: var(--card-bg);
+}
+
+.accordion-header:hover {
+    background: var(--hover-color);
+}
+
+.accordion-header span:first-child {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.accordion-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    color: var(--secondary-color);
+}
+
+.accordion-header.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    background: #0f1419;
+}
+
+.accordion-content.active {
+    max-height: 8000px;
+    padding: 2rem;
+}
+
+.quran-box {
+    background: linear-gradient(135deg, rgba(13, 124, 102, 0.15), rgba(65, 184, 166, 0.15));
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(13, 124, 102, 0.2);
+}
+
+.quran-box .bismillah {
+    color: var(--primary-color);
+    font-family: 'Amiri', 'Traditional Arabic', serif;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.quran-box .ayah {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin: 15px 0;
+    line-height: 2;
+    font-family: 'Amiri', 'Traditional Arabic', serif;
+}
+
+.quran-box .reference {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.quran-box .translation {
+    font-size: 1.05rem;
+    color: #a0a0a0;
+    font-style: italic;
+    border-top: 1px solid var(--border-color);
+    padding-top: 12px;
+    margin-top: 12px;
+}
+
+.tafsir-box {
+    background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.1));
+    border-right: 4px solid #9b59b6;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 15px 0;
+}
+
+.tafsir-box h4 {
+    color: #9b59b6;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tafsir-box p {
+    line-height: 1.9;
+    color: #c0c0c0;
+    margin-bottom: 0.8rem;
+}
+
+.tafsir-box ul {
+    margin-right: 20px;
+    line-height: 1.9;
+    color: #c0c0c0;
+}
+
+.madhab-box {
+    padding: 1.2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    border-right: 4px solid;
+    transition: transform 0.2s ease;
+}
+
+.madhab-box:hover {
+    transform: translateX(-5px);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.action-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.copy-btn {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+}
+
+.copy-btn:hover {
+    background: linear-gradient(135deg, #2980b9, #21618c);
+    transform: translateY(-2px);
+}
+
+.share-btn {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+}
+
+.share-btn:hover {
+    background: linear-gradient(135deg, #27ae60, #1e8449);
+    transform: translateY(-2px);
+}
+
+.copy-btn::before {
+    content: "📋 ";
+}
+
+.share-btn::before {
+    content: "📤 ";
+}
+
+.info-box {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.1));
+    border-right: 4px solid #3498db;
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin: 15px 0;
+}
+
+.info-box h4 {
+    color: #3498db;
+    margin-bottom: 0.8rem;
+}
+
+.warning-box {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.1));
+    border-right: 4px solid #e74c3c;
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin: 15px 0;
+}
+
+.warning-box h4 {
+    color: #e74c3c;
+    margin-bottom: 0.8rem;
+}
+
+.success-box {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.1));
+    border-right: 4px solid #2ecc71;
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin: 15px 0;
+}
+
+.success-box h4 {
+    color: #2ecc71;
+    margin-bottom: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .card-title {
+        font-size: 1.4rem;
+    }
+    
+    .accordion-header span:first-child {
+        font-size: 0.95rem;
+    }
+}
+
+
+
+
+
+
+
+
+        
         
         /* ============================================ */
         /* نموذج الإدخال */
@@ -16787,6 +17102,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
