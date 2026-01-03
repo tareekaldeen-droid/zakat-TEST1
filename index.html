@@ -5397,7 +5397,7 @@ body.dark-mode .smart-logo-box {
                 </div>
             </div>
         </div>
-        
+
         <!-- الحكم 2: شروط وجوب الزكاة -->
         <div class="accordion">
             <div class="accordion-header" onclick="toggleAccordion(this)">
@@ -5408,6 +5408,18 @@ body.dark-mode .smart-logo-box {
                 <span class="accordion-icon">▼</span>
             </div>
             <div class="accordion-content">
+                
+                <!-- آية قرآنية -->
+                <div style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.08), rgba(65, 184, 166, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-right: 4px solid var(--primary-color);">
+                    <div class="quran-text" style="font-family: 'Amiri', serif; font-size: 1.3rem; color: var(--text-color); margin-bottom: 0.5rem; text-align: center; line-height: 2;">
+                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>
+                        ﴿وَآتُوا حَقَّهُ يَوْمَ حَصَادِهِ﴾
+                    </div>
+                    <div class="verse-ref" style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-bottom: 0.8rem;">
+                        <span data-ar="[الأنعام: 141]" data-tr="[En'am: 141]">[الأنعام: 141]</span>
+                    </div>
+                </div>
+
                 <div class="info-box" style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.05), rgba(65, 184, 166, 0.05)); border-left: 4px solid var(--primary-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
                     <p data-ar="اتفق الفقهاء على خمسة شروط أساسية لوجوب الزكاة:" 
                        data-tr="Fıkıh âlimleri zekâtın vacip olması için beş temel şart üzerinde ittifak etmişlerdir:">
@@ -5418,38 +5430,54 @@ body.dark-mode .smart-logo-box {
                 <ul class="custom-list" style="list-style: none; padding: 0;">
                     <li style="background: var(--bg-color); padding: 10px; margin-bottom: 8px; border-radius: 6px; border-right: 3px solid #2ecc71;">
                         <strong data-ar="1. الإسلام:" data-tr="1. Müslüman Olmak:">1. الإسلام:</strong>
-                        <span data-ar="فلا تجب على الكافر." data-tr="Kâfire vacip değildir.">فلا تجب على الكافر.</span>
+                        <span data-ar="فلا تجب على الكافر، لأنها عبادة مالية." data-tr="Kâfire vacip değildir, çünkü mali bir ibadettir.">فلا تجب على الكافر، لأنها عبادة مالية.</span>
                     </li>
                     <li style="background: var(--bg-color); padding: 10px; margin-bottom: 8px; border-radius: 6px; border-right: 3px solid #3498db;">
                         <strong data-ar="2. الحرية:" data-tr="2. Hürriyet:">2. الحرية:</strong>
-                        <span data-ar="فلا تجب على العبد (في الزمن القديم)." data-tr="Köleye vacip değildir.">فلا تجب على العبد (في الزمن القديم).</span>
+                        <span data-ar="فلا تجب على العبد المملوك (في الزمن القديم)، لأنه لا يملك شيئاً." data-tr="Köleye (eski zamanda) vacip değildir, çünkü hiçbir şeye malik değildir.">فلا تجب على العبد المملوك (في الزمن القديم)، لأنه لا يملك شيئاً.</span>
                     </li>
                     <li style="background: var(--bg-color); padding: 10px; margin-bottom: 8px; border-radius: 6px; border-right: 3px solid #9b59b6;">
                         <strong data-ar="3. الملك التام:" data-tr="3. Tam Mülkiyet:">3. الملك التام:</strong>
-                        <span data-ar="أن يكون المال مملوكاً لصاحبه ملكاً مستقراً." data-tr="Malın sahibinin mülkiyetinde istikrarlı olması.">أن يكون المال مملوكاً لصاحبه ملكاً مستقراً.</span>
+                        <span data-ar="أن يكون المال مملوكاً لصاحبه ملكاً مستقراً تاماً، يتصرف فيه كيف يشاء." data-tr="Malın sahibinin mülkiyetinde istikrarlı ve tam olması, dilediği gibi tasarruf edebilmesi.">أن يكون المال مملوكاً لصاحبه ملكاً مستقراً تاماً، يتصرف فيه كيف يشاء.</span>
                     </li>
                     <li style="background: var(--bg-color); padding: 10px; margin-bottom: 8px; border-radius: 6px; border-right: 3px solid #f39c12;">
                         <strong data-ar="4. بلوغ النصاب:" data-tr="4. Nisaba Ulaşmak:">4. بلوغ النصاب:</strong>
-                        <span data-ar="وهو الحد الأدنى الذي حدده الشرع." data-tr="Şeriatın belirlediği asgari sınırdır.">وهو الحد الأدنى الذي حدده الشرع.</span>
+                        <span data-ar="وهو الحد الأدنى الذي حدده الشرع لكل نوع من أنواع المال." data-tr="Şeriatın her mal türü için belirlediği asgari sınırdır.">وهو الحد الأدنى الذي حدده الشرع لكل نوع من أنواع المال.</span>
                     </li>
                     <li style="background: var(--bg-color); padding: 10px; margin-bottom: 8px; border-radius: 6px; border-right: 3px solid #e74c3c;">
                         <strong data-ar="5. حولان الحول:" data-tr="5. Yılın Dolması:">5. حولان الحول:</strong>
-                        <span data-ar="مرور سنة قمرية كاملة على امتلاك النصاب." data-tr="Nisaba sahip olmanın üzerinden tam bir kameri yıl geçmesi.">مرور سنة قمرية كاملة على امتلاك النصاب.</span>
+                        <span data-ar="مرور سنة قمرية كاملة (354 يوماً) على امتلاك النصاب، إلا في الزروع والثمار." data-tr="Nisaba sahip olmanın üzerinden tam bir kameri yıl (354 gün) geçmesi, ekinler ve meyveler hariç.">مرور سنة قمرية كاملة (354 يوماً) على امتلاك النصاب، إلا في الزروع والثمار.</span>
                     </li>
                 </ul>
+
+                <!-- حديث نبوي -->
+                <div style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.08), rgba(142, 68, 173, 0.08)); padding: 1rem; border-radius: 8px; margin-top: 1rem; border-right: 4px solid #9b59b6;">
+                    <h4 style="color: #9b59b6; margin-bottom: 0.75rem;" data-ar="📚 من السنة النبوية:" data-tr="📚 Sünnetten:">📚 من السنة النبوية:</h4>
+                    <p style="font-weight: 600; margin-bottom: 0.5rem; line-height: 1.8;" 
+                       data-ar="قال رسول الله ﷺ: «ليس فيما دون خمسة أوسق صدقة، وليس فيما دون خمس ذود صدقة، وليس فيما دون خمس أواق صدقة»"
+                       data-tr="Rasulullah ﷺ buyurdu: 'Beş vesk'ten (yaklaşık 653 kg) az tahılda zekât yoktur, beş deveden az devede zekât yoktur, beş ûkıyye'den (yaklaşık 595 gr gümüş) az gümüşte zekât yoktur'">
+                        قال رسول الله ﷺ: «ليس فيما دون خمسة أوسق صدقة، وليس فيما دون خمس ذود صدقة، وليس فيما دون خمس أواق صدقة»
+                    </p>
+                    <div class="verse-ref" style="font-size: 0.85rem; color: var(--text-secondary);">
+                        <span data-ar="[رواه البخاري ومسلم]" data-tr="[Buhari ve Müslim]">[رواه البخاري ومسلم]</span>
+                    </div>
+                </div>
 
                 <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.1), rgba(211, 84, 0, 0.1)); padding: 1rem; border-radius: 8px; margin-top: 1rem; border: 1px solid #f39c12;">
                     <h5 style="color: #d35400; margin-bottom: 0.5rem;" data-ar="⚠️ مسألة خلافية: البلوغ والعقل" data-tr="⚠️ İhtilaflı Mesele: Buluğ ve Akıl">⚠️ مسألة خلافية: البلوغ والعقل</h5>
                     <p style="font-size: 0.9rem; line-height: 1.6;" 
-                       data-ar="الجمهور (المالكية والشافعية والحنابلة): تجب الزكاة في مال الصبي والمجنون. الحنفية: لا تجب، لأنها عبادة." 
-                       data-tr="Cumhur (Maliki, Şafii, Hanbeli): Çocuğun ve delinin malında zekât vaciptir. Hanefi: Vacip değildir, çünkü ibadettir.">
-                        الجمهور (المالكية والشافعية والحنابلة): تجب الزكاة في مال الصبي والمجنون. الحنفية: لا تجب، لأنها عبادة.
+                       data-ar="• الجمهور (المالكية والشافعية والحنابلة): تجب الزكاة في مال الصبي والمجنون، ويخرجها وليهما، لأن الزكاة حق مالي متعلق بالمال لا بالمكلف.<br>• الحنفية: لا تجب الزكاة على الصبي والمجنون، لأنها عبادة محضة تحتاج إلى نية، والصبي والمجنون ليسا من أهل التكليف." 
+                       data-tr="• Cumhur (Maliki, Şafii, Hanbeli): Çocuğun ve delinin malında zekât vaciptir, velisi verir, çünkü zekât mükellefle değil malla ilgili mali bir haktır.<br>• Hanefi: Çocuk ve deliye zekât vacip değildir, çünkü niyet gerektiren saf bir ibadettir ve çocuk ile deli mükellef değildir.">
+                        • الجمهور (المالكية والشافعية والحنابلة): تجب الزكاة في مال الصبي والمجنون، ويخرجها وليهما، لأن الزكاة حق مالي متعلق بالمال لا بالمكلف.<br>
+                        • الحنفية: لا تجب الزكاة على الصبي والمجنون، لأنها عبادة محضة تحتاج إلى نية، والصبي والمجنون ليسا من أهل التكليف.
                     </p>
                 </div>
 
                 <div class="action-buttons" style="margin-top: 1rem;">
-                    <button class="action-btn copy-btn" onclick="copyText(this)"></button>
-                    <button class="action-btn share-btn" onclick="shareText(this)"></button>
+                    <button class="action-btn copy-btn" onclick="copyText(this)" 
+                            data-ar="نسخ" data-tr="Kopyala"></button>
+                    <button class="action-btn share-btn" onclick="shareText(this)" 
+                            data-ar="مشاركة" data-tr="Paylaş"></button>
                 </div>
             </div>
         </div>
@@ -5465,57 +5493,361 @@ body.dark-mode .smart-logo-box {
             </div>
             <div class="accordion-content">
                 
+                <!-- آية قرآنية -->
+                <div style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.08), rgba(65, 184, 166, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-right: 4px solid var(--primary-color);">
+                    <div class="quran-text" style="font-family: 'Amiri', serif; font-size: 1.3rem; color: var(--text-color); margin-bottom: 0.5rem; text-align: center; line-height: 2;">
+                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>
+                        ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا أَنفِقُوا مِن طَيِّبَاتِ مَا كَسَبْتُمْ وَمِمَّا أَخْرَجْنَا لَكُم مِّنَ الْأَرْضِ﴾
+                    </div>
+                    <div class="verse-ref" style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-bottom: 0.8rem;">
+                        <span data-ar="[البقرة: 267]" data-tr="[Bakara: 267]">[البقرة: 267]</span>
+                    </div>
+                    <div class="explanation" style="font-size: 0.95rem; line-height: 1.6; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 0.5rem;"
+                         data-ar="تدل الآية على وجوب الزكاة في الأموال المكتسبة والخارجة من الأرض."
+                         data-tr="Ayet, kazanılan mallarda ve topraktan çıkanlarda zekâtın vacip olduğunu gösterir.">
+                        تدل الآية على وجوب الزكاة في الأموال المكتسبة والخارجة من الأرض.
+                    </div>
+                </div>
+
                 <!-- الذهب والفضة -->
                 <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(255, 215, 0, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #d4af37;">
                     <strong style="color: #d4af37; font-size: 1.05rem;">
-                        <span data-ar="1. الأثمان (الذهب والفضة والنقود):" data-tr="1. Nakitler (Altın, Gümüş ve Para):">1. الأثمان (الذهب والفضة والنقود):</span>
+                        <span data-ar="1️⃣ الأثمان (الذهب والفضة والنقود):" data-tr="1️⃣ Nakitler (Altın, Gümüş ve Para):">1️⃣ الأثمان (الذهب والفضة والنقود):</span>
                     </strong>
                     <p style="margin-top: 0.5rem; line-height: 1.8;" 
-                       data-ar="تشمل العملات الورقية والمعدنية والرصيد البنكي. النصاب: 85 جرام ذهب أو 595 جرام فضة." 
-                       data-tr="Kağıt para, madeni para ve banka bakiyesini içerir. Nisap: 85 gr altın veya 595 gr gümüş.">
-                        تشمل العملات الورقية والمعدنية والرصيد البنكي. النصاب: 85 جرام ذهب أو 595 جرام فضة.
+                       data-ar="تشمل الذهب والفضة والعملات الورقية والمعدنية والرصيد البنكي والودائع.<br>
+                       <strong>النصاب:</strong> 85 جراماً من الذهب الخالص، أو 595 جراماً من الفضة.<br>
+                       <strong>المقدار الواجب:</strong> ربع العشر (2.5%).<br>
+                       <strong>الدليل:</strong> قال ﷺ: «هاتوا ربع العشور من كل أربعين درهماً درهم» [رواه أبو داود]" 
+                       data-tr="Altın, gümüş, kağıt para, madeni para, banka bakiyesi ve mevduatı içerir.<br>
+                       <strong>Nisap:</strong> 85 gram saf altın veya 595 gram gümüş.<br>
+                       <strong>Verilecek Miktar:</strong> Dörtte bir öşür (%2.5).<br>
+                       <strong>Delil:</strong> Peygamber ﷺ buyurdu: 'Her kırk dirhemden bir dirhem, dörtte bir öşür verin' [Ebu Davud]">
+                        تشمل الذهب والفضة والعملات الورقية والمعدنية والرصيد البنكي والودائع.<br>
+                        <strong>النصاب:</strong> 85 جراماً من الذهب الخالص، أو 595 جراماً من الفضة.<br>
+                        <strong>المقدار الواجب:</strong> ربع العشر (2.5%).<br>
+                        <strong>الدليل:</strong> قال ﷺ: «هاتوا ربع العشور من كل أربعين درهماً درهم» [رواه أبو داود]
                     </p>
                 </div>
 
                 <!-- السائمة -->
                 <div style="background: linear-gradient(135deg, rgba(121, 85, 72, 0.08), rgba(141, 110, 99, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #795548;">
                     <strong style="color: #795548; font-size: 1.05rem;">
-                        <span data-ar="2. بهيمة الأنعام:" data-tr="2. En'am Hayvanları:">2. بهيمة الأنعام:</span>
+                        <span data-ar="2️⃣ بهيمة الأنعام (الإبل والبقر والغنم):" data-tr="2️⃣ En'am Hayvanları (Deve, Sığır, Koyun):">2️⃣ بهيمة الأنعام (الإبل والبقر والغنم):</span>
                     </strong>
                     <p style="margin-top: 0.5rem; line-height: 1.8;" 
-                       data-ar="الإبل والبقر والغنم، بشرط أن تكون سائمة (ترعى العشب المباح) عند الجمهور." 
-                       data-tr="Deve, sığır ve koyun; cumhura göre saime (otlakta otlayan) olması şartıyla.">
-                        الإبل والبقر والغنم، بشرط أن تكون سائمة (ترعى العشب المباح) عند الجمهور.
+                       data-ar="تجب الزكاة في الإبل والبقر والغنم، بشرط أن تكون سائمة (ترعى العشب المباح أكثر الحول) عند الجمهور.<br>
+                       <strong>نصاب الإبل:</strong> 5 من الإبل.<br>
+                       <strong>نصاب البقر:</strong> 30 من البقر.<br>
+                       <strong>نصاب الغنم:</strong> 40 من الغنم.<br>
+                       <strong>الدليل:</strong> قال تعالى: ﴿وَمِن بَهِيمَةِ الْأَنْعَامِ﴾ وأحاديث النبي ﷺ في تفصيل زكاة الأنعام." 
+                       data-tr="Deve, sığır ve koyunda zekât vaciptir; cumhura göre saime (yılın çoğunda otlakta otlayan) olması şartıyla.<br>
+                       <strong>Deve Nisabı:</strong> 5 deve.<br>
+                       <strong>Sığır Nisabı:</strong> 30 sığır.<br>
+                       <strong>Koyun Nisabı:</strong> 40 koyun.<br>
+                       <strong>Delil:</strong> Allah buyurdu: 'En'am hayvanlarından' ve Peygamber ﷺ'in hayvan zekâtını detaylandıran hadisleri.">
+                        تجب الزكاة في الإبل والبقر والغنم، بشرط أن تكون سائمة (ترعى العشب المباح أكثر الحول) عند الجمهور.<br>
+                        <strong>نصاب الإبل:</strong> 5 من الإبل.<br>
+                        <strong>نصاب البقر:</strong> 30 من البقر.<br>
+                        <strong>نصاب الغنم:</strong> 40 من الغنم.<br>
+                        <strong>الدليل:</strong> قال تعالى: ﴿وَمِن بَهِيمَةِ الْأَنْعَامِ﴾ وأحاديث النبي ﷺ في تفصيل زكاة الأنعام.
                     </p>
                 </div>
 
                 <!-- الخارج من الأرض -->
                 <div style="background: linear-gradient(135deg, rgba(139, 195, 74, 0.08), rgba(156, 204, 101, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #8bc34a;">
                     <strong style="color: #558b2f; font-size: 1.05rem;">
-                        <span data-ar="3. الخارج من الأرض:" data-tr="3. Topraktan Çıkanlar:">3. الخارج من الأرض:</span>
+                        <span data-ar="3️⃣ الخارج من الأرض (الزروع والثمار):" data-tr="3️⃣ Topraktan Çıkanlar (Ekinler ve Meyveler):">3️⃣ الخارج من الأرض (الزروع والثمار):</span>
                     </strong>
                     <p style="margin-top: 0.5rem; line-height: 1.8;" 
-                       data-ar="الحبوب والثمار. قال تعالى: ﴿وآتوا حقه يوم حصاده﴾. وتجب عند اشتداد الحب وبدو الصلاح." 
-                       data-tr="Tahıllar ve meyveler. Allah buyurdu: 'Hasat günü hakkını verin'. Tane sertleşince ve olgunlaşınca vacip olur.">
-                        الحبوب والثمار. قال تعالى: ﴿وآتوا حقه يوم حصاده﴾. وتجب عند اشتداد الحب وبدو الصلاح.
+                       data-ar="تجب الزكاة في الحبوب والثمار التي تُكال وتُدخر كالقمح والشعير والتمر والزبيب.<br>
+                       <strong>النصاب:</strong> خمسة أوسق (حوالي 653 كيلوجرام).<br>
+                       <strong>المقدار الواجب:</strong><br>
+                       • العشر (10%) إذا سُقي بلا كلفة (بالمطر أو الأنهار).<br>
+                       • نصف العشر (5%) إذا سُقي بكلفة (بالآلات والمضخات).<br>
+                       <strong>الدليل:</strong> قال تعالى: ﴿وَآتُوا حَقَّهُ يَوْمَ حَصَادِهِ﴾ [الأنعام: 141]<br>
+                       وقال ﷺ: «فيما سقت السماء والعيون العشر، وفيما سقي بالنضح نصف العشر» [رواه البخاري]" 
+                       data-tr="Buğday, arpa, hurma, üzüm gibi ölçülen ve saklanan tahıl ve meyvelerde zekât vaciptir.<br>
+                       <strong>Nisap:</strong> Beş vesk (yaklaşık 653 kg).<br>
+                       <strong>Verilecek Miktar:</strong><br>
+                       • Öşür (%10) masrafsız sulanırsa (yağmur veya nehirlerle).<br>
+                       • Yarım öşür (%5) masrafla sulanırsa (makine ve pompalarla).<br>
+                       <strong>Delil:</strong> Allah buyurdu: 'Hasat günü hakkını verin' [En'am: 141]<br>
+                       Peygamber ﷺ buyurdu: 'Gökyüzü ve kaynaklarla sulanan için öşür, kova ile sulanan için yarım öşür' [Buhari]">
+                        تجب الزكاة في الحبوب والثمار التي تُكال وتُدخر كالقمح والشعير والتمر والزبيب.<br>
+                        <strong>النصاب:</strong> خمسة أوسق (حوالي 653 كيلوجرام).<br>
+                        <strong>المقدار الواجب:</strong><br>
+                        • العشر (10%) إذا سُقي بلا كلفة (بالمطر أو الأنهار).<br>
+                        • نصف العشر (5%) إذا سُقي بكلفة (بالآلات والمضخات).<br>
+                        <strong>الدليل:</strong> قال تعالى: ﴿وَآتُوا حَقَّهُ يَوْمَ حَصَادِهِ﴾ [الأنعام: 141]<br>
+                        وقال ﷺ: «فيما سقت السماء والعيون العشر، وفيما سقي بالنضح نصف العشر» [رواه البخاري]
                     </p>
                 </div>
 
                 <!-- عروض التجارة -->
                 <div style="background: linear-gradient(135deg, rgba(156, 39, 176, 0.08), rgba(171, 71, 188, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #9c27b0;">
                     <strong style="color: #9c27b0; font-size: 1.05rem;">
-                        <span data-ar="4. عروض التجارة:" data-tr="4. Ticaret Malları:">4. عروض التجارة:</span>
+                        <span data-ar="4️⃣ عروض التجارة:" data-tr="4️⃣ Ticaret Malları:">4️⃣ عروض التجارة:</span>
                     </strong>
                     <p style="margin-top: 0.5rem; line-height: 1.8;" 
-                       data-ar="كل ما أعد للبيع والشراء بقصد الربح. تُقوم عند الحول وتخرج زكاتها 2.5%." 
-                       data-tr="Kâr amacıyla alım satım için hazırlanan her şey. Yıl sonunda değerlenir ve %2.5 zekâtı verilir.">
-                        كل ما أعد للبيع والشراء بقصد الربح. تُقوم عند الحول وتخرج زكاتها 2.5%.
+                       data-ar="كل ما أُعد للبيع والشراء بقصد الربح من عقارات وسيارات وبضائع وأسهم تجارية.<br>
+                       <strong>النصاب:</strong> ما يساوي قيمة 85 جراماً من الذهب.<br>
+                       <strong>المقدار الواجب:</strong> ربع العشر (2.5%) من قيمة البضاعة عند نهاية الحول.<br>
+                       <strong>الطريقة:</strong> تُقوَّم البضاعة بسعر السوق عند تمام الحول، ثم يُخرج 2.5% من قيمتها.<br>
+                       <strong>الدليل:</strong> قال تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا أَنفِقُوا مِن طَيِّبَاتِ مَا كَسَبْتُمْ﴾ [البقرة: 267]" 
+                       data-tr="Gayrimenkul, araç, mal ve ticari hisse gibi kâr amacıyla alım satım için hazırlanan her şey.<br>
+                       <strong>Nisap:</strong> 85 gram altın değerine eşit olan.<br>
+                       <strong>Verilecek Miktar:</strong> Yıl sonunda malın değerinin dörtte bir öşrü (%2.5).<br>
+                       <strong>Yöntem:</strong> Yıl dolunca mal piyasa fiyatıyla değerlenir, sonra değerinin %2.5'i verilir.<br>
+                       <strong>Delil:</strong> Allah buyurdu: 'Ey iman edenler! Kazandıklarınızın temiz olanından infak edin' [Bakara: 267]">
+                        كل ما أُعد للبيع والشراء بقصد الربح من عقارات وسيارات وبضائع وأسهم تجارية.<br>
+                        <strong>النصاب:</strong> ما يساوي قيمة 85 جراماً من الذهب.<br>
+                        <strong>المقدار الواجب:</strong> ربع العشر (2.5%) من قيمة البضاعة عند نهاية الحول.<br>
+                        <strong>الطريقة:</strong> تُقوَّم البضاعة بسعر السوق عند تمام الحول، ثم يُخرج 2.5% من قيمتها.<br>
+                        <strong>الدليل:</strong> قال تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا أَنفِقُوا مِن طَيِّبَاتِ مَا كَسَبْتُمْ﴾ [البقرة: 267]
                     </p>
                 </div>
 
+                <!-- الركاز والمعادن -->
+                <div style="background: linear-gradient(135deg, rgba(96, 125, 139, 0.08), rgba(69, 90, 100, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #607d8b;">
+                    <strong style="color: #455a64; font-size: 1.05rem;">
+                        <span data-ar="5️⃣ الركاز والمعادن:" data-tr="5️⃣ Define ve Madenler:">5️⃣ الركاز والمعادن:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="<strong>الركاز:</strong> هو المال المدفون في الأرض من الجاهلية، وفيه الخُمس (20%) فوراً بلا شرط نصاب ولا حول.<br>
+                       <strong>المعادن:</strong> ما يُستخرج من الأرض كالذهب والفضة والنحاس، وفيها خلاف بين العلماء:<br>
+                       • الجمهور: فيها الزكاة إذا بلغت النصاب.<br>
+                       • الحنفية: لا زكاة فيها إلا إذا بلغت نصاب الذهب أو الفضة وحال عليها الحول.<br>
+                       <strong>الدليل:</strong> قال ﷺ: «وفي الركاز الخمس» [متفق عليه]" 
+                       data-tr="<strong>Define:</strong> Cahiliye döneminden toprağa gömülmüş maldır, hemen beşte biri (%20) verilir, nisap ve yıl şartı yoktur.<br>
+                       <strong>Madenler:</strong> Altın, gümüş, bakır gibi topraktan çıkarılanlar, âlimler arasında ihtilaf var:<br>
+                       • Cumhur: Nisaba ulaşırsa zekât vardır.<br>
+                       • Hanefi: Altın veya gümüş nisabına ulaşıp yıl dolmadıkça zekât yoktur.<br>
+                       <strong>Delil:</strong> Peygamber ﷺ buyurdu: 'Definede beşte bir vardır' [Buhari ve Müslim]">
+                        <strong>الركاز:</strong> هو المال المدفون في الأرض من الجاهلية، وفيه الخُمس (20%) فوراً بلا شرط نصاب ولا حول.<br>
+                        <strong>المعادن:</strong> ما يُستخرج من الأرض كالذهب والفضة والنحاس، وفيها خلاف بين العلماء:<br>
+                        • الجمهور: فيها الزكاة إذا بلغت النصاب.<br>
+                        • الحنفية: لا زكاة فيها إلا إذا بلغت نصاب الذهب أو الفضة وحال عليها الحول.<br>
+                        <strong>الدليل:</strong> قال ﷺ: «وفي الركاز الخمس» [متفق عليه]
+                    </p>
+                </div>
+
+                <!-- جدول ملخص -->
+                <div style="background: linear-gradient(135deg, rgba(33, 150, 243, 0.05), rgba(21, 101, 192, 0.05)); padding: 1rem; border-radius: 8px; margin-top: 1rem; border: 2px solid #2196f3;">
+                    <h4 style="color: #2196f3; margin-bottom: 1rem; text-align: center;">
+                        <span data-ar="📊 جدول ملخص أنصبة الزكاة ومقاديرها" data-tr="📊 Zekât Nisap ve Miktarları Özet Tablosu">📊 جدول ملخص أنصبة الزكاة ومقاديرها</span>
+                    </h4>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 0.5rem;">
+                        <strong style="color: #d4af37;">💰 <span data-ar="النقود والذهب والفضة" data-tr="Para, Altın ve Gümüş">النقود والذهب والفضة</span></strong><br>
+                        <span data-ar="النصاب: 85 جم ذهب / 595 جم فضة | المقدار: 2.5%" data-tr="Nisap: 85 gr altın / 595 gr gümüş | Miktar: %2.5">النصاب: 85 جم ذهب / 595 جم فضة | المقدار: 2.5%</span>
+                    </div>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 0.5rem;">
+                        <strong style="color: #795548;">🐪 <span data-ar="الإبل" data-tr="Deve">الإبل</span></strong><br>
+                        <span data-ar="النصاب: 5 من الإبل | المقدار: شاة واحدة" data-tr="Nisap: 5 deve | Miktar: 1 koyun">النصاب: 5 من الإبل | المقدار: شاة واحدة</span>
+                    </div>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 0.5rem;">
+                        <strong style="color: #795548;">🐄 <span data-ar="البقر" data-tr="Sığır">البقر</span></strong><br>
+                        <span data-ar="النصاب: 30 من البقر | المقدار: تبيع أو تبيعة" data-tr="Nisap: 30 sığır | Miktar: 1 yaşında dana">النصاب: 30 من البقر | المقدار: تبيع أو تبيعة</span>
+                    </div>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 0.5rem;">
+                        <strong style="color: #795548;">🐑 <span data-ar="الغنم" data-tr="Koyun">الغنم</span></strong><br>
+                        <span data-ar="النصاب: 40 من الغنم | المقدار: شاة واحدة" data-tr="Nisap: 40 koyun | Miktar: 1 koyun">النصاب: 40 من الغنم | المقدار: شاة واحدة</span>
+                    </div>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 0.5rem;">
+                        <strong style="color: #8bc34a;">🌾 <span data-ar="الزروع والثمار" data-tr="Ekin ve Meyveler">الزروع والثمار</span></strong><br>
+                        <span data-ar="النصاب: 653 كجم | المقدار: 10% (مطر) أو 5% (سقي)" data-tr="Nisap: 653 kg | Miktar: %10 (yağmur) veya %5 (sulama)">النصاب: 653 كجم | المقدار: 10% (مطر) أو 5% (سقي)</span>
+                    </div>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 6px;">
+                        <strong style="color: #9c27b0;">🏪 <span data-ar="عروض التجارة" data-tr="Ticaret Malları">عروض التجارة</span></strong><br>
+                        <span data-ar="النصاب: قيمة 85 جم ذهب | المقدار: 2.5%" data-tr="Nisap: 85 gr altın değeri | Miktar: %2.5">النصاب: قيمة 85 جم ذهب | المقدار: 2.5%</span>
+                    </div>
+                </div>
+
                 <div class="action-buttons" style="margin-top: 1rem;">
-                    <button class="action-btn copy-btn" onclick="copyText(this)"></button>
-                    <button class="action-btn share-btn" onclick="shareText(this)"></button>
+                    <button class="action-btn copy-btn" onclick="copyText(this)" 
+                            data-ar="نسخ" data-tr="Kopyala"></button>
+                    <button class="action-btn share-btn" onclick="shareText(this)" 
+                            data-ar="مشاركة" data-tr="Paylaş"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الحكم 4: مصارف الزكاة -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>
+                    <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">4</span>
+                    <span data-ar="🎯 مصارف الزكاة الثمانية" data-tr="🎯 Zekâtın Sekiz Masrafı">🎯 مصارف الزكاة الثمانية</span>
+                </span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                
+                <!-- آية مصارف الزكاة -->
+                <div style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.08), rgba(65, 184, 166, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-right: 4px solid var(--primary-color);">
+                    <h4 style="color: var(--primary-color); margin-bottom: 0.75rem;" data-ar="📖 آية مصارف الزكاة:" data-tr="📖 Zekât Masrafları Ayeti:">📖 آية مصارف الزكاة:</h4>
+                    
+                    <div class="quran-text" style="font-family: 'Amiri', serif; font-size: 1.3rem; color: var(--text-color); margin-bottom: 0.5rem; text-align: center; line-height: 2;">
+                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>
+                        ﴿إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا وَالْمُؤَلَّفَةِ قُلُوبُهُمْ وَفِي الرِّقَابِ وَالْغَارِمِينَ وَفِي سَبِيلِ اللَّهِ وَابْنِ السَّبِيلِ ۖ فَرِيضَةً مِّنَ اللَّهِ ۗ وَاللَّهُ عَلِيمٌ حَكِيمٌ﴾
+                    </div>
+                    <div class="verse-ref" style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-bottom: 0.8rem;">
+                        <span data-ar="[التوبة: 60]" data-tr="[Tevbe: 60]">[التوبة: 60]</span>
+                    </div>
+                    
+                    <div class="explanation" style="font-size: 0.95rem; line-height: 1.6; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 0.5rem;"
+                         data-ar="حددت هذه الآية الكريمة مصارف الزكاة الثمانية حصراً، فلا يجوز صرفها لغيرهم."
+                         data-tr="Bu mübarek ayet zekâtın sekiz masrafını kesin olarak belirlemiştir, bunların dışına verilemez.">
+                        حددت هذه الآية الكريمة مصارف الزكاة الثمانية حصراً، فلا يجوز صرفها لغيرهم.
+                    </div>
+                </div>
+
+                <!-- المصارف الثمانية -->
+                <h4 style="color: var(--primary-color); margin: 1rem 0;" data-ar="المصارف الثمانية بالتفصيل:" data-tr="Sekiz Masraf Detaylı:">المصارف الثمانية بالتفصيل:</h4>
+
+                <!-- 1. الفقراء -->
+                <div style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.08), rgba(39, 174, 96, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #2ecc71;">
+                    <strong style="color: #2ecc71; font-size: 1.05rem;">
+                        <span data-ar="1️⃣ الفقراء:" data-tr="1️⃣ Fakirler:">1️⃣ الفقراء:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="هم الذين لا يملكون شيئاً، أو يملكون أقل من نصف كفايتهم. وهم أشد حاجة من المساكين عند الحنفية، وأخف حالاً عند الجمهور."
+                       data-tr="Hiçbir şeye sahip olmayanlar veya ihtiyaçlarının yarısından azına sahip olanlardır. Hanefilere göre miskinlerden daha muhtaçtırlar, cumhura göre ise daha az muhtaçtırlar.">
+                        هم الذين لا يملكون شيئاً، أو يملكون أقل من نصف كفايتهم. وهم أشد حاجة من المساكين عند الحنفية، وأخف حالاً عند الجمهور.
+                    </p>
+                </div>
+
+                <!-- 2. المساكين -->
+                <div style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.08), rgba(41, 128, 185, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #3498db;">
+                    <strong style="color: #3498db; font-size: 1.05rem;">
+                        <span data-ar="2️⃣ المساكين:" data-tr="2️⃣ Miskinler:">2️⃣ المساكين:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="هم الذين يملكون نصف كفايتهم أو أكثر، لكنه لا يكفيهم. قال ﷺ: «ليس المسكين الذي ترده التمرة والتمرتان، ولكن المسكين الذي لا يجد غنى يغنيه» [متفق عليه]"
+                       data-tr="İhtiyaçlarının yarısına veya daha fazlasına sahip olup yetmeyen kimselerdir. Peygamber ﷺ buyurdu: 'Miskin, bir iki hurma ile geri çevrilen değildir, asıl miskin kendisini zenginleştirecek bir şey bulamayandır' [Buhari ve Müslim]">
+                        هم الذين يملكون نصف كفايتهم أو أكثر، لكنه لا يكفيهم. قال ﷺ: «ليس المسكين الذي ترده التمرة والتمرتان، ولكن المسكين الذي لا يجد غنى يغنيه» [متفق عليه]
+                    </p>
+                </div>
+
+                <!-- 3. العاملون عليها -->
+                <div style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.08), rgba(142, 68, 173, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #9b59b6;">
+                    <strong style="color: #9b59b6; font-size: 1.05rem;">
+                        <span data-ar="3️⃣ العاملون عليها:" data-tr="3️⃣ Zekât Görevlileri:">3️⃣ العاملون عليها:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="هم الذين يُعينهم ولي الأمر لجمع الزكاة وتوزيعها، فيُعطون منها أجرة عملهم ولو كانوا أغنياء."
+                       data-tr="Devlet başkanı tarafından zekât toplamak ve dağıtmak için görevlendirilen kimselerdir, zengin olsalar bile çalışmalarının karşılığını alırlar.">
+                        هم الذين يُعينهم ولي الأمر لجمع الزكاة وتوزيعها، فيُعطون منها أجرة عملهم ولو كانوا أغنياء.
+                    </p>
+                </div>
+
+                <!-- 4. المؤلفة قلوبهم -->
+                <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.08), rgba(211, 84, 0, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #f39c12;">
+                    <strong style="color: #f39c12; font-size: 1.05rem;">
+                        <span data-ar="4️⃣ المؤلفة قلوبهم:" data-tr="4️⃣ Kalpleri İslam'a Isındırılanlar:">4️⃣ المؤلفة قلوبهم:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="هم السادة والرؤساء الذين يُرجى إسلامهم، أو يُرجى بعطيتهم قوة إيمانهم، أو كف شرهم عن المسلمين، أو جلب نفعهم في الدفاع عن المسلمين."
+                       data-tr="Müslüman olmaları, imanlarının güçlenmesi, Müslümanlara zarar vermelerinin önlenmesi veya Müslümanları savunmada faydalı olmaları umulan lider ve reislerdir.">
+                        هم السادة والرؤساء الذين يُرجى إسلامهم، أو يُرجى بعطيتهم قوة إيمانهم، أو كف شرهم عن المسلمين، أو جلب نفعهم في الدفاع عن المسلمين.
+                    </p>
+                </div>
+
+                <!-- 5. في الرقاب -->
+                <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.08), rgba(192, 57, 43, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #e74c3c;">
+                    <strong style="color: #e74c3c; font-size: 1.05rem;">
+                        <span data-ar="5️⃣ في الرقاب (تحرير العبيد):" data-tr="5️⃣ Köleleri Azat Etmek:">5️⃣ في الرقاب (تحرير العبيد):</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="يشمل المكاتبين (العبيد الذين اتفقوا مع سادتهم على شراء حريتهم)، وفك الأسرى المسلمين. وفي العصر الحديث: يُصرف لإنقاذ المسلمين من الأسر والاضطهاد."
+                       data-tr="Efendileriyle özgürlüklerini satın almak için anlaşan köleleri (mükateb) ve Müslüman esirleri kurtarmayı içerir. Modern çağda: Müslümanları esaret ve zulümden kurtarmak için harcanır.">
+                        يشمل المكاتبين (العبيد الذين اتفقوا مع سادتهم على شراء حريتهم)، وفك الأسرى المسلمين. وفي العصر الحديث: يُصرف لإنقاذ المسلمين من الأسر والاضطهاد.
+                    </p>
+                </div>
+
+                <!-- 6. الغارمون -->
+                <div style="background: linear-gradient(135deg, rgba(0, 150, 136, 0.08), rgba(0, 121, 107, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #009688;">
+                    <strong style="color: #00796b; font-size: 1.05rem;">
+                        <span data-ar="6️⃣ الغارمون:" data-tr="6️⃣ Borçlular:">6️⃣ الغارمون:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="هم المدينون الذين تحملوا ديوناً ولم يستطيعوا سدادها، وينقسمون إلى قسمين:<br>
+                       • <strong>غارم لنفسه:</strong> من استدان لحاجته المباحة ولم يستطع السداد.<br>
+                       • <strong>غارم لإصلاح ذات البين:</strong> من تحمل ديناً للإصلاح بين الناس."
+                       data-tr="Borç yüklenip ödeyemeyenlerdir, iki kısma ayrılır:<br>
+                       • <strong>Kendisi için borçlu:</strong> Mubah ihtiyacı için borçlanıp ödeyemeyen.<br>
+                       • <strong>İnsanları barıştırmak için borçlu:</strong> İnsanlar arasını düzeltmek için borç yüklenen.">
+                        هم المدينون الذين تحملوا ديوناً ولم يستطيعوا سدادها، وينقسمون إلى قسمين:<br>
+                        • <strong>غارم لنفسه:</strong> من استدان لحاجته المباحة ولم يستطع السداد.<br>
+                        • <strong>غارم لإصلاح ذات البين:</strong> من تحمل ديناً للإصلاح بين الناس.
+                    </p>
+                </div>
+
+                <!-- 7. في سبيل الله -->
+                <div style="background: linear-gradient(135deg, rgba(76, 175, 80, 0.08), rgba(56, 142, 60, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #4caf50;">
+                    <strong style="color: #388e3c; font-size: 1.05rem;">
+                        <span data-ar="7️⃣ في سبيل الله:" data-tr="7️⃣ Allah Yolunda:">7️⃣ في سبيل الله:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="المراد بهم الغزاة والمجاهدون في سبيل الله الذين لا راتب لهم من بيت المال. ويُلحق بهم في العصر الحديث: الدعاة إلى الله، وطلبة العلم الشرعي المتفرغون، والمشاريع الخيرية التي تخدم الإسلام."
+                       data-tr="Devlet hazinesinden maaş almayan Allah yolunda savaşan ve cihad edenlerdir. Modern çağda bunlara eklenir: Allah'a davet edenler, tam zamanlı şer'i ilim öğrencileri ve İslam'a hizmet eden hayır projeleri.">
+                        المراد بهم الغزاة والمجاهدون في سبيل الله الذين لا راتب لهم من بيت المال. ويُلحق بهم في العصر الحديث: الدعاة إلى الله، وطلبة العلم الشرعي المتفرغون، والمشاريع الخيرية التي تخدم الإسلام.
+                    </p>
+                </div>
+
+                <!-- 8. ابن السبيل -->
+                <div style="background: linear-gradient(135deg, rgba(255, 152, 0, 0.08), rgba(245, 124, 0, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-right: 4px solid #ff9800;">
+                    <strong style="color: #f57c00; font-size: 1.05rem;">
+                        <span data-ar="8️⃣ ابن السبيل:" data-tr="8️⃣ Yolcu:">8️⃣ ابن السبيل:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="هو المسافر المنقطع عن بلده، الذي نفدت نفقته ولم يجد ما يوصله إلى بلده، فيُعطى من الزكاة ما يكفيه للوصول إلى بلده، ولو كان غنياً في بلده."
+                       data-tr="Memleketinden uzakta, yol masrafı bitmiş ve memleketine dönecek bir şey bulamayan yolcudur. Memleketinde zengin olsa bile, memleketine ulaşmaya yetecek kadar zekâttan verilir.">
+                        هو المسافر المنقطع عن بلده، الذي نفدت نفقته ولم يجد ما يوصله إلى بلده، فيُعطى من الزكاة ما يكفيه للوصول إلى بلده، ولو كان غنياً في بلده.
+                    </p>
+                </div>
+
+                <!-- من لا يجوز دفع الزكاة لهم -->
+                <div style="background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(229, 57, 53, 0.1)); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; border: 2px solid #f44336;">
+                    <h4 style="color: #d32f2f; margin-bottom: 1rem; text-align: center;">
+                        <span data-ar="⛔ من لا يجوز دفع الزكاة لهم" data-tr="⛔ Zekât Verilmeyenler">⛔ من لا يجوز دفع الزكاة لهم</span>
+                    </h4>
+                    
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 8px; margin-bottom: 6px; background: rgba(255,255,255,0.7); border-radius: 6px; border-right: 3px solid #f44336;">
+                            <strong data-ar="1️⃣ الأغنياء والأقوياء المكتسبون" data-tr="1️⃣ Zenginler ve Kazanç Sahibi Güçlüler">1️⃣ الأغنياء والأقوياء المكتسبون</strong>
+                            <span data-ar=" - قال ﷺ: «لا حظ فيها لغني ولا لقوي مكتسب»" data-tr=" - Peygamber ﷺ: 'Onda zengin ve kazanç sahibi güçlü için pay yoktur'"> - قال ﷺ: «لا حظ فيها لغني ولا لقوي مكتسب»</span>
+                        </li>
+                        <li style="padding: 8px; margin-bottom: 6px; background: rgba(255,255,255,0.7); border-radius: 6px; border-right: 3px solid #f44336;">
+                            <strong data-ar="2️⃣ الأصول والفروع" data-tr="2️⃣ Usul ve Füru">2️⃣ الأصول والفروع</strong>
+                            <span data-ar=" (الآباء والأمهات والأجداد، والأبناء وأبناء الأبناء)" data-tr=" (Anne, baba, dedeler; çocuklar ve torunlar)"> (الآباء والأمهات والأجداد، والأبناء وأبناء الأبناء)</span>
+                        </li>
+                        <li style="padding: 8px; margin-bottom: 6px; background: rgba(255,255,255,0.7); border-radius: 6px; border-right: 3px solid #f44336;">
+                            <strong data-ar="3️⃣ الزوجة" data-tr="3️⃣ Eş">3️⃣ الزوجة</strong>
+                            <span data-ar=" - لأن نفقتها واجبة على الزوج" data-tr=" - Çünkü nafakası kocaya vaciptir"> - لأن نفقتها واجبة على الزوج</span>
+                        </li>
+                        <li style="padding: 8px; margin-bottom: 6px; background: rgba(255,255,255,0.7); border-radius: 6px; border-right: 3px solid #f44336;">
+                            <strong data-ar="4️⃣ آل بيت النبي ﷺ" data-tr="4️⃣ Peygamber ﷺ'in Ehli Beyt'i">4️⃣ آل بيت النبي ﷺ</strong>
+                            <span data-ar=" (بنو هاشم وبنو المطلب)" data-tr=" (Haşimoğulları ve Muttalip oğulları)"> (بنو هاشم وبنو المطلب)</span>
+                        </li>
+                        <li style="padding: 8px; background: rgba(255,255,255,0.7); border-radius: 6px; border-right: 3px solid #f44336;">
+                            <strong data-ar="5️⃣ الكفار" data-tr="5️⃣ Kâfirler">5️⃣ الكفار</strong>
+                            <span data-ar=" - إلا المؤلفة قلوبهم" data-tr=" - Kalpleri İslam'a ısındırılanlar hariç"> - إلا المؤلفة قلوبهم</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="action-buttons" style="margin-top: 1rem;">
+                    <button class="action-btn copy-btn" onclick="copyText(this)" 
+                            data-ar="نسخ" data-tr="Kopyala"></button>
+                    <button class="action-btn share-btn" onclick="shareText(this)" 
+                            data-ar="مشاركة" data-tr="Paylaş"></button>
                 </div>
             </div>
         </div>
@@ -17045,6 +17377,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
