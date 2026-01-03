@@ -244,642 +244,80 @@
 
 
 
-<!-- ============================================ -->
-<!-- صفحة الأحكام الفقهية - النسخة الكاملة -->
-<!-- ============================================ -->
+/* ============================================ */
+/* تنسيقات صفحة الفقه (Fiqh Page) المطورة */
+/* ============================================ */
 
-/* ========== الأنماط الأساسية ========== */
-.page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    direction: rtl;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-}
-
-[dir="ltr"] .page {
-    direction: ltr;
-}
-
-.card {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+/* توحيد تصميم الأكوردين مع الأسئلة الشائعة */
+#fiqhPage .accordion {
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-sm);
     overflow: hidden;
-    margin-bottom: 30px;
+    transition: var(--transition);
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
 }
 
-.card-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 30px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.card-header svg {
-    width: 40px;
-    height: 40px;
-    fill: white;
-}
-
-.card-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin: 0;
-}
-
-.subtitle {
-    padding: 20px 30px;
-    background: #f8f9fa;
-    border-bottom: 3px solid #667eea;
-    font-size: 16px;
-    color: #555;
-    line-height: 1.8;
-}
-
-/* ========== الأكورديون ========== */
-.accordion {
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.accordion-header {
-    padding: 20px 30px;
-    background: #f8f9fa;
+#fiqhPage .accordion-header {
+    background: var(--card-bg);
+    padding: 1.1rem 1.2rem;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    font-weight: 700;
+    font-size: 1.1rem;
     user-select: none;
+    border-bottom: 1px solid var(--border-color);
+    gap: 0.5rem;
 }
 
-.accordion-header:hover {
-    background: #e9ecef;
-    color: #667eea;
+#fiqhPage .accordion-header:hover {
+    background: var(--bg-color);
 }
 
-.accordion-icon {
-    transition: transform 0.3s ease;
-    font-size: 14px;
-    color: #667eea;
-}
-
-.accordion.active .accordion-icon {
-    transform: rotate(180deg);
-}
-
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease;
-    padding: 0 30px;
-    background: white;
-}
-
-.accordion.active .accordion-content {
-    max-height: 10000px;
-    padding: 30px;
-}
-
-/* ========== صناديق المذاهب مع العلامات الدائرية ========== */
-.madhab-box {
-    margin: 20px 0;
-    padding: 20px;
-    border-radius: 12px;
-    border-right: 5px solid;
-    position: relative;
-    padding-right: 50px;
-}
-
-[dir="ltr"] .madhab-box {
-    border-right: none;
-    border-left: 5px solid;
-    padding-right: 20px;
-    padding-left: 50px;
-}
-
-/* علامة دائرية للمذهب */
-.madhab-box::before {
-    content: '';
-    position: absolute;
-    right: 15px;
-    top: 20px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-[dir="ltr"] .madhab-box::before {
-    right: auto;
-    left: 15px;
-}
-
-/* 🟢 الحنفية - أخضر */
-.madhab-box.hanafi {
-    background: #e8f5e9;
-    border-color: #4caf50;
-}
-
-.madhab-box.hanafi::before {
-    background: #4caf50;
-}
-
-.madhab-box.hanafi h5, .madhab-box.hanafi h6 {
-    color: #2e7d32;
-}
-
-/* 🔵 المالكية - أزرق */
-.madhab-box.maliki {
-    background: #e3f2fd;
-    border-color: #2196f3;
-}
-
-.madhab-box.maliki::before {
-    background: #2196f3;
-}
-
-.madhab-box.maliki h5, .madhab-box.maliki h6 {
-    color: #1565c0;
-}
-
-/* 🔴 الشافعية - أحمر */
-.madhab-box.shafii {
-    background: #ffebee;
-    border-color: #f44336;
-}
-
-.madhab-box.shafii::before {
-    background: #f44336;
-}
-
-.madhab-box.shafii h5, .madhab-box.shafii h6 {
-    color: #c62828;
-}
-
-/* 🟠 الحنابلة - برتقالي */
-.madhab-box.hanbali {
-    background: #fff3e0;
-    border-color: #ff9800;
-}
-
-.madhab-box.hanbali::before {
-    background: #ff9800;
-}
-
-.madhab-box.hanbali h5, .madhab-box.hanbali h6 {
-    color: #e65100;
-}
-
-/* ========== صندوق الاتفاق ========== */
-.madhab-agreement {
-    background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
-    padding: 15px 20px;
-    border-radius: 10px;
-    margin: 15px 0;
-    border: 2px solid #4caf50;
-    font-weight: bold;
-}
-
-/* ========== الصناديق المختلفة ========== */
-.info-box {
-    background: #e3f2fd;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-    border-right: 4px solid #2196f3;
-}
-
-[dir="ltr"] .info-box {
-    border-right: none;
-    border-left: 4px solid #2196f3;
-}
-
-.warning-box {
-    background: #fff3e0;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-    border-right: 4px solid #ff9800;
-}
-
-[dir="ltr"] .warning-box {
-    border-right: none;
-    border-left: 4px solid #ff9800;
-}
-
-.tip-box {
-    background: #f3e5f5;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-    border-right: 4px solid #9c27b0;
-}
-
-[dir="ltr"] .tip-box {
-    border-right: none;
-    border-left: 4px solid #9c27b0;
-}
-
-.quran-box {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+#fiqhPage .accordion-header.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-    font-size: 18px;
-    line-height: 2;
-    text-align: center;
 }
 
-.hadith-box {
-    background: #fff8e1;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-    border-right: 4px solid #ffc107;
-    font-size: 16px;
+/* تنسيق النصوص القرآنية */
+#fiqhPage .quran-text {
+    font-family: 'Amiri', 'Traditional Arabic', serif;
     line-height: 1.8;
-}
-
-[dir="ltr"] .hadith-box {
-    border-right: none;
-    border-left: 4px solid #ffc107;
-}
-
-/* شرح الحديث بالتركية - يظهر فقط باللغة التركية */
-.hadith-explanation {
-    background: #fffbf0;
-    padding: 15px;
-    margin-top: 15px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
     border-radius: 8px;
-    border-right: 3px solid #ffb300;
-    font-size: 14px;
-    color: #555;
+    border: 1px solid rgba(13, 124, 102, 0.2);
+}
+
+[data-theme="dark"] #fiqhPage .quran-text {
+    background: rgba(0, 0, 0, 0.2);
+    color: #e8f5f1;
+}
+
+/* تنسيق الشرح والترجمة */
+#fiqhPage .explanation {
+    color: var(--text-secondary);
     font-style: italic;
 }
 
-[dir="ltr"] .hadith-explanation {
-    border-right: none;
-    border-left: 3px solid #ffb300;
+/* دعم الوضع الليلي للصناديق الملونة */
+[data-theme="dark"] #fiqhPage div[style*="background: linear-gradient"] {
+    /* زيادة الشفافية في الوضع الليلي لتقليل السطوع */
+    opacity: 0.9;
 }
 
-/* إخفاء الشرح بالعربية */
-html[lang="ar"] .hadith-explanation,
-html:not([lang="tr"]) .hadith-explanation {
-    display: none;
+/* تنسيق القوائم المخصصة */
+#fiqhPage .custom-list li {
+    background: var(--bg-color) !important;
+    color: var(--text-color);
+    border-color: var(--border-color);
 }
 
-/* شرح الآية بالتركية - يظهر فقط باللغة التركية */
-.ayah-explanation {
-    background: #f0f4ff;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 8px;
-    border-right: 3px solid #5c6bc0;
-    font-size: 14px;
-    color: #555;
-    font-style: italic;
-}
 
-[dir="ltr"] .ayah-explanation {
-    border-right: none;
-    border-left: 3px solid #5c6bc0;
-}
-
-/* إخفاء الشرح بالعربية */
-html[lang="ar"] .ayah-explanation,
-html:not([lang="tr"]) .ayah-explanation {
-    display: none;
-}
-
-.condition-box {
-    background: #f5f5f5;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 15px 0;
-}
-
-.masrif-box {
-    background: #fafafa;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-    border: 2px solid #e0e0e0;
-}
-
-.example-box {
-    background: #e8f5e9;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-    border: 2px dashed #4caf50;
-}
-
-.time-box {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-    border: 2px solid #e0e0e0;
-}
-
-.time-item {
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 8px;
-}
-
-.time-item.best {
-    background: #e8f5e9;
-    border-right: 4px solid #4caf50;
-}
-
-[dir="ltr"] .time-item.best {
-    border-right: none;
-    border-left: 4px solid #4caf50;
-}
-
-.time-item.allowed {
-    background: #e3f2fd;
-    border-right: 4px solid #2196f3;
-}
-
-[dir="ltr"] .time-item.allowed {
-    border-right: none;
-    border-left: 4px solid #2196f3;
-}
-
-.time-item.makruh {
-    background: #fff3e0;
-    border-right: 4px solid #ff9800;
-}
-
-[dir="ltr"] .time-item.makruh {
-    border-right: none;
-    border-left: 4px solid #ff9800;
-}
-
-.time-item.haram {
-    background: #ffebee;
-    border-right: 4px solid #f44336;
-}
-
-[dir="ltr"] .time-item.haram {
-    border-right: none;
-    border-left: 4px solid #f44336;
-}
-
-/* ========== الجداول ========== */
-.table-container {
-    overflow-x: auto;
-    margin: 20px 0;
-}
-
-.zakat-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.zakat-table thead {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.zakat-table th, .zakat-table td {
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.zakat-table tbody tr:hover {
-    background: #f5f5f5;
-}
-
-.zakat-table .total-row {
-    background: #e3f2fd;
-    font-weight: bold;
-}
-
-.zakat-table .zakat-row {
-    background: #e8f5e9;
-    font-weight: bold;
-    color: #2e7d32;
-}
-
-/* ========== القوائم ========== */
-.custom-list {
-    list-style: none;
-    padding-right: 0;
-}
-
-[dir="ltr"] .custom-list {
-    padding-left: 0;
-}
-
-.custom-list li {
-    padding: 10px 0 10px 30px;
-    position: relative;
-    line-height: 1.8;
-}
-
-[dir="ltr"] .custom-list li {
-    padding: 10px 30px 10px 0;
-}
-
-.custom-list li::before {
-    content: '✓';
-    position: absolute;
-    right: 0;
-    color: #4caf50;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-[dir="ltr"] .custom-list li::before {
-    right: auto;
-    left: 0;
-}
-
-/* ========== العناوين ========== */
-h4 {
-    color: #667eea;
-    font-size: 22px;
-    margin: 30px 0 15px 0;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #667eea;
-}
-
-h5 {
-    color: #333;
-    font-size: 18px;
-    margin: 20px 0 10px 0;
-}
-
-h6 {
-    color: #555;
-    font-size: 16px;
-    margin: 15px 0 10px 0;
-}
-
-/* ========== الأزرار ========== */
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 2px dashed #e0e0e0;
-    justify-content: center;
-}
-
-.action-btn {
-    padding: 12px 30px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.copy-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.copy-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.copy-btn::before {
-    content: '📋';
-}
-
-.share-btn {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
-}
-
-.share-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
-}
-
-.share-btn::before {
-    content: '🔗';
-}
-
-/* ========== تنسيقات إضافية ========== */
-strong {
-    color: #667eea;
-    font-weight: bold;
-}
-
-em {
-    color: #764ba2;
-    font-style: italic;
-}
-
-p {
-    line-height: 1.8;
-    margin: 15px 0;
-}
-
-/* ========== الاستجابة للشاشات الصغيرة ========== */
-@media (max-width: 768px) {
-    .page {
-        padding: 10px;
-    }
-    
-    .card-header {
-        padding: 20px;
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .card-title {
-        font-size: 22px;
-    }
-    
-    .subtitle {
-        padding: 15px;
-        font-size: 14px;
-    }
-    
-    .accordion-header {
-        padding: 15px;
-        font-size: 16px;
-    }
-    
-    .accordion-content {
-        padding: 0 15px;
-    }
-    
-    .accordion.active .accordion-content {
-        padding: 20px 15px;
-    }
-    
-    .madhab-box {
-        padding: 15px;
-        padding-right: 40px;
-    }
-    
-    [dir="ltr"] .madhab-box {
-        padding-left: 40px;
-    }
-    
-    .action-buttons {
-        flex-direction: column;
-    }
-    
-    .action-btn {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .zakat-table {
-        font-size: 14px;
-    }
-    
-    .zakat-table th, .zakat-table td {
-        padding: 10px 5px;
-    }
-}
-
-/* ========== طباعة ========== */
-@media print {
-    .action-buttons {
-        display: none;
-    }
-    
-    .accordion-content {
-        max-height: none !important;
-        padding: 20px !important;
-    }
-    
-    .page {
-        background: white;
-    }
-    
-    .card {
-        box-shadow: none;
-    }
-}
 
 
 
@@ -5636,7 +5074,7 @@ body.dark-mode .smart-logo-box {
 
 
 <!-- ============================================ -->
-<!-- صفحة الأحكام الفقهية الموسعة - المذاهب الأربعة -->
+<!-- صفحة الأحكام الفقهية المطور - تصميم موحد مع الأسئلة -->
 <!-- ============================================ -->
 <div id="fiqhPage" class="page">
     <div class="card">
@@ -5647,7 +5085,8 @@ body.dark-mode .smart-logo-box {
             <h2 class="card-title" data-ar="الأحكام الفقهية للزكاة - المذاهب الأربعة" data-tr="Zekâtın Fıkhi Hükümleri - Dört Mezhep">الأحكام الفقهية للزكاة - المذاهب الأربعة</h2>
         </div>
 
-        <p class="subtitle" data-ar="موسوعة شاملة لأحكام الزكاة الشرعية مع الأدلة وآراء المذاهب الأربعة (🟢 الحنفي - 🔵 المالكي - 🔴 الشافعي - 🟠 الحنبلي)" 
+        <p class="subtitle" style="margin-bottom: 1.5rem; color: var(--text-secondary);" 
+           data-ar="موسوعة شاملة لأحكام الزكاة الشرعية مع الأدلة وآراء المذاهب الأربعة (🟢 الحنفي - 🔵 المالكي - 🔴 الشافعي - 🟠 الحنبلي)" 
            data-tr="Dört mezhebin (🟢 Hanefi - 🔵 Maliki - 🔴 Şafii - 🟠 Hanbeli) görüşleri ve delillerle kapsamlı zekât hükümleri ansiklopedisi">
             موسوعة شاملة لأحكام الزكاة الشرعية مع الأدلة وآراء المذاهب الأربعة (🟢 الحنفي - 🔵 المالكي - 🔴 الشافعي - 🟠 الحنبلي)
         </p>
@@ -5655,128 +5094,230 @@ body.dark-mode .smart-logo-box {
         <!-- الحكم 1: تعريف الزكاة وحكمها -->
         <div class="accordion">
             <div class="accordion-header" onclick="toggleAccordion(this)">
-                <span data-ar="📖 تعريف الزكاة وحكمها الشرعي" data-tr="📖 Zekâtın Tanımı ve Şer'i Hükmü">📖 تعريف الزكاة وحكمها الشرعي</span>
+                <span>
+                    <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">1</span>
+                    <span data-ar="📖 تعريف الزكاة وحكمها الشرعي" data-tr="📖 Zekâtın Tanımı ve Şer'i Hükmü">📖 تعريف الزكاة وحكمها الشرعي</span>
+                </span>
                 <span class="accordion-icon">▼</span>
             </div>
             <div class="accordion-content">
                 
-                <!-- 📖 الأدلة من القرآن (في البداية) -->
-                <h4 data-ar="📖 الأدلة من القرآن الكريم:" data-tr="📖 Kur'an-ı Kerim'den Deliller:">📖 الأدلة من القرآن الكريم:</h4>
-                
-                <div class="quran-box">
-                    <p>﴿وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ﴾ [البقرة: 43]</p>
-                    <div class="ayah-explanation">
-                        <strong>Ayetin Açıklaması:</strong> Allah Teâlâ bu ayette namazı kılmayı ve zekâtı vermeyi emretmektedir. Namazla zekâtın birlikte zikredilmesi, zekâtın İslam'daki önemini ve namazdan sonraki yerini gösterir. Rükû edenlerle birlikte rükû etmek, cemaatle namaz kılmaya teşviktir.
+                <!-- القرآن الكريم -->
+                <div style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.08), rgba(65, 184, 166, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-right: 4px solid var(--primary-color);">
+                    <h4 style="color: var(--primary-color); margin-bottom: 0.75rem;" data-ar="📖 الأدلة من القرآن الكريم:" data-tr="📖 Kur'an-ı Kerim'den Deliller:">📖 الأدلة من القرآن الكريم:</h4>
+                    
+                    <div class="quran-text" style="font-family: 'Amiri', serif; font-size: 1.3rem; color: var(--text-color); margin-bottom: 0.5rem; text-align: center;">
+                        ﴿وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ﴾
+                    </div>
+                    <div class="verse-ref" style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-bottom: 0.8rem;">[البقرة: 43]</div>
+                    
+                    <div class="explanation" style="font-size: 0.95rem; line-height: 1.6; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 0.5rem;"
+                         data-ar="قرن الله الزكاة بالصلاة في مواضع كثيرة، مما يدل على عظم شأنها وأنها ركن ركين."
+                         data-tr="Allah Teâlâ bu ayette namazı kılmayı ve zekâtı vermeyi emretmektedir. Namazla zekâtın birlikte zikredilmesi, zekâtın İslam'daki önemini gösterir.">
+                        قرن الله الزكاة بالصلاة في مواضع كثيرة، مما يدل على عظم شأنها وأنها ركن ركين.
                     </div>
                 </div>
 
-                <div class="quran-box">
-                    <p>﴿خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِم بِهَا﴾ [التوبة: 103]</p>
-                    <div class="ayah-explanation">
-                        <strong>Ayetin Açıklaması:</strong> Bu ayet zekâtın iki önemli hikmetini açıklar: Birincisi, mallardan alınan sadaka (zekât) onları temizler, yani günahlardan ve cimrilikten arındırır. İkincisi, onları tezkiye eder, yani nefislerini ve mallarını bereketlendirir ve geliştirir.
+                <!-- السنة النبوية -->
+                <div style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.08), rgba(142, 68, 173, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-right: 4px solid #9b59b6;">
+                    <h4 style="color: #9b59b6; margin-bottom: 0.75rem;" data-ar="📚 الأدلة من السنة النبوية:" data-tr="📚 Sünnetten Deliller:">📚 الأدلة من السنة النبوية:</h4>
+                    
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;" 
+                       data-ar="قال رسول الله ﷺ: «بُني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمداً رسول الله، وإقام الصلاة، وإيتاء الزكاة...»"
+                       data-tr="Rasulullah ﷺ buyurdu: 'İslam beş temel üzerine bina edilmiştir: Allah'tan başka ilah olmadığına şehadet etmek, namazı kılmak, zekâtı vermek...'">
+                        قال رسول الله ﷺ: «بُني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمداً رسول الله، وإقام الصلاة، وإيتاء الزكاة...»
+                    </p>
+                    <div class="explanation" style="font-size: 0.95rem; line-height: 1.6; opacity: 0.9;"
+                         data-ar="الحديث يدل على أن الزكاة ركن أساسي لا يصح إسلام المرء بدونه."
+                         data-tr="Hadis, zekâtın İslam'ın temel rükünlerinden biri olduğunu ve onsuz İslam'ın tamam olmayacağını gösterir.">
+                        الحديث يدل على أن الزكاة ركن أساسي لا يصح إسلام المرء بدونه.
                     </div>
                 </div>
 
-                <div class="quran-box">
-                    <p>﴿وَالَّذِينَ فِي أَمْوَالِهِمْ حَقٌّ مَّعْلُومٌ * لِّلسَّائِلِ وَالْمَحْرُومِ﴾ [المعارج: 24-25]</p>
-                    <div class="ayah-explanation">
-                        <strong>Ayetin Açıklaması:</strong> Allah Teâlâ müminlerin özelliklerinden birinin mallarında belirli bir hak olduğunu belirtir. Bu hak, isteyen (sâil) ve mahrum olan (mahrum) için belirlenen zekâttır. Bu, zekâtın fakirin malında bir hak olduğunu, zenginin minneti olmadığını gösterir.
-                    </div>
-                </div>
+                <!-- أقوال المذاهب -->
+                <h4 style="color: var(--primary-color); margin: 1.5rem 0 0.75rem;" data-ar="⚖️ التعريف الشرعي عند المذاهب:" data-tr="⚖️ Mezheplere Göre Şer'i Tanım:">⚖️ التعريف الشرعي عند المذاهب:</h4>
 
-                <div class="quran-box">
-                    <p>﴿وَآتُوا حَقَّهُ يَوْمَ حَصَادِهِ﴾ [الأنعام: 141]</p>
-                    <div class="ayah-explanation">
-                        <strong>Ayetin Açıklaması:</strong> Allah Teâlâ ekinlerin ve meyvelerin hakkını hasat günü vermeyi emreder. Bu, zekâtın zamanında verilmesinin önemini ve ekinlerin zekâtında yıl dönmesinin şart olmadığını gösterir.
-                    </div>
-                </div>
-
-                <!-- 📚 الأدلة من السنة (في البداية) -->
-                <h4 data-ar="📚 الأدلة من السنة النبوية الشريفة:" data-tr="📚 Peygamber Sünnetinden Deliller:">📚 الأدلة من السنة النبوية الشريفة:</h4>
-                
-                <div class="hadith-box">
-                    <p data-ar="قال رسول الله ﷺ: «بُني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمداً رسول الله، وإقام الصلاة، وإيتاء الزكاة، وحج البيت، وصوم رمضان» [متفق عليه]" 
-                       data-tr="Rasulullah ﷺ buyurdu: 'İslam beş temel üzerine bina edilmiştir: Allah'tan başka ilah olmadığına ve Muhammed'in O'nun Rasulü olduğuna şehadet etmek, namazı ikame etmek, zekâtı vermek, Beyt'i haccetmek ve Ramazan'ı oruçla geçirmek' [Buhari ve Muslim]">
-                        قال رسول الله ﷺ: «بُني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمداً رسول الله، وإقام الصلاة، وإيتاء الزكاة، وحج البيت، وصوم رمضان» [متفق عليه]
-                    </p>
-                    <div class="hadith-explanation">
-                        <strong>Hadisin Açıklaması:</strong> Bu hadis İslam'ın beş temel rüknünü açıklar. Zekâtın bu rükünler arasında üçüncü sırada zikredilmesi, İslam'daki önemini ve konumunu gösterir. Zekât, şehadet ve namazdan sonra gelir, bu da mali ibadetlerin bedeni ibadetlerden sonraki yerini gösterir.
-                    </div>
-                </div>
-
-                <div class="hadith-box">
-                    <p data-ar="وعن ابن عباس رضي الله عنهما: أن النبي ﷺ بعث معاذاً إلى اليمن فقال: «إنك تأتي قوماً من أهل الكتاب، فادعهم إلى شهادة أن لا إله إلا الله وأني رسول الله، فإن هم أطاعوا لذلك، فأعلمهم أن الله افترض عليهم خمس صلوات في كل يوم وليلة، فإن هم أطاعوا لذلك، فأعلمهم أن الله افترض عليهم صدقة تؤخذ من أغنيائهم فترد على فقرائهم» [متفق عليه]" 
-                       data-tr="İbn Abbas radıyallahu anhümâ'dan: Peygamber ﷺ Muaz'ı Yemen'e gönderirken buyurdu: 'Ehl-i Kitap'tan bir topluluğa gideceksin. Onları Allah'tan başka ilah olmadığına ve benim O'nun Rasulü olduğuma şehadet etmeye davet et. Eğer buna itaat ederlerse, Allah'ın onlara her gün ve gecede beş vakit namaz farz kıldığını bildir. Buna da itaat ederlerse, Allah'ın zenginlerinden alınıp fakirlerine verilen bir sadaka (zekât) farz kıldığını bildir' [Buhari ve Muslim]">
-                        وعن ابن عباس رضي الله عنهما: أن النبي ﷺ بعث معاذاً إلى اليمن فقال: «إنك تأتي قوماً من أهل الكتاب، فادعهم إلى شهادة أن لا إله إلا الله وأني رسول الله، فإن هم أطاعوا لذلك، فأعلمهم أن الله افترض عليهم خمس صلوات في كل يوم وليلة، فإن هم أطاعوا لذلك، فأعلمهم أن الله افترض عليهم صدقة تؤخذ من أغنيائهم فترد على فقرائهم» [متفق عليه]
-                    </p>
-                    <div class="hadith-explanation">
-                        <strong>Hadisin Açıklaması:</strong> Bu hadis, İslam'a davet etmenin aşamalarını ve önceliklerini gösterir. Zekâtın açıklamasında önemli bir nokta vardır: "Zenginlerinden alınıp fakirlerine verilir" ifadesi, zekâtın zenginlerden fakir Müslümanlara transfer edilmesini, böylece toplumda dayanışma ve dengeyi sağlamayı amaçladığını gösterir.
-                    </div>
-                </div>
-
-                <!-- 📝 التعريف اللغوي والاصطلاحي -->
-                <h4 data-ar="📝 التعريف اللغوي:" data-tr="📝 Lugavi Tanım:">📝 التعريف اللغوي:</h4>
-                <div class="info-box">
-                    <p data-ar="الزكاة في اللغة: النماء والزيادة والطهارة والبركة. يقال: زكا الزرع إذا نما وزاد، وزكا الرجل إذا صلح." 
-                       data-tr="Zekât lugatte: Artma, çoğalma, temizlik ve bereket demektir. Denilir ki: Ekin zeka etti, yani arttı ve çoğaldı. Adam zeka etti, yani salah buldu.">
-                        الزكاة في اللغة: النماء والزيادة والطهارة والبركة. يقال: زكا الزرع إذا نما وزاد، وزكا الرجل إذا صلح.
+                <!-- الحنفية -->
+                <div style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.08), rgba(39, 174, 96, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #2ecc71;">
+                    <strong style="color: #2ecc71; font-size: 1.05rem;">
+                        <span data-ar="🟢 المذهب الحنفي:" data-tr="🟢 Hanefi Mezhebi:">🟢 المذهب الحنفي:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="هي تمليك جزء مال مخصوص من مال مخصوص لشخص مخصوص عينه الشارع لوجه الله تعالى." 
+                       data-tr="Şari'in belirlediği belirli bir malın, belirli bir kısmını, belirli bir kişiye Allah rızası için temlik etmektir.">
+                        هي تمليك جزء مال مخصوص من مال مخصوص لشخص مخصوص عينه الشارع لوجه الله تعالى.
                     </p>
                 </div>
 
-                <h4 data-ar="📝 التعريف الشرعي عند المذاهب:" data-tr="📝 Mezheplere Göre Şer'i Tanım:">📝 التعريف الشرعي عند المذاهب:</h4>
-                
-                <div class="madhab-box hanafi">
-                    <h5>🟢 <span data-ar="المذهب الحنفي" data-tr="Hanefi Mezhebi">المذهب الحنفي</span></h5>
-                    <p data-ar="تمليك جزء مال مخصوص من مال مخصوص لشخص مخصوص عينه الشارع لوجه الله تعالى" 
-                       data-tr="Şari'in belirlediği belirli bir malın, belirli bir kısmını, belirli bir kişiye Allah rızası için temlik etmektir">
-                        تمليك جزء مال مخصوص من مال مخصوص لشخص مخصوص عينه الشارع لوجه الله تعالى
+                <!-- المالكية -->
+                <div style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.08), rgba(41, 128, 185, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #3498db;">
+                    <strong style="color: #3498db; font-size: 1.05rem;">
+                        <span data-ar="🔵 المذهب المالكي:" data-tr="🔵 Maliki Mezhebi:">🔵 المذهب المالكي:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="إخراج جزء مخصوص من مال مخصوص بلغ نصاباً لمستحقه إن تم الملك وحال الحول." 
+                       data-tr="Mülkiyet tamam olup yıl dönünce, nisaba ulaşan belirli maldan, belirli bir kısmını hak sahibine çıkarmaktır.">
+                        إخراج جزء مخصوص من مال مخصوص بلغ نصاباً لمستحقه إن تم الملك وحال الحول.
                     </p>
                 </div>
 
-                <div class="madhab-box maliki">
-                    <h5>🔵 <span data-ar="المذهب المالكي" data-tr="Maliki Mezhebi">المذهب المالكي</span></h5>
-                    <p data-ar="إخراج جزء مخصوص من مال مخصوص بلغ نصاباً لمستحقه إن تم الملك وحال الحول غير معدن وحرث" 
-                       data-tr="Maden ve ekin hariç, mülkiyet tamam olup yıl dönünce, nisaba ulaşan belirli maldan, belirli bir kısmını hak sahibine çıkarmaktır">
-                        إخراج جزء مخصوص من مال مخصوص بلغ نصاباً لمستحقه إن تم الملك وحال الحول غير معدن وحرث
+                <!-- الشافعية -->
+                <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.08), rgba(192, 57, 43, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #e74c3c;">
+                    <strong style="color: #e74c3c; font-size: 1.05rem;">
+                        <span data-ar="🔴 المذهب الشافعي:" data-tr="🔴 Şafii Mezhebi:">🔴 المذهب الشافعي:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="اسم لما يخرج من مال أو بدن على وجه مخصوص." 
+                       data-tr="Belirli bir şekilde mal veya bedenden çıkarılana verilen isimdir.">
+                        اسم لما يخرج من مال أو بدن على وجه مخصوص.
                     </p>
                 </div>
 
-                <div class="madhab-box shafii">
-                    <h5>🔴 <span data-ar="المذهب الشافعي" data-tr="Şafii Mezhebi">المذهب الشافعي</span></h5>
-                    <p data-ar="اسم لما يخرج من مال أو بدن على وجه مخصوص" 
-                       data-tr="Belirli bir şekilde mal veya bedenden çıkarılana verilen isimdir">
-                        اسم لما يخرج من مال أو بدن على وجه مخصوص
+                <!-- الحنابلة -->
+                <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.08), rgba(211, 84, 0, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #f39c12;">
+                    <strong style="color: #f39c12; font-size: 1.05rem;">
+                        <span data-ar="🟠 المذهب الحنبلي:" data-tr="🟠 Hanbeli Mezhebi:">🟠 المذهب الحنبلي:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="حق واجب في مال خاص لطائفة مخصوصة في وقت مخصوص." 
+                       data-tr="Belirli bir zamanda, belirli bir malda, belirli bir grup için vacip olan haktır.">
+                        حق واجب في مال خاص لطائفة مخصوصة في وقت مخصوص.
                     </p>
                 </div>
 
-                <div class="madhab-box hanbali">
-                    <h5>🟠 <span data-ar="المذهب الحنبلي" data-tr="Hanbeli Mezhebi">المذهب الحنبلي</span></h5>
-                    <p data-ar="حق واجب في مال خاص لطائفة مخصوصة في وقت مخصوص" 
-                       data-tr="Belirli bir zamanda, belirli bir malda, belirli bir grup için vacip olan haktır">
-                        حق واجب في مال خاص لطائفة مخصوصة في وقت مخصوص
-                    </p>
-                </div>
-
-                <!-- ⚖️ الحكم الشرعي والإجماع -->
-                <h4 data-ar="⚖️ الحكم الشرعي:" data-tr="⚖️ Şer'i Hüküm:">⚖️ الحكم الشرعي:</h4>
-                <div class="madhab-agreement">
-                    <p data-ar="🤝 الزكاة ركن من أركان الإسلام الخمسة، وفرض عين على كل مسلم تتوفر فيه الشروط، وقد أجمعت الأمة على وجوبها، ومنكر وجوبها كافر إلا إذا كان حديث عهد بالإسلام" 
-                       data-tr="🤝 Zekât İslam'ın beş rüknünden biridir, şartları taşıyan her Müslüman'a farz-ı ayındır ve ümmet vücubunda icma etmiştir. Vücubunu inkâr eden, İslam'a yeni girmişse hariç, kâfir olur">
-                        🤝 الزكاة ركن من أركان الإسلام الخمسة، وفرض عين على كل مسلم تتوفر فيه الشروط، وقد أجمعت الأمة على وجوبها، ومنكر وجوبها كافر إلا إذا كان حديث عهد بالإسلام
-                    </p>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="action-btn copy-btn" onclick="copyText(this)" title="نسخ / Kopyala"></button>
-                    <button class="action-btn share-btn" onclick="shareText(this)" title="مشاركة / Paylaş"></button>
+                <!-- أزرار النسخ والمشاركة -->
+                <div class="action-buttons" style="margin-top: 1rem;">
+                    <button class="action-btn copy-btn" onclick="copyText(this)" title="نسخ"></button>
+                    <button class="action-btn share-btn" onclick="shareText(this)" title="مشاركة"></button>
                 </div>
             </div>
         </div>
 
-        <!-- يمكن إضافة باقي الأحكام بنفس الطريقة... -->
-        
+        <!-- الحكم 2: شروط وجوب الزكاة -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>
+                    <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">2</span>
+                    <span data-ar="📋 شروط وجوب الزكاة" data-tr="📋 Zekâtın Vacip Olma Şartları">📋 شروط وجوب الزكاة</span>
+                </span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="info-box" style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.05), rgba(65, 184, 166, 0.05)); border-left: 4px solid var(--primary-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <p data-ar="اتفق الفقهاء على خمسة شروط أساسية لوجوب الزكاة:" 
+                       data-tr="Fıkıh âlimleri zekâtın vacip olması için beş temel şart üzerinde ittifak etmişlerdir:">
+                        اتفق الفقهاء على خمسة شروط أساسية لوجوب الزكاة:
+                    </p>
+                </div>
+
+                <ul class="custom-list" style="list-style: none; padding: 0;">
+                    <li style="background: var(--bg-color); padding: 10px; margin-bottom: 8px; border-radius: 6px; border-right: 3px solid #2ecc71;">
+                        <strong data-ar="1. الإسلام:" data-tr="1. Müslüman Olmak:">1. الإسلام:</strong>
+                        <span data-ar="فلا تجب على الكافر." data-tr="Kâfire vacip değildir.">فلا تجب على الكافر.</span>
+                    </li>
+                    <li style="background: var(--bg-color); padding: 10px; margin-bottom: 8px; border-radius: 6px; border-right: 3px solid #3498db;">
+                        <strong data-ar="2. الحرية:" data-tr="2. Hürriyet:">2. الحرية:</strong>
+                        <span data-ar="فلا تجب على العبد (في الزمن القديم)." data-tr="Köleye vacip değildir.">فلا تجب على العبد (في الزمن القديم).</span>
+                    </li>
+                    <li style="background: var(--bg-color); padding: 10px; margin-bottom: 8px; border-radius: 6px; border-right: 3px solid #9b59b6;">
+                        <strong data-ar="3. الملك التام:" data-tr="3. Tam Mülkiyet:">3. الملك التام:</strong>
+                        <span data-ar="أن يكون المال مملوكاً لصاحبه ملكاً مستقراً." data-tr="Malın sahibinin mülkiyetinde istikrarlı olması.">أن يكون المال مملوكاً لصاحبه ملكاً مستقراً.</span>
+                    </li>
+                    <li style="background: var(--bg-color); padding: 10px; margin-bottom: 8px; border-radius: 6px; border-right: 3px solid #f39c12;">
+                        <strong data-ar="4. بلوغ النصاب:" data-tr="4. Nisaba Ulaşmak:">4. بلوغ النصاب:</strong>
+                        <span data-ar="وهو الحد الأدنى الذي حدده الشرع." data-tr="Şeriatın belirlediği asgari sınırdır.">وهو الحد الأدنى الذي حدده الشرع.</span>
+                    </li>
+                    <li style="background: var(--bg-color); padding: 10px; margin-bottom: 8px; border-radius: 6px; border-right: 3px solid #e74c3c;">
+                        <strong data-ar="5. حولان الحول:" data-tr="5. Yılın Dolması:">5. حولان الحول:</strong>
+                        <span data-ar="مرور سنة قمرية كاملة على امتلاك النصاب." data-tr="Nisaba sahip olmanın üzerinden tam bir kameri yıl geçmesi.">مرور سنة قمرية كاملة على امتلاك النصاب.</span>
+                    </li>
+                </ul>
+
+                <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.1), rgba(211, 84, 0, 0.1)); padding: 1rem; border-radius: 8px; margin-top: 1rem; border: 1px solid #f39c12;">
+                    <h5 style="color: #d35400; margin-bottom: 0.5rem;" data-ar="⚠️ مسألة خلافية: البلوغ والعقل" data-tr="⚠️ İhtilaflı Mesele: Buluğ ve Akıl">⚠️ مسألة خلافية: البلوغ والعقل</h5>
+                    <p style="font-size: 0.9rem; line-height: 1.6;" 
+                       data-ar="الجمهور (المالكية والشافعية والحنابلة): تجب الزكاة في مال الصبي والمجنون. الحنفية: لا تجب، لأنها عبادة." 
+                       data-tr="Cumhur (Maliki, Şafii, Hanbeli): Çocuğun ve delinin malında zekât vaciptir. Hanefi: Vacip değildir, çünkü ibadettir.">
+                        الجمهور (المالكية والشافعية والحنابلة): تجب الزكاة في مال الصبي والمجنون. الحنفية: لا تجب، لأنها عبادة.
+                    </p>
+                </div>
+
+                <div class="action-buttons" style="margin-top: 1rem;">
+                    <button class="action-btn copy-btn" onclick="copyText(this)"></button>
+                    <button class="action-btn share-btn" onclick="shareText(this)"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الحكم 3: الأموال التي تجب فيها الزكاة -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>
+                    <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">3</span>
+                    <span data-ar="💰 الأموال التي تجب فيها الزكاة" data-tr="💰 Zekâtın Vacip Olduğu Mallar">💰 الأموال التي تجب فيها الزكاة</span>
+                </span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                
+                <!-- الذهب والفضة -->
+                <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(255, 215, 0, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #d4af37;">
+                    <strong style="color: #d4af37; font-size: 1.05rem;">
+                        <span data-ar="1. الأثمان (الذهب والفضة والنقود):" data-tr="1. Nakitler (Altın, Gümüş ve Para):">1. الأثمان (الذهب والفضة والنقود):</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="تشمل العملات الورقية والمعدنية والرصيد البنكي. النصاب: 85 جرام ذهب أو 595 جرام فضة." 
+                       data-tr="Kağıt para, madeni para ve banka bakiyesini içerir. Nisap: 85 gr altın veya 595 gr gümüş.">
+                        تشمل العملات الورقية والمعدنية والرصيد البنكي. النصاب: 85 جرام ذهب أو 595 جرام فضة.
+                    </p>
+                </div>
+
+                <!-- السائمة -->
+                <div style="background: linear-gradient(135deg, rgba(121, 85, 72, 0.08), rgba(141, 110, 99, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #795548;">
+                    <strong style="color: #795548; font-size: 1.05rem;">
+                        <span data-ar="2. بهيمة الأنعام:" data-tr="2. En'am Hayvanları:">2. بهيمة الأنعام:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="الإبل والبقر والغنم، بشرط أن تكون سائمة (ترعى العشب المباح) عند الجمهور." 
+                       data-tr="Deve, sığır ve koyun; cumhura göre saime (otlakta otlayan) olması şartıyla.">
+                        الإبل والبقر والغنم، بشرط أن تكون سائمة (ترعى العشب المباح) عند الجمهور.
+                    </p>
+                </div>
+
+                <!-- الخارج من الأرض -->
+                <div style="background: linear-gradient(135deg, rgba(139, 195, 74, 0.08), rgba(156, 204, 101, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #8bc34a;">
+                    <strong style="color: #558b2f; font-size: 1.05rem;">
+                        <span data-ar="3. الخارج من الأرض:" data-tr="3. Topraktan Çıkanlar:">3. الخارج من الأرض:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="الحبوب والثمار. قال تعالى: ﴿وآتوا حقه يوم حصاده﴾. وتجب عند اشتداد الحب وبدو الصلاح." 
+                       data-tr="Tahıllar ve meyveler. Allah buyurdu: 'Hasat günü hakkını verin'. Tane sertleşince ve olgunlaşınca vacip olur.">
+                        الحبوب والثمار. قال تعالى: ﴿وآتوا حقه يوم حصاده﴾. وتجب عند اشتداد الحب وبدو الصلاح.
+                    </p>
+                </div>
+
+                <!-- عروض التجارة -->
+                <div style="background: linear-gradient(135deg, rgba(156, 39, 176, 0.08), rgba(171, 71, 188, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-right: 4px solid #9c27b0;">
+                    <strong style="color: #9c27b0; font-size: 1.05rem;">
+                        <span data-ar="4. عروض التجارة:" data-tr="4. Ticaret Malları:">4. عروض التجارة:</span>
+                    </strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.8;" 
+                       data-ar="كل ما أعد للبيع والشراء بقصد الربح. تُقوم عند الحول وتخرج زكاتها 2.5%." 
+                       data-tr="Kâr amacıyla alım satım için hazırlanan her şey. Yıl sonunda değerlenir ve %2.5 zekâtı verilir.">
+                        كل ما أعد للبيع والشراء بقصد الربح. تُقوم عند الحول وتخرج زكاتها 2.5%.
+                    </p>
+                </div>
+
+                <div class="action-buttons" style="margin-top: 1rem;">
+                    <button class="action-btn copy-btn" onclick="copyText(this)"></button>
+                    <button class="action-btn share-btn" onclick="shareText(this)"></button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
 
 
 
@@ -17299,6 +16840,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
