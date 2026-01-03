@@ -5091,16 +5091,19 @@ body.dark-mode .smart-logo-box {
             موسوعة شاملة لأحكام الزكاة الشرعية مع الأدلة وآراء المذاهب الأربعة (🟢 الحنفي - 🔵 المالكي - 🔴 الشافعي - 🟠 الحنبلي)
         </p>
 
-        <!-- الحكم 1: تعريف الزكاة وحكمها وفوائدها -->
-        <div class="accordion">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-                <span>
-                    <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">1</span>
-                    <span data-ar="📖 تعريف الزكاة وحكمها الشرعي وفوائدها العظيمة" data-tr="📖 Zekâtın Tanımı, Şer'i Hükmü ve Büyük Faydaları">📖 تعريف الزكاة وحكمها الشرعي وفوائدها العظيمة</span>
-                </span>
-                <span class="accordion-icon">▼</span>
-            </div>
-            <div class="accordion-content">
+       <!-- الحكم 1: تعريف الزكاة (يفتح في نافذة جديدة) -->
+<div class="accordion" style="border-color: var(--primary-color);">
+    <div class="accordion-header" onclick="openDefinitionWindow()">
+        <span>
+            <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">1</span>
+            <span data-ar="📖 تعريف الزكاة وحكمها الشرعي (اضغط لفتح الصفحة)" data-tr="📖 Zekâtın Tanımı ve Hükmü (Açmak için tıklayın)">📖 تعريف الزكاة وحكمها الشرعي (اضغط لفتح الصفحة)</span>
+        </span>
+        <span class="accordion-icon">↗️</span>
+    </div>
+    
+    <!-- المحتوى المخفي الذي سيتم نقله -->
+    <div id="hiddenDefinitionContent" style="display: none;">
+
                 
                 <!-- المعنى اللغوي والاصطلاحي -->
                 <div style="background: linear-gradient(135deg, rgba(103, 58, 183, 0.08), rgba(81, 45, 168, 0.08)); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-right: 4px solid #673ab7;">
@@ -5618,15 +5621,7 @@ rin Zekât Vermeyenlere Karşı Kararlı Tutumu:">⚔️ موقف الصحابة
                     </div>
                 </div>
 
-                <!-- أزرار النسخ والمشاركة -->
-                <div class="action-buttons" style="margin-top: 1rem;">
-                    <button class="action-btn copy-btn" onclick="copyText(this)" 
-                            data-ar="نسخ" data-tr="Kopyala" title="نسخ"></button>
-                    <button class="action-btn share-btn" onclick="shareText(this)" 
-                            data-ar="مشاركة" data-tr="Paylaş" title="مشاركة"></button>
-                </div>
-            </div>
-        </div>
+              
 
                    
 
@@ -16779,6 +16774,365 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+// ============================================
+// دالة فتح صفحة الأحكام الفقهية (تخزين في الصفحة الرئيسية - Parent Storage)
+// ============================================
+function openDefinitionWindow() {
+    // 1. جلب المحتوى
+    var content = document.getElementById('hiddenDefinitionContent').innerHTML;
+    var isRTL = currentLanguage === 'ar';
+    
+    // 2. إعداد الصور
+    var arLogo = "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png";
+    var trLogo = "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/__gemini_generated_image_l7bj58l7bj58l7bj---uo3o-r-o-c-1-Egn1jwHegFrVqeor.png"; 
+    var currentLogo = isRTL ? arLogo : trLogo;
+
+    // ---------------------------------------------------------
+    // 3. منطق استرجاع الإعدادات من الصفحة الرئيسية (Parent)
+    // ---------------------------------------------------------
+    var parentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    
+    // محاولة جلب الإعدادات المحفوظة في جلسة المتصفح الرئيسية
+    var savedPrefsString = sessionStorage.getItem('zakat_reader_prefs');
+    var initialPrefs;
+
+    if (savedPrefsString) {
+        // إذا وجدنا إعدادات محفوظة سابقاً، نستخدمها
+        initialPrefs = savedPrefsString;
+    } else {
+        // إذا لم نجد (أول مرة)، ننشئ إعدادات افتراضية بناءً على وضع البرنامج الحالي
+        var defaultPrefs = {
+            fontSize: 19,
+            lineHeight: 1.8,
+            theme: parentTheme, // يأخذ وضع البرنامج (ليلي/نهاري)
+            fontType: 'classic',
+            textCase: 'none'
+        };
+        initialPrefs = JSON.stringify(defaultPrefs);
+    }
+
+    // 4. فتح النافذة
+    var newWin = window.open('', '_blank');
+    
+    newWin.document.write(`
+        <!DOCTYPE html>
+        <html lang="${currentLanguage}" dir="${isRTL ? 'rtl' : 'ltr'}">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+            <title>${currentLanguage === 'ar' ? 'تعريف الزكاة' : 'Zekâtın Tanımı'}</title>
+            
+            <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;700&family=Merriweather:wght@300;400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+            
+            <style>
+                :root {
+                    --primary-color: #0d7c66;
+                    --bg-color: #f5f9f7;
+                    --card-bg: #ffffff;
+                    --text-color: #1a3a2e;
+                    --border-color: #c8ddd4;
+                    --header-bg: rgba(255, 255, 255, 0.95);
+                    
+                    /* متغيرات القراءة */
+                    --read-font-size: 19px;
+                    --read-line-height: 1.8;
+                    --read-font-family: ${isRTL ? "'Amiri', serif" : "'Merriweather', serif"};
+                    --read-text-transform: none;
+                }
+
+                /* --- 1. الوضع النهاري --- */
+                [data-theme="light"] {
+                    --bg-color: #f5f9f7; --card-bg: #ffffff; --text-color: #1a3a2e; 
+                    --header-bg: rgba(255, 255, 255, 0.95); --border-color: #c8ddd4;
+                }
+
+                /* --- 2. الوضع الليلي --- */
+                [data-theme="dark"] {
+                    --bg-color: #121212; --card-bg: #1e1e1e; --text-color: #e0e0e0; 
+                    --header-bg: rgba(30,30,30,0.95); --border-color: #333;
+                }
+
+                /* --- 3. وضع الكتاب (Sepia) - نظيف 100% --- */
+                [data-theme="sepia"] {
+                    --bg-color: #f4ecd8;       
+                    --card-bg: transparent;    
+                    --text-color: #000000;     
+                    --header-bg: #e9e0c9;
+                    --border-color: transparent;
+                    --primary-color: #000000;
+                }
+
+                /* تنظيف شامل لوضع الكتاب */
+                [data-theme="sepia"] .container,
+                [data-theme="sepia"] .container * {
+                    background-color: transparent !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                    color: #000000 !important;
+                    text-shadow: none !important;
+                }
+
+                * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+                body {
+                    font-family: var(--read-font-family);
+                    background-color: var(--bg-color);
+                    color: var(--text-color);
+                    margin: 0;
+                    padding-top: 70px;
+                    line-height: var(--read-line-height);
+                    font-size: var(--read-font-size);
+                    text-transform: var(--read-text-transform);
+                    transition: background-color 0.3s, color 0.3s;
+                }
+
+                .fixed-header {
+                    position: fixed; top: 0; left: 0; width: 100%; height: 65px;
+                    background-color: var(--header-bg);
+                    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+                    border-bottom: 1px solid var(--border-color);
+                    display: flex; align-items: center; justify-content: space-between;
+                    padding: 0 15px; z-index: 1000;
+                    transition: background-color 0.3s;
+                }
+                [data-theme="sepia"] .fixed-header { border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+                .header-title {
+                    font-weight: bold; color: var(--primary-color);
+                    font-size: 1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 50%;
+                }
+                .header-actions { display: flex; gap: 8px; }
+
+                .action-btn {
+                    background: transparent; border: 1px solid var(--border-color);
+                    cursor: pointer; width: 40px; height: 40px; border-radius: 10px;
+                    display: flex; align-items: center; justify-content: center;
+                    font-size: 1.2rem; color: var(--text-color); transition: 0.2s;
+                }
+                [data-theme="sepia"] .action-btn { border: 1px solid rgba(0,0,0,0.1); }
+                .action-btn:hover, .action-btn.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+
+                /* --- القائمة المنبثقة --- */
+                .settings-panel {
+                    position: fixed; top: 70px;
+                    ${isRTL ? 'left: 15px;' : 'right: 15px;'}
+                    width: 300px;
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 16px;
+                    padding: 20px;
+                    box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+                    display: none;
+                    flex-direction: column; gap: 15px;
+                    z-index: 2000; max-height: 80vh; overflow-y: auto;
+                }
+                
+                [data-theme="sepia"] .settings-panel {
+                    background: #fffbf0; border: 1px solid #d3c0a3; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                }
+                [data-theme="sepia"] .settings-panel * { color: #333 !important; }
+
+                .settings-panel.show { display: flex; animation: slideDown 0.3s ease; }
+                @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+                .setting-group { display: flex; flex-direction: column; gap: 6px; }
+                .setting-label { font-size: 0.8rem; font-weight: bold; opacity: 0.7; text-transform: uppercase; }
+                
+                .btn-row { display: flex; gap: 8px; }
+                .set-btn {
+                    flex: 1; border: 1px solid var(--border-color); background: transparent; cursor: pointer;
+                    padding: 8px; border-radius: 8px; font-size: 1rem; color: var(--text-color); transition: 0.2s;
+                    display: flex; align-items: center; justify-content: center;
+                }
+                [data-theme="sepia"] .set-btn { border: 1px solid #d3c0a3; }
+                .set-btn:hover { background: rgba(0,0,0,0.05); }
+
+                .theme-options { display: flex; gap: 15px; justify-content: center; margin-top: 5px; }
+                .theme-circle {
+                    width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+                    border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+                    font-size: 1.2rem; transition: 0.2s;
+                }
+                .theme-circle.selected { border-color: var(--primary-color); transform: scale(1.15); box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+
+                /* --- الحاوية --- */
+                .container { margin: 0 auto; background: var(--card-bg); transition: all 0.3s ease; }
+                
+                @media (min-width: 1025px) { 
+                    .container { max-width: 800px; margin-top: 30px; margin-bottom: 50px; padding: 50px; border-radius: 20px; border: 1px solid var(--border-color); } 
+                }
+                
+                [data-theme="sepia"] .container {
+                    border: none !important; box-shadow: none !important; background: transparent !important;
+                }
+
+                @media (max-width: 768px) {
+                    body { background-color: var(--bg-color); }
+                    .container { width: 100%; max-width: 100%; margin: 0; padding: 20px; border: none; }
+                    .header-title span { display: none; }
+                    .header-title::after { content: '📖'; }
+                }
+
+                @media print {
+                    .fixed-header, .settings-panel, .action-btn { display: none !important; }
+                    .container { width: 100% !important; border: none !important; }
+                }
+            </style>
+        </head>
+        <body>
+
+            <div class="fixed-header">
+                <div class="header-title">
+                    <span>${isRTL ? 'تعريف الزكاة وحكمها' : 'Zekâtın Tanımı'}</span>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn" id="settingsBtn" onclick="toggleSettings(event)" title="Settings">Aa</button>
+                    <button class="action-btn" onclick="shareText()" title="Share">📤</button>
+                    <button class="action-btn" onclick="window.print()" title="Print">🖨️</button>
+                    <button class="action-btn" onclick="window.close()" style="color:#ef4444; border-color:rgba(239,68,68,0.3)" title="Close">✕</button>
+                </div>
+            </div>
+
+            <div id="settingsPanel" class="settings-panel" onclick="event.stopPropagation()">
+                
+                <div class="setting-group">
+                    <div class="setting-label">${isRTL ? 'لون الصفحة' : 'Sayfa Rengi'}</div>
+                    <div class="theme-options">
+                        <div class="theme-circle" onclick="setTheme('light')" style="background:#fff;" title="Light">☀️</div>
+                        <div class="theme-circle" onclick="setTheme('sepia')" style="background:#f4ecd8;" title="Book">📖</div>
+                        <div class="theme-circle" onclick="setTheme('dark')" style="background:#1e1e1e; color:white;" title="Dark">🌑</div>
+                    </div>
+                </div>
+
+                <hr style="width:100%; border:0; border-top:1px solid var(--border-color); opacity:0.3">
+
+                <div class="setting-group">
+                    <div class="setting-label">${isRTL ? 'نوع الخط' : 'Yazı Tipi'}</div>
+                    <div class="btn-row">
+                        <button class="set-btn" onclick="setFont('classic')">${isRTL ? 'نسخ' : 'Klasik'}</button>
+                        <button class="set-btn" onclick="setFont('modern')">${isRTL ? 'حديث' : 'Modern'}</button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <div class="setting-label">${isRTL ? 'حجم النص' : 'Yazı Boyutu'}</div>
+                    <div class="btn-row">
+                        <button class="set-btn" onclick="changeFontSize(-1)">A-</button>
+                        <button class="set-btn" onclick="changeFontSize(1)">A+</button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <div class="setting-label">${isRTL ? 'تباعد الأسطر' : 'Satır Aralığı'}</div>
+                    <div class="btn-row">
+                        <button class="set-btn" onclick="changeLineHeight(-0.1)">≣</button>
+                        <button class="set-btn" onclick="changeLineHeight(0.1)">☷</button>
+                    </div>
+                </div>
+
+                ${!isRTL ? `
+                <div class="setting-group">
+                    <div class="setting-label">Harf Durumu</div>
+                    <div class="btn-row">
+                        <button class="set-btn" onclick="setTextCase('none')">ab</button>
+                        <button class="set-btn" onclick="setTextCase('uppercase')">AB</button>
+                    </div>
+                </div>
+                ` : ''}
+            </div>
+
+            <div class="container">
+                <div id="mainContent">
+                    ${content}
+                </div>
+            </div>
+
+            <script>
+                // 1. استلام الإعدادات التي تم تمريرها من الصفحة الرئيسية
+                // هذه القيمة تم حقنها أثناء إنشاء النافذة
+                let prefs = ${initialPrefs};
+                
+                const isRTL = ${isRTL};
+
+                function applyAllSettings() {
+                    document.documentElement.style.setProperty('--read-font-size', prefs.fontSize + 'px');
+                    document.documentElement.style.setProperty('--read-line-height', prefs.lineHeight);
+                    document.documentElement.setAttribute('data-theme', prefs.theme);
+                    
+                    document.querySelectorAll('.theme-circle').forEach(c => c.classList.remove('selected'));
+                    const themeBtn = document.querySelector(\`.theme-circle[title="\${prefs.theme === 'sepia' ? 'Book' : (prefs.theme === 'dark' ? 'Dark' : 'Light')}"]\`);
+                    if(themeBtn) themeBtn.classList.add('selected');
+
+                    let fontVal = isRTL ? (prefs.fontType === 'modern' ? "'Cairo', sans-serif" : "'Amiri', serif") : (prefs.fontType === 'modern' ? "'Roboto', sans-serif" : "'Merriweather', serif");
+                    document.documentElement.style.setProperty('--read-font-family', fontVal);
+                    if (!isRTL) document.documentElement.style.setProperty('--read-text-transform', prefs.textCase);
+                }
+
+                // دالة الحفظ الذكي
+                function saveAndApply() {
+                    // 1. تطبيق التغييرات محلياً في النافذة الحالية
+                    applyAllSettings();
+                    
+                    // 2. إرسال التغييرات إلى الصفحة الرئيسية (Parent Window) لحفظها
+                    // نستخدم window.opener للوصول للصفحة التي فتحت هذه النافذة
+                    if (window.opener && !window.opener.closed) {
+                        window.opener.sessionStorage.setItem('zakat_reader_prefs', JSON.stringify(prefs));
+                    }
+                }
+
+                function setTheme(t) { prefs.theme = t; saveAndApply(); }
+                function setFont(t) { prefs.fontType = t; saveAndApply(); }
+                function setTextCase(t) { prefs.textCase = t; saveAndApply(); }
+                function changeFontSize(d) { prefs.fontSize = Math.max(14, Math.min(32, prefs.fontSize + d)); saveAndApply(); }
+                function changeLineHeight(d) { prefs.lineHeight = Math.max(1.2, Math.min(2.5, parseFloat((prefs.lineHeight + d).toFixed(1)))); saveAndApply(); }
+
+                // --- التحكم في القائمة ---
+                function toggleSettings(e) {
+                    if(e) e.stopPropagation();
+                    const panel = document.getElementById('settingsPanel');
+                    const btn = document.getElementById('settingsBtn');
+                    
+                    if (panel.classList.contains('show')) {
+                        closeSettings();
+                    } else {
+                        panel.classList.add('show');
+                        btn.classList.add('active');
+                    }
+                }
+
+                function closeSettings() {
+                    const panel = document.getElementById('settingsPanel');
+                    const btn = document.getElementById('settingsBtn');
+                    panel.classList.remove('show');
+                    btn.classList.remove('active');
+                }
+
+                window.addEventListener('scroll', function() {
+                    if (document.getElementById('settingsPanel').classList.contains('show')) closeSettings();
+                }, { passive: true });
+
+                document.addEventListener('click', function(event) {
+                    const panel = document.getElementById('settingsPanel');
+                    const btn = document.getElementById('settingsBtn');
+                    if (!panel.contains(event.target) && !btn.contains(event.target)) closeSettings();
+                });
+
+                async function shareText() {
+                    const text = document.getElementById('mainContent').innerText;
+                    const shareData = { title: "${isRTL ? 'تعريف الزكاة' : 'Zekât Tanımı'}", text: text, url: window.location.href };
+                    if (navigator.share) { try { await navigator.share(shareData); } catch (err) {} } 
+                }
+
+                // تطبيق الإعدادات فور فتح النافذة
+                applyAllSettings();
+
+            <\/script>
+        </body>
+        </html>
+    `);
+    
+    newWin.document.close();
+}
 
 
 
@@ -17158,6 +17512,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
