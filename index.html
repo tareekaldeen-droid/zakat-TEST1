@@ -16883,7 +16883,8 @@ document.addEventListener('DOMContentLoaded', function() {
             lineHeight: 1.8, 
             theme: parentTheme, 
             fontType: 'classic', 
-            textCase: 'none'
+            textCase: 'none',
+            logoSize: 60 // حجم اللوجو الافتراضي
         });
 
         var doc = iframe.contentWindow.document;
@@ -16914,6 +16915,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         --read-line-height: 1.8;
                         --read-font-family: ${isRTL ? "'Amiri', serif" : "'Merriweather', serif"};
                         --read-text-transform: none;
+                        --logo-size: 60px; /* حجم اللوجو */
                     }
                     
                     [data-theme="light"] { 
@@ -17206,7 +17208,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         font-size: 16px !important;
                     }
 
-                    /* --- CSS الطباعة (بدون براويز + خط تحت الهيدر فقط) --- */
+                    /* --- CSS الطباعة --- */
                     .print-only { 
                         display: none; 
                     }
@@ -17236,22 +17238,34 @@ document.addEventListener('DOMContentLoaded', function() {
                             font-family: 'Amiri', 'Times New Roman', serif !important;
                         }
 
-                        /* رأس الصفحة: خط تحت فقط */
+                        /* رأس الصفحة: اللوجو يسار والباركود يمين */
                         .print-header-container {
                             width: 100%;
                             border: none !important;
-                            border-bottom: 2px solid #000 !important; /* خط تحت فقط */
+                            border-bottom: 2px solid #000 !important;
                             padding-bottom: 15px !important;
                             margin-bottom: 25px;
                             display: flex;
                             justify-content: space-between;
-                            align-items: center;
+                            align-items: flex-start;
+                            gap: 20px;
                         }
                         
+                        /* اللوجو على اليسار */
+                        .print-logo-img { 
+                            height: var(--logo-size);
+                            width: auto;
+                            order: 1;
+                            border: none !important;
+                        }
+                        
+                        /* المعلومات في الوسط */
                         .print-info { 
                             display: flex; 
                             flex-direction: column; 
-                            gap: 5px; 
+                            gap: 5px;
+                            flex: 1;
+                            order: 2;
                         }
                         
                         .print-title { 
@@ -17265,18 +17279,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             color: #444; 
                         }
                         
-                        .print-logo-img { 
-                            height: 60px; 
-                            width: auto; 
-                        }
-                        
-                        /* الباركود: خط تحت فقط */
+                        /* الباركود على اليمين - بدون خط تحت */
                         .print-qr { 
                             height: 80px; 
                             width: 80px; 
                             border: none !important;
-                            border-bottom: 2px solid #000 !important; /* خط تحت فقط */
-                            padding-bottom: 5px !important;
+                            order: 3;
                         }
 
                         /* المحتوى */
@@ -17326,9 +17334,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             border: none !important;
                         }
                         
-                        /* استثناء: السماح بالخط تحت الهيدر والباركود فقط */
-                        .print-header-container,
-                        .print-qr {
+                        /* استثناء: السماح بالخط تحت الهيدر فقط */
+                        .print-header-container {
                             border-bottom: 2px solid #000 !important;
                         }
                         
@@ -17387,8 +17394,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
 
-                <!-- رأس الطباعة (خط تحت فقط) -->
+                <!-- رأس الطباعة: اللوجو يسار، المعلومات وسط، الباركود يمين -->
                 <div class="print-only print-header-container">
+                    <img src="${currentLogo}" 
+                         class="print-logo-img" 
+                         alt="${isRTL ? 'شعار' : 'Logo'}"
+                         onerror="this.style.display='none'">
+                    
                     <div class="print-info">
                         <div class="print-title">${isRTL ? 'حاسبة الزكاة الذكية' : 'Akıllı Zekât Hesaplayıcı'}</div>
                         <div class="print-meta">
@@ -17396,10 +17408,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             ${isRTL ? 'التاريخ:' : 'Tarih:'} ${todayDate}
                         </div>
                     </div>
-                    <img src="${currentLogo}" 
-                         class="print-logo-img" 
-                         alt="${isRTL ? 'شعار' : 'Logo'}"
-                         onerror="this.style.display='none'">
+                    
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&format=png&data=${encodeURIComponent(currentUrl)}" 
                          class="print-qr" 
                          alt="QR Code"
@@ -17471,6 +17480,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                     
+                    <div class="setting-group">
+                        <div class="setting-label">${isRTL ? 'حجم اللوجو (طباعة)' : 'Logo Boyutu (Yazdırma)'}</div>
+                        <div class="btn-row">
+                            <button class="set-btn" onclick="changeLogoSize(-10)">🖼️-</button>
+                            <button class="set-btn" onclick="changeLogoSize(10)">🖼️+</button>
+                        </div>
+                    </div>
+                    
                     ${!isRTL ? `
                     <div class="setting-group">
                         <div class="setting-label">Harf Durumu</div>
@@ -17487,7 +17504,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div id="mainContent">${content}</div>
                 </div>
 
-                <!-- تذييل الطباعة (بدون حدود) -->
+                <!-- تذييل الطباعة -->
                 <div class="print-only print-footer-container">
                     <div>${currentUrl}</div>
                     <div>${isRTL ? 'تمت الطباعة من التطبيق' : 'Uygulamadan yazdırıldı'}</div>
@@ -17500,6 +17517,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     function applyAllSettings() {
                         document.documentElement.style.setProperty('--read-font-size', prefs.fontSize + 'px');
                         document.documentElement.style.setProperty('--read-line-height', prefs.lineHeight);
+                        document.documentElement.style.setProperty('--logo-size', prefs.logoSize + 'px');
                         document.documentElement.setAttribute('data-theme', prefs.theme);
                         
                         // تحديث الثيمات
@@ -17554,6 +17572,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     function changeLineHeight(d) { 
                         prefs.lineHeight = Math.max(1.2, Math.min(2.5, parseFloat((prefs.lineHeight + d).toFixed(1)))); 
                         saveAndApply(); 
+                    }
+                    
+                    function changeLogoSize(d) { 
+                        prefs.logoSize = Math.max(40, Math.min(120, prefs.logoSize + d)); 
+                        saveAndApply();
+                        showToast('${isRTL ? 'حجم اللوجو:' : 'Logo boyutu:'} ' + prefs.logoSize + 'px');
                     }
 
                     function toggleSettings(e) {
@@ -18110,6 +18134,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
