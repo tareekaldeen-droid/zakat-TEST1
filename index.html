@@ -16778,27 +16778,24 @@ document.addEventListener('DOMContentLoaded', function() {
 // دالة فتح صفحة الأحكام الفقهية (تخزين في الصفحة الرئيسية - Parent Storage)
 // ============================================
 // ============================================
-// متغيرات عامة للتحكم في الإغلاق
+// دالة إغلاق القارئ
 // ============================================
 window.closeZakatReader = function() {
     var overlay = document.getElementById('zakat-reader-overlay');
     if (overlay) {
-        // تأثير خروج سلس
         overlay.style.opacity = '0';
         setTimeout(function() {
             if(overlay.parentNode) overlay.parentNode.removeChild(overlay);
         }, 300);
-        
-        // إزالة حالة التاريخ (عشان زر الرجوع ما يعلق)
         if (history.state && history.state.readerOpen) {
             history.back();
         }
-        document.body.style.overflow = 'auto'; // إعادة تفعيل التمرير للصفحة الأصلية
+        document.body.style.overflow = 'auto';
     }
 };
 
 // ============================================
-// دالة فتح القارئ (Overlay + طباعة احترافية)
+// دالة فتح القارئ (مع طباعة احترافية)
 // ============================================
 function openDefinitionWindow() {
     if (document.getElementById('zakat-reader-overlay')) return;
@@ -16807,17 +16804,17 @@ function openDefinitionWindow() {
     var isRTL = currentLanguage === 'ar';
     var parentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     
-    // إعداد البيانات للطباعة
+    // إعداد التاريخ والوقت للطباعة
     var printDate = new Date().toLocaleDateString(isRTL ? 'ar-EG' : 'tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
-    var appName = isRTL ? 'حاسبة الزكاة الذكية' : 'Akıllı Zekât Hesaplayıcı';
-    var docTitle = isRTL ? 'تعريف الزكاة وحكمها الشرعي' : 'Zekâtın Tanımı ve Hükmü';
-    
-    // رابط الباركود (يستخدم API مجاني لتوليد باركود لرابط الموقع الحالي)
-    var qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=${encodeURIComponent(window.location.href)}`;
 
+    // إنشاء الـ Overlay
     var overlay = document.createElement('div');
     overlay.id = 'zakat-reader-overlay';
-    overlay.style.cssText = `position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 2147483647; opacity: 0; transition: opacity 0.3s ease; border: none;`;
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: #fff; z-index: 2147483647; opacity: 0;
+        transition: opacity 0.3s ease; border: none;
+    `;
     
     var iframe = document.createElement('iframe');
     iframe.style.cssText = "width: 100%; height: 100%; border: none;";
@@ -16842,9 +16839,13 @@ function openDefinitionWindow() {
     });
 
     var doc = iframe.contentWindow.document;
+    
     var arLogo = "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png";
     var trLogo = "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/__gemini_generated_image_l7bj58l7bj58l7bj---uo3o-r-o-c-1-Egn1jwHegFrVqeor.png"; 
     var currentLogo = isRTL ? arLogo : trLogo;
+    
+    // رابط QR Code (يستخدم API مجاني لتوليد كود للصفحة الحالية)
+    var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(window.location.href);
 
     doc.open();
     doc.write(`
@@ -16855,7 +16856,7 @@ function openDefinitionWindow() {
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
             <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;700&family=Merriweather:wght@300;400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
             <style>
-                /* --- المتغيرات الأساسية --- */
+                /* --- الأساسيات --- */
                 :root {
                     --primary-color: #0d7c66; --bg-color: #f5f9f7; --card-bg: #ffffff;
                     --text-color: #1a3a2e; --border-color: #c8ddd4; --header-bg: rgba(255, 255, 255, 0.95);
@@ -16863,24 +16864,28 @@ function openDefinitionWindow() {
                     --read-font-family: ${isRTL ? "'Amiri', serif" : "'Merriweather', serif"};
                     --read-text-transform: none;
                 }
+                
+                /* الثيمات */
                 [data-theme="light"] { --bg-color: #f5f9f7; --card-bg: #ffffff; --text-color: #1a3a2e; }
                 [data-theme="dark"] { --bg-color: #121212; --card-bg: #1e1e1e; --text-color: #e0e0e0; --header-bg: rgba(30,30,30,0.95); --border-color: #333; }
                 [data-theme="sepia"] {
                     --bg-color: #f4ecd8; --card-bg: transparent; --text-color: #000000;
                     --header-bg: #e9e0c9; --border-color: transparent; --primary-color: #000000;
                 }
-                [data-theme="sepia"] .container * { background: transparent !important; color: #000 !important; box-shadow: none !important; }
-                [data-theme="sepia"] .fixed-header { border-bottom: 1px solid rgba(0,0,0,0.05); }
+                [data-theme="sepia"] .container, [data-theme="sepia"] .container * {
+                    background-color: transparent !important; box-shadow: none !important; border: none !important; color: #000000 !important;
+                }
+                [data-theme="sepia"] .settings-panel { background: #fffbf0; border: 1px solid #d3c0a3; }
+                [data-theme="sepia"] .settings-panel * { color: #333 !important; }
 
-                * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+                * { box-sizing: border-box; }
                 body {
                     font-family: var(--read-font-family); background-color: var(--bg-color); color: var(--text-color);
                     margin: 0; padding-top: 70px; line-height: var(--read-line-height);
                     font-size: var(--read-font-size); text-transform: var(--read-text-transform);
-                    transition: background-color 0.3s;
                 }
 
-                /* --- الهيدر والقوائم (تختفي عند الطباعة) --- */
+                /* --- واجهة المستخدم (تختفي عند الطباعة) --- */
                 .fixed-header {
                     position: fixed; top: 0; left: 0; width: 100%; height: 65px;
                     background-color: var(--header-bg); backdrop-filter: blur(10px);
@@ -16891,7 +16896,8 @@ function openDefinitionWindow() {
                 .header-actions { display: flex; gap: 8px; }
                 .action-btn {
                     background: transparent; border: 1px solid var(--border-color); cursor: pointer;
-                    width: 40px; height: 40px; border-radius: 10px; font-size: 1.2rem; color: var(--text-color);
+                    width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+                    font-size: 1.2rem; color: var(--text-color);
                 }
                 .settings-panel {
                     position: fixed; top: 70px; ${isRTL ? 'left: 15px;' : 'right: 15px;'} width: 300px;
@@ -16900,44 +16906,40 @@ function openDefinitionWindow() {
                     flex-direction: column; gap: 15px; z-index: 2000;
                 }
                 .settings-panel.show { display: flex; }
+                .theme-options { display: flex; gap: 15px; justify-content: center; }
                 .theme-circle { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--border-color); cursor: pointer; display: flex; align-items: center; justify-content: center; }
                 .theme-circle.selected { border-color: var(--primary-color); transform: scale(1.15); }
+                .btn-row { display: flex; gap: 8px; }
                 .set-btn { flex: 1; padding: 8px; border: 1px solid var(--border-color); background: transparent; cursor: pointer; color: var(--text-color); border-radius: 8px; }
-                .set-btn.active { background: var(--primary-color); color: white; }
 
-                .container { margin: 0 auto; background: var(--card-bg); max-width: 800px; padding: 50px; margin-top: 30px; border-radius: 20px; border: 1px solid var(--border-color); }
+                .container { margin: 0 auto; background: var(--card-bg); max-width: 800px; padding: 50px; margin-top: 30px; border-radius: 20px; }
+                @media (max-width: 768px) { .container { padding: 20px; margin-top: 0; border-radius: 0; } }
+
+                /* --- 🖨️ تنسيقات الطباعة الاحترافية --- */
+                .print-only { display: none; }
                 
-                @media (max-width: 768px) {
-                    .container { width: 100%; max-width: 100%; margin: 0; padding: 20px; border: none; }
-                }
-
-                /* ========================================= */
-                /* 🖨️ تنسيقات الطباعة الاحترافية (Print CSS) */
-                /* ========================================= */
-                .print-only { display: none; } /* مخفي في الشاشة العادية */
-
                 @media print {
                     @page {
-                        size: A4;
                         margin: 1.5cm;
+                        size: A4;
                     }
                     
-                    /* إخفاء عناصر الواجهة */
-                    .fixed-header, .settings-panel, .action-btn, #toast { display: none !important; }
-                    
-                    /* إظهار عناصر الطباعة */
-                    .print-only { display: block; }
-                    
                     body {
-                        background: white !important;
+                        background-color: white !important;
                         color: black !important;
-                        padding: 0 !important;
-                        margin: 0 !important;
-                        font-family: 'Amiri', 'Times New Roman', serif !important; /* خط رسمي للطباعة */
-                        font-size: 12pt !important;
+                        padding-top: 0 !important;
+                        font-family: 'Amiri', 'Merriweather', serif !important; /* خط طباعة رسمي */
+                        font-size: 14pt !important;
                         line-height: 1.6 !important;
                     }
 
+                    /* إخفاء عناصر الواجهة */
+                    .fixed-header, .settings-panel, .action-btn { display: none !important; }
+
+                    /* إظهار عناصر الطباعة */
+                    .print-only { display: block; }
+
+                    /* تنسيق الحاوية للطباعة */
                     .container {
                         width: 100% !important;
                         max-width: 100% !important;
@@ -16945,57 +16947,56 @@ function openDefinitionWindow() {
                         padding: 0 !important;
                         border: none !important;
                         box-shadow: none !important;
+                        background: transparent !important;
+                        text-align: justify; /* محاذاة النص */
                     }
 
-                    /* --- تصميم رأس الصفحة المطبوعة --- */
-                    .print-header-container {
+                    /* --- 1. هيدر الطباعة --- */
+                    .print-header-wrapper {
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
-                        border-bottom: 2px solid #000;
+                        border-bottom: 2px solid #0d7c66;
                         padding-bottom: 15px;
                         margin-bottom: 30px;
                     }
-                    
-                    .print-logo-box { width: 80px; text-align: ${isRTL ? 'right' : 'left'}; }
-                    .print-logo-img { width: 100%; height: auto; }
-                    
-                    .print-title-box { text-align: center; flex: 1; padding: 0 20px; }
-                    .print-main-title { font-size: 18pt; font-weight: bold; margin: 0; color: #000; }
-                    .print-sub-title { font-size: 10pt; color: #555; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
-                    
-                    .print-meta-box { width: 90px; text-align: ${isRTL ? 'left' : 'right'}; display: flex; flex-direction: column; align-items: center; }
-                    .print-qr-img { width: 70px; height: 70px; margin-bottom: 5px; border: 1px solid #eee; }
-                    .print-date { font-size: 8pt; color: #444; white-space: nowrap; }
+                    .print-logo { width: 80px; height: auto; }
+                    .print-info { text-align: ${isRTL ? 'left' : 'right'}; }
+                    .print-title { font-size: 18pt; font-weight: bold; color: #0d7c66; margin: 0; }
+                    .print-subtitle { font-size: 10pt; color: #555; margin-top: 5px; }
 
-                    /* --- تنسيق المحتوى --- */
-                    #mainContent {
-                        text-align: justify;
-                        text-justify: inter-word;
-                    }
-                    h1, h2, h3 { color: #000 !important; page-break-after: avoid; }
-                    p { margin-bottom: 15px; orphans: 3; widows: 3; }
-                    
-                    /* --- تذييل الصفحة --- */
-                    .print-footer {
+                    /* --- 2. فوتر الطباعة (يتكرر في كل صفحة) --- */
+                    .print-footer-wrapper {
                         position: fixed;
                         bottom: 0;
                         left: 0;
-                        right: 0;
+                        width: 100%;
+                        height: 80px;
                         border-top: 1px solid #ccc;
                         padding-top: 10px;
                         display: flex;
                         justify-content: space-between;
-                        font-size: 9pt;
-                        color: #666;
+                        align-items: center;
+                        background: white; /* لتغطية أي نص تحته */
                     }
+                    
+                    .footer-qr { width: 60px; height: 60px; }
+                    .footer-text { font-size: 9pt; color: #666; max-width: 70%; }
+                    
+                    /* ضمان عدم تغطية الفوتر للنص */
+                    body { margin-bottom: 100px; } 
+
+                    /* تحسين النصوص */
+                    h1, h2, h3 { color: #000 !important; page-break-after: avoid; }
+                    p { page-break-inside: avoid; orphans: 3; widows: 3; }
+                    a { text-decoration: none; color: black !important; }
                 }
             </style>
         </head>
         <body>
-            <!-- واجهة المستخدم (للهاتف/الكمبيوتر) -->
+            <!-- واجهة المستخدم -->
             <div class="fixed-header">
-                <div class="header-title"><span>${docTitle}</span></div>
+                <div class="header-title"><span>${isRTL ? 'تعريف الزكاة وحكمها' : 'Zekâtın Tanımı'}</span></div>
                 <div class="header-actions">
                     <button class="action-btn" id="settingsBtn" onclick="toggleSettings(event)">Aa</button>
                     <button class="action-btn" onclick="shareText()">📤</button>
@@ -17004,14 +17005,14 @@ function openDefinitionWindow() {
                 </div>
             </div>
 
+            <!-- لوحة الإعدادات -->
             <div id="settingsPanel" class="settings-panel" onclick="event.stopPropagation()">
-                <!-- خيارات الإعدادات (نفس الكود السابق) -->
                 <div class="setting-group">
                     <div class="setting-label">${isRTL ? 'لون الصفحة' : 'Sayfa Rengi'}</div>
                     <div class="theme-options">
-                        <div class="theme-circle" onclick="setTheme('light')" style="background:#fff;" title="Light">☀️</div>
-                        <div class="theme-circle" onclick="setTheme('sepia')" style="background:#f4ecd8;" title="Book">📖</div>
-                        <div class="theme-circle" onclick="setTheme('dark')" style="background:#1e1e1e; color:white;" title="Dark">🌑</div>
+                        <div class="theme-circle" onclick="setTheme('light')" style="background:#fff;">☀️</div>
+                        <div class="theme-circle" onclick="setTheme('sepia')" style="background:#f4ecd8;">📖</div>
+                        <div class="theme-circle" onclick="setTheme('dark')" style="background:#1e1e1e; color:white;">🌑</div>
                     </div>
                 </div>
                 <hr style="width:100%; border:0; border-top:1px solid var(--border-color); opacity:0.3">
@@ -17039,31 +17040,37 @@ function openDefinitionWindow() {
                 ${!isRTL ? `<div class="setting-group"><div class="setting-label">Harf Durumu</div><div class="btn-row"><button class="set-btn" onclick="setTextCase('none')">ab</button><button class="set-btn" onclick="setTextCase('uppercase')">AB</button></div></div>` : ''}
             </div>
 
-            <!-- 🖨️ رأس الصفحة للطباعة فقط -->
-            <div class="print-only print-header-container">
-                <div class="print-logo-box">
-                    <img src="${currentLogo}" class="print-logo-img" alt="Logo">
+            <!-- 🖨️ هيدر الطباعة (يظهر فقط عند الطباعة) -->
+            <div class="print-only print-header-wrapper">
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <img src="${currentLogo}" class="print-logo" alt="Logo">
+                    <div>
+                        <h1 class="print-title">${isRTL ? 'حاسبة الزكاة الذكية' : 'Akıllı Zekât Hesaplayıcı'}</h1>
+                        <div style="font-size:10pt; color:#666;">www.zakat-app.com</div>
+                    </div>
                 </div>
-                <div class="print-title-box">
-                    <h1 class="print-main-title">${docTitle}</h1>
-                    <div class="print-sub-title">${appName}</div>
-                </div>
-                <div class="print-meta-box">
-                    <img src="${qrUrl}" class="print-qr-img" alt="QR">
-                    <div class="print-date">${printDate}</div>
+                <div class="print-info">
+                    <div style="font-weight:bold; font-size:12pt;">${isRTL ? 'وثيقة تعريفية' : 'Bilgi Belgesi'}</div>
+                    <div class="print-subtitle">${printDate}</div>
                 </div>
             </div>
 
             <div class="container">
-                <div id="mainContent">
-                    ${content}
-                </div>
+                <div id="mainContent">${content}</div>
             </div>
 
-            <!-- 🖨️ تذييل الصفحة للطباعة فقط -->
-            <div class="print-only print-footer">
-                <div>${appName} © ${new Date().getFullYear()}</div>
-                <div>www.zakat-calculator.com</div>
+            <!-- 🖨️ فوتر الطباعة (يظهر في كل صفحة) -->
+            <div class="print-only print-footer-wrapper">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <img src="${qrUrl}" class="footer-qr" alt="QR Code">
+                    <div class="footer-text">
+                        <strong>${isRTL ? 'امسح الرمز للقراءة أونلاين' : 'Online okumak için tarayın'}</strong><br>
+                        ${isRTL ? 'تم إنشاء هذه الوثيقة تلقائياً بواسطة تطبيق حاسبة الزكاة.' : 'Bu belge Zekât Hesaplayıcı uygulaması tarafından oluşturulmuştur.'}
+                    </div>
+                </div>
+                <div style="text-align:${isRTL ? 'left' : 'right'}; font-size:10pt; color:#444;">
+                    Page <span class="page-number"></span>
+                </div>
             </div>
 
             <script>
@@ -17503,6 +17510,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
