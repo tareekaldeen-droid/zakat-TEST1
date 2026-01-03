@@ -16778,7 +16778,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // دالة فتح صفحة الأحكام الفقهية (تخزين في الصفحة الرئيسية - Parent Storage)
 // ============================================
 // ============================================
-// 1. دالة الإغلاق (لزر الرجوع ولزر الإغلاق)
+// متغيرات عامة للتحكم في الإغلاق
 // ============================================
 window.closeZakatReader = function() {
     var overlay = document.getElementById('zakat-reader-overlay');
@@ -16791,24 +16791,21 @@ window.closeZakatReader = function() {
         if (history.state && history.state.readerOpen) {
             history.back();
         }
-        document.body.style.overflow = 'auto'; 
+        document.body.style.overflow = 'auto';
     }
 };
 
 // ============================================
-// 2. دالة فتح القارئ (Overlay + Pro Print)
+// دالة فتح القارئ (Overlay + طباعة احترافية)
 // ============================================
 function openDefinitionWindow() {
     if (document.getElementById('zakat-reader-overlay')) return;
 
-    // إعداد البيانات
     var content = document.getElementById('hiddenDefinitionContent').innerHTML;
     var isRTL = currentLanguage === 'ar';
     var parentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    var currentDate = new Date().toLocaleDateString(isRTL ? 'ar-EG' : 'tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
-    var currentUrl = encodeURIComponent(window.location.href);
 
-    // إنشاء الطبقة
+    // إنشاء الطبقة (Overlay)
     var overlay = document.createElement('div');
     overlay.id = 'zakat-reader-overlay';
     overlay.style.cssText = `
@@ -16825,7 +16822,6 @@ function openDefinitionWindow() {
 
     requestAnimationFrame(() => overlay.style.opacity = '1');
 
-    // دعم زر الرجوع
     history.pushState({readerOpen: true}, "", window.location.href);
     window.onpopstate = function(event) {
         if (document.getElementById('zakat-reader-overlay')) {
@@ -16835,7 +16831,6 @@ function openDefinitionWindow() {
         }
     };
 
-    // استرجاع الإعدادات
     var savedPrefsString = sessionStorage.getItem('zakat_reader_prefs');
     var initialPrefs = savedPrefsString ? savedPrefsString : JSON.stringify({
         fontSize: 19, lineHeight: 1.8, theme: parentTheme, fontType: 'classic', textCase: 'none'
@@ -16843,11 +16838,15 @@ function openDefinitionWindow() {
 
     var doc = iframe.contentWindow.document;
     
-    // اللوجو
+    // إعداد متغيرات الطباعة
     var arLogo = "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png";
     var trLogo = "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/__gemini_generated_image_l7bj58l7bj58l7bj---uo3o-r-o-c-1-Egn1jwHegFrVqeor.png"; 
     var currentLogo = isRTL ? arLogo : trLogo;
-    var appName = isRTL ? "حاسبة الزكاة الذكية" : "Akıllı Zekât Hesaplayıcı";
+    
+    // تاريخ اليوم للطباعة
+    var today = new Date().toLocaleDateString(isRTL ? 'ar-EG' : 'tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
+    // رابط الباركود
+    var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=" + encodeURIComponent(window.location.href);
 
     doc.open();
     doc.write(`
@@ -16858,7 +16857,6 @@ function openDefinitionWindow() {
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
             <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;700&family=Merriweather:wght@300;400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
             <style>
-                /* --- متغيرات الشاشة --- */
                 :root {
                     --primary-color: #0d7c66; --bg-color: #f5f9f7; --card-bg: #ffffff;
                     --text-color: #1a3a2e; --border-color: #c8ddd4; --header-bg: rgba(255, 255, 255, 0.95);
@@ -16866,204 +16864,220 @@ function openDefinitionWindow() {
                     --read-font-family: ${isRTL ? "'Amiri', serif" : "'Merriweather', serif"};
                     --read-text-transform: none;
                 }
-                
-                /* إعدادات الثيمات للشاشة فقط */
-                [data-theme="light"] { --bg-color: #f5f9f7; --card-bg: #ffffff; --text-color: #1a3a2e; }
+                /* CSS الأساسي (نفس السابق) */
+                [data-theme="light"] { --bg-color: #f5f9f7; --card-bg: #ffffff; --text-color: #1a3a2e; --header-bg: rgba(255, 255, 255, 0.95); --border-color: #c8ddd4; }
                 [data-theme="dark"] { --bg-color: #121212; --card-bg: #1e1e1e; --text-color: #e0e0e0; --header-bg: rgba(30,30,30,0.95); --border-color: #333; }
-                [data-theme="sepia"] {
-                    --bg-color: #f4ecd8; --card-bg: transparent; --text-color: #000000;
-                    --header-bg: #e9e0c9; --border-color: transparent; --primary-color: #000000;
-                }
-                [data-theme="sepia"] .container * { background: transparent !important; color: #000 !important; box-shadow: none !important; border:none !important; }
+                [data-theme="sepia"] { --bg-color: #f4ecd8; --card-bg: transparent; --text-color: #000000; --header-bg: #e9e0c9; --border-color: transparent; --primary-color: #000000; }
+                [data-theme="sepia"] .container, [data-theme="sepia"] .container * { background-color: transparent !important; box-shadow: none !important; border: none !important; color: #000000 !important; text-shadow: none !important; }
+                [data-theme="sepia"] .fixed-header { border-bottom: 1px solid rgba(0,0,0,0.05); }
+                [data-theme="sepia"] .action-btn { border: 1px solid rgba(0,0,0,0.1); }
+                [data-theme="sepia"] .settings-panel { background: #fffbf0; border: 1px solid #d3c0a3; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+                [data-theme="sepia"] .settings-panel * { color: #333 !important; }
+                [data-theme="sepia"] .set-btn { border: 1px solid #d3c0a3; }
 
                 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-                
                 body {
                     font-family: var(--read-font-family); background-color: var(--bg-color); color: var(--text-color);
                     margin: 0; padding-top: 70px; line-height: var(--read-line-height);
                     font-size: var(--read-font-size); text-transform: var(--read-text-transform);
                     transition: background-color 0.3s, color 0.3s;
                 }
-
-                /* --- الهيدر والقوائم (تختفي عند الطباعة) --- */
                 .fixed-header {
                     position: fixed; top: 0; left: 0; width: 100%; height: 65px;
-                    background-color: var(--header-bg); backdrop-filter: blur(10px);
+                    background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
                     border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;
-                    padding: 0 15px; z-index: 1000;
+                    padding: 0 15px; z-index: 1000; transition: background-color 0.3s;
                 }
+                .header-title { font-weight: bold; color: var(--primary-color); font-size: 1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 50%; }
+                .header-actions { display: flex; gap: 8px; }
                 .action-btn {
                     background: transparent; border: 1px solid var(--border-color); cursor: pointer;
                     width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
-                    font-size: 1.2rem; color: var(--text-color);
+                    font-size: 1.2rem; color: var(--text-color); transition: 0.2s;
                 }
+                .action-btn:hover, .action-btn.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+                
                 .settings-panel {
                     position: fixed; top: 70px; ${isRTL ? 'left: 15px;' : 'right: 15px;'} width: 300px;
                     background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px;
                     padding: 20px; box-shadow: 0 15px 50px rgba(0,0,0,0.2); display: none;
-                    flex-direction: column; gap: 15px; z-index: 2000;
+                    flex-direction: column; gap: 15px; z-index: 2000; max-height: 80vh; overflow-y: auto;
                 }
-                .settings-panel.show { display: flex; }
+                .settings-panel.show { display: flex; animation: slideDown 0.3s ease; }
+                @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
                 
-                /* الحاوية الرئيسية */
-                .container { margin: 0 auto; background: var(--card-bg); max-width: 800px; padding: 40px; border-radius: 20px; }
-                @media (max-width: 768px) { .container { padding: 20px; border: none; } }
-
-                /* --- عناصر الطباعة (مخفية في الشاشة) --- */
-                .print-header-container { display: none; }
+                .setting-group { display: flex; flex-direction: column; gap: 6px; }
+                .setting-label { font-size: 0.8rem; font-weight: bold; opacity: 0.7; text-transform: uppercase; }
+                .btn-row { display: flex; gap: 8px; }
+                .set-btn {
+                    flex: 1; border: 1px solid var(--border-color); background: transparent; cursor: pointer;
+                    padding: 8px; border-radius: 8px; font-size: 1rem; color: var(--text-color); transition: 0.2s;
+                    display: flex; align-items: center; justify-content: center;
+                }
+                .set-btn:hover { background: rgba(0,0,0,0.05); }
+                .theme-options { display: flex; gap: 15px; justify-content: center; margin-top: 5px; }
+                .theme-circle {
+                    width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+                    border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+                    font-size: 1.2rem; transition: 0.2s;
+                }
+                .theme-circle.selected { border-color: var(--primary-color); transform: scale(1.15); box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+                
+                .container { margin: 0 auto; background: var(--card-bg); transition: all 0.3s ease; }
+                @media (min-width: 1025px) { .container { max-width: 800px; margin-top: 30px; margin-bottom: 50px; padding: 50px; border-radius: 20px; border: 1px solid var(--border-color); } }
+                @media (max-width: 768px) {
+                    body { background-color: var(--bg-color); }
+                    .container { width: 100%; max-width: 100%; margin: 0; padding: 20px; border: none; }
+                    .header-title span { display: none; }
+                    .header-title::after { content: '📖'; }
+                }
 
                 /* ========================================= */
-                /* 🖨️ CSS الطباعة الاحترافي */
+                /* 🖨️ تنسيقات الطباعة الاحترافية (Print CSS) */
                 /* ========================================= */
+                .print-only { display: none; } /* إخفاء عناصر الطباعة في العرض العادي */
+
                 @media print {
-                    @page {
-                        margin: 1.5cm;
-                        size: A4;
-                        /* محاولة لإظهار أرقام الصفحات (حسب دعم المتصفح) */
-                        @bottom-center {
-                            content: counter(page);
-                            font-size: 10pt;
-                        }
-                    }
+                    @page { margin: 1.5cm; size: A4; }
+                    
+                    /* إخفاء واجهة المستخدم */
+                    .fixed-header, .settings-panel, .action-btn, button { display: none !important; }
+                    
+                    /* إظهار هيدر الطباعة */
+                    .print-only { display: flex !important; }
 
-                    /* 1. إخفاء عناصر واجهة المستخدم */
-                    .fixed-header, .settings-panel, .action-btn, #settingsBtn {
-                        display: none !important;
-                    }
-
-                    /* 2. تصفير الصفحة */
-                    body {
-                        background-color: white !important;
-                        color: black !important;
+                    /* تصفير الألوان والخلفيات إجبارياً */
+                    body, .container, #mainContent {
+                        background-color: #fff !important;
+                        color: #000 !important;
                         padding: 0 !important;
                         margin: 0 !important;
-                        font-size: 12pt !important;
-                        line-height: 1.5 !important;
-                        -webkit-print-color-adjust: exact;
-                    }
-
-                    /* 3. تنظيف الحاوية */
-                    .container {
                         width: 100% !important;
                         max-width: 100% !important;
-                        margin: 0 !important;
-                        padding: 0 !important;
                         border: none !important;
                         box-shadow: none !important;
-                        background: transparent !important;
+                        overflow: visible !important;
                     }
 
-                    /* 4. تنظيف النصوص الداخلية */
-                    #mainContent, #mainContent * {
+                    /* إجبار النص على اللون الأسود */
+                    * {
+                        -webkit-print-color-adjust: exact;
+                        color: #000 !important;
                         background: transparent !important;
-                        color: black !important;
-                        box-shadow: none !important;
                         text-shadow: none !important;
-                        border: none !important;
+                        box-shadow: none !important;
                     }
 
-                    /* 5. إظهار وتنسيق هيدر الطباعة */
-                    .print-header-container {
-                        display: flex !important;
+                    /* تصميم هيدر الطباعة */
+                    .print-header-wrapper {
+                        display: flex;
                         justify-content: space-between;
-                        align-items: center;
+                        align-items: flex-start;
                         border-bottom: 2px solid #000;
                         padding-bottom: 15px;
                         margin-bottom: 30px;
                         width: 100%;
                     }
 
-                    .ph-left {
+                    .print-info-left {
                         display: flex;
-                        align-items: center;
-                        gap: 15px;
-                    }
-
-                    .ph-logo {
-                        width: 60px;
-                        height: auto;
-                        filter: grayscale(100%); /* جعل اللوجو أبيض وأسود */
-                    }
-
-                    .ph-text h1 {
-                        margin: 0;
-                        font-size: 18pt;
-                        color: #000;
-                        font-family: 'Amiri', serif;
-                    }
-
-                    .ph-text p {
-                        margin: 5px 0 0 0;
-                        font-size: 10pt;
-                        color: #444;
-                    }
-
-                    .ph-right {
-                        text-align: center;
-                    }
-
-                    .ph-qr {
-                        width: 80px;
-                        height: 80px;
-                        border: 1px solid #ddd;
-                        padding: 2px;
+                        flex-direction: column;
+                        gap: 10px;
                     }
                     
-                    /* كسر الصفحات بشكل نظيف */
+                    .print-logo-img {
+                        height: 60px;
+                        width: auto;
+                        object-fit: contain;
+                    }
+                    
+                    .print-app-name {
+                        font-weight: bold;
+                        font-size: 18px;
+                        margin-top: 5px;
+                    }
+
+                    .print-info-right {
+                        text-align: ${isRTL ? 'left' : 'right'};
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+                        align-items: ${isRTL ? 'flex-end' : 'flex-end'}; /* عكس الاتجاه للباركود */
+                    }
+
+                    .print-meta {
+                        font-size: 12px;
+                        color: #333 !important;
+                        margin-top: 5px;
+                    }
+
+                    /* تحسين النصوص */
+                    p { text-align: justify; widows: 3; orphans: 3; }
                     h1, h2, h3 { page-break-after: avoid; }
-                    p { page-break-inside: avoid; orphans: 3; widows: 3; }
+                    
+                    /* إضافة مسافة للفوتر الافتراضي للمتصفح */
+                    body { margin-bottom: 20px; }
                 }
             </style>
         </head>
         <body>
-            <!-- هيدر الشاشة -->
-            <div class="fixed-header">
-                <div style="font-weight:bold; color:var(--primary-color); padding:0 15px;">
-                    ${isRTL ? 'تعريف الزكاة' : 'Zekâtın Tanımı'}
+            <!-- هيدر الطباعة المخفي -->
+            <div class="print-only print-header-wrapper">
+                <div class="print-info-left">
+                    <img src="${currentLogo}" class="print-logo-img" alt="Logo">
+                    <div class="print-app-name">${isRTL ? 'حاسبة الزكاة الذكية' : 'Akıllı Zekât Hesaplayıcı'}</div>
                 </div>
-                <div style="display:flex; gap:8px; padding:0 15px;">
+                <div class="print-info-right">
+                    <img src="${qrUrl}" alt="QR" style="width: 80px; height: 80px; border: 1px solid #ddd;">
+                    <div class="print-meta">📅 ${today}</div>
+                </div>
+            </div>
+
+            <div class="fixed-header">
+                <div class="header-title"><span>${isRTL ? 'تعريف الزكاة وحكمها' : 'Zekâtın Tanımı'}</span></div>
+                <div class="header-actions">
                     <button class="action-btn" id="settingsBtn" onclick="toggleSettings(event)">Aa</button>
+                    <button class="action-btn" onclick="shareText()">📤</button>
                     <button class="action-btn" onclick="window.print()">🖨️</button>
                     <button class="action-btn" onclick="closeMe()" style="color:#ef4444; border-color:rgba(239,68,68,0.3)">✕</button>
                 </div>
             </div>
 
-            <!-- لوحة الإعدادات -->
             <div id="settingsPanel" class="settings-panel" onclick="event.stopPropagation()">
-                <div style="display:flex; gap:10px; justify-content:center;">
-                    <div class="theme-circle" onclick="setTheme('light')" style="background:#fff;">☀️</div>
-                    <div class="theme-circle" onclick="setTheme('sepia')" style="background:#f4ecd8;">📖</div>
-                    <div class="theme-circle" onclick="setTheme('dark')" style="background:#1e1e1e; color:white;">🌑</div>
-                </div>
-                <hr style="opacity:0.2">
-                <div style="display:flex; gap:5px;">
-                    <button class="set-btn" onclick="setFont('classic')">${isRTL ? 'نسخ' : 'Klasik'}</button>
-                    <button class="set-btn" onclick="setFont('modern')">${isRTL ? 'حديث' : 'Modern'}</button>
-                </div>
-                <div style="display:flex; gap:5px;">
-                    <button class="set-btn" onclick="changeFontSize(-1)">A-</button>
-                    <button class="set-btn" onclick="changeFontSize(1)">A+</button>
-                </div>
-            </div>
-
-            <!-- هيدر الطباعة (يظهر فقط عند الطباعة) -->
-            <div class="print-header-container">
-                <div class="ph-left">
-                    <img src="${currentLogo}" class="ph-logo" alt="Logo">
-                    <div class="ph-text">
-                        <h1>${appName}</h1>
-                        <p>${isRTL ? 'تاريخ الطباعة:' : 'Yazdırma Tarihi:'} ${currentDate}</p>
+                <div class="setting-group">
+                    <div class="setting-label">${isRTL ? 'لون الصفحة' : 'Sayfa Rengi'}</div>
+                    <div class="theme-options">
+                        <div class="theme-circle" onclick="setTheme('light')" style="background:#fff;" title="Light">☀️</div>
+                        <div class="theme-circle" onclick="setTheme('sepia')" style="background:#f4ecd8;" title="Book">📖</div>
+                        <div class="theme-circle" onclick="setTheme('dark')" style="background:#1e1e1e; color:white;" title="Dark">🌑</div>
                     </div>
                 </div>
-                <div class="ph-right">
-                    <!-- توليد QR Code تلقائي للرابط الحالي -->
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${currentUrl}" class="ph-qr" alt="QR">
+                <hr style="width:100%; border:0; border-top:1px solid var(--border-color); opacity:0.3">
+                <div class="setting-group">
+                    <div class="setting-label">${isRTL ? 'نوع الخط' : 'Yazı Tipi'}</div>
+                    <div class="btn-row">
+                        <button class="set-btn" onclick="setFont('classic')">${isRTL ? 'نسخ' : 'Klasik'}</button>
+                        <button class="set-btn" onclick="setFont('modern')">${isRTL ? 'حديث' : 'Modern'}</button>
+                    </div>
                 </div>
+                <div class="setting-group">
+                    <div class="setting-label">${isRTL ? 'حجم النص' : 'Yazı Boyutu'}</div>
+                    <div class="btn-row">
+                        <button class="set-btn" onclick="changeFontSize(-1)">A-</button>
+                        <button class="set-btn" onclick="changeFontSize(1)">A+</button>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <div class="setting-label">${isRTL ? 'تباعد الأسطر' : 'Satır Aralığı'}</div>
+                    <div class="btn-row">
+                        <button class="set-btn" onclick="changeLineHeight(-0.1)">≣</button>
+                        <button class="set-btn" onclick="changeLineHeight(0.1)">☷</button>
+                    </div>
+                </div>
+                ${!isRTL ? `<div class="setting-group"><div class="setting-label">Harf Durumu</div><div class="btn-row"><button class="set-btn" onclick="setTextCase('none')">ab</button><button class="set-btn" onclick="setTextCase('uppercase')">AB</button></div></div>` : ''}
             </div>
 
-            <div class="container">
-                <div id="mainContent">${content}</div>
-            </div>
+            <div class="container"><div id="mainContent">${content}</div></div>
 
             <script>
                 let prefs = ${initialPrefs};
@@ -17073,6 +17087,9 @@ function openDefinitionWindow() {
                     document.documentElement.style.setProperty('--read-font-size', prefs.fontSize + 'px');
                     document.documentElement.style.setProperty('--read-line-height', prefs.lineHeight);
                     document.documentElement.setAttribute('data-theme', prefs.theme);
+                    document.querySelectorAll('.theme-circle').forEach(c => c.classList.remove('selected'));
+                    const themeBtn = document.querySelector(\`.theme-circle[title="\${prefs.theme === 'sepia' ? 'Book' : (prefs.theme === 'dark' ? 'Dark' : 'Light')}"]\`);
+                    if(themeBtn) themeBtn.classList.add('selected');
                     let fontVal = isRTL ? (prefs.fontType === 'modern' ? "'Cairo', sans-serif" : "'Amiri', serif") : (prefs.fontType === 'modern' ? "'Roboto', sans-serif" : "'Merriweather', serif");
                     document.documentElement.style.setProperty('--read-font-family', fontVal);
                     if (!isRTL) document.documentElement.style.setProperty('--read-text-transform', prefs.textCase);
@@ -17080,26 +17097,46 @@ function openDefinitionWindow() {
 
                 function saveAndApply() {
                     applyAllSettings();
-                    if (window.parent) window.parent.sessionStorage.setItem('zakat_reader_prefs', JSON.stringify(prefs));
+                    if (window.parent) {
+                        window.parent.sessionStorage.setItem('zakat_reader_prefs', JSON.stringify(prefs));
+                    }
                 }
 
                 function setTheme(t) { prefs.theme = t; saveAndApply(); }
                 function setFont(t) { prefs.fontType = t; saveAndApply(); }
+                function setTextCase(t) { prefs.textCase = t; saveAndApply(); }
                 function changeFontSize(d) { prefs.fontSize = Math.max(14, Math.min(32, prefs.fontSize + d)); saveAndApply(); }
+                function changeLineHeight(d) { prefs.lineHeight = Math.max(1.2, Math.min(2.5, parseFloat((prefs.lineHeight + d).toFixed(1)))); saveAndApply(); }
 
                 function toggleSettings(e) {
                     if(e) e.stopPropagation();
                     const panel = document.getElementById('settingsPanel');
-                    if (panel.classList.contains('show')) panel.classList.remove('show'); else panel.classList.add('show');
+                    const btn = document.getElementById('settingsBtn');
+                    if (panel.classList.contains('show')) closeSettings(); else { panel.classList.add('show'); btn.classList.add('active'); }
                 }
-                
-                function closeMe() { if(window.parent && window.parent.closeZakatReader) window.parent.closeZakatReader(); }
-                
-                window.addEventListener('scroll', function() { document.getElementById('settingsPanel').classList.remove('show'); });
-                document.addEventListener('click', function(e) { 
-                    if (!document.getElementById('settingsPanel').contains(e.target) && !document.getElementById('settingsBtn').contains(e.target)) 
-                        document.getElementById('settingsPanel').classList.remove('show');
+                function closeSettings() {
+                    document.getElementById('settingsPanel').classList.remove('show');
+                    document.getElementById('settingsBtn').classList.remove('active');
+                }
+
+                window.addEventListener('scroll', function() { if (document.getElementById('settingsPanel').classList.contains('show')) closeSettings(); }, { passive: true });
+                document.addEventListener('click', function(event) {
+                    const panel = document.getElementById('settingsPanel');
+                    const btn = document.getElementById('settingsBtn');
+                    if (!panel.contains(event.target) && !btn.contains(event.target)) closeSettings();
                 });
+
+                function closeMe() {
+                    if(window.parent && window.parent.closeZakatReader) {
+                        window.parent.closeZakatReader();
+                    }
+                }
+
+                async function shareText() {
+                    const text = document.getElementById('mainContent').innerText;
+                    const shareData = { title: "${isRTL ? 'تعريف الزكاة' : 'Zekât Tanımı'}", text: text, url: window.location.href };
+                    if (navigator.share) { try { await navigator.share(shareData); } catch (err) {} } 
+                }
 
                 applyAllSettings();
             <\/script>
@@ -17486,6 +17523,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
