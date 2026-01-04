@@ -17014,16 +17014,34 @@ document.addEventListener('DOMContentLoaded', function() {
                         transition: background-color 0.3s;
                     }
                     
-                    .header-title { 
-                        font-weight: bold; 
-                        color: var(--primary-color); 
-                        font-size: 1.1rem; 
-                        white-space: nowrap; 
-                        overflow: hidden; 
-                        text-overflow: ellipsis; 
-                        max-width: 50%; 
-                    }
+                   .header-title { 
+    font-weight: bold; 
+    color: var(--primary-color); 
+    font-size: 1.1rem; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    max-width: 50%; 
+}
+
+/* إظهار اسم القسم على الهاتف */
+@media (max-width: 768px) {
+    .header-title {
+        max-width: 60%; /* زيادة المساحة */
+        font-size: 0.95rem; /* تصغير الخط قليلاً */
+    }
+    
+    .header-title span {
+        display: inline !important; /* إظهار النص */
+    }
+    
+    .header-title::after {
+        content: '' !important; /* إزالة الأيقونة */
+    }
+}
+
                     
+
                     .header-actions { 
                         display: flex; 
                         gap: 8px; 
@@ -17447,7 +17465,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                  tabindex="0"
                                  role="button"
                                  aria-label="${isRTL ? 'وضع داكن' : 'Koyu mod'}">
-                                🌑
+                                🌙
                             </div>
                         </div>
                     </div>
