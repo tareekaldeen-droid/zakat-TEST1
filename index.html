@@ -2876,26 +2876,33 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;               /* عرض كامل */
 }
 
+/* ============================================ */
+/* تعديل اللوجو في الإعدادات ليصبح دائرياً */
+/* ============================================ */
+
 /* صندوق اللوجو */
 .hero-logo-box {
-    width: 55px;  /* حجم صغير للوجو */
-    height: 55px;
-    flex-shrink: 0; /* منع الانكماش */
+    width: 70px;          /* تم تكبير الحجم قليلاً للوضوح */
+    height: 70px;
+    flex-shrink: 0;
     
     background: white;
-    border-radius: 50%;
-    padding: 4px;
-    box-shadow: 0 4px 8px rgba(13, 124, 102, 0.1);
+    border-radius: 50%;   /* جعل الصندوق دائرياً */
+    padding: 0px;         /* إزالة الحشوة لملء الدائرة بالكامل */
+    box-shadow: 0 4px 10px rgba(13, 124, 102, 0.2); /* ظل أنعم */
     border: 2px solid white;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;     /* مهم جداً: لقص أي جزء من الصورة يخرج عن الدائرة */
 }
 
+/* الصورة داخل اللوجو */
 .hero-logo-img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;    /* يجعل الصورة تملأ الدائرة بالكامل (قص الزوائد) */
+    border-radius: 50%;   /* ضمان تدوير الصورة نفسها */
 }
 
 /* حاوية النصوص */
@@ -3999,6 +4006,18 @@ body.dark-mode .smart-logo-box {
         background-color: rgba(0, 0, 0, 0.5) !important;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -23045,6 +23064,403 @@ document.addEventListener('DOMContentLoaded', function() {
                             content: none !important;
                         }
                     }
+
+
+
+
+
+                    /* ================================================= */
+                    /* نمط الكتاب (نص صافي بدون صناديق) - الوضع الليلي */
+                    /* ================================================= */
+                    
+                    /* 1. إزالة جميع الخلفيات والحدود والظلال من الصناديق */
+                    [data-theme="dark"] div[style*="background"],
+                    [data-theme="dark"] .madhab-box,
+                    [data-theme="dark"] .warning-box,
+                    [data-theme="dark"] .info-box,
+                    [data-theme="dark"] .tip-box,
+                    [data-theme="dark"] .quran-text {
+                        background: transparent !important;  /* خلفية شفافة */
+                        border: none !important;             /* بدون حدود */
+                        box-shadow: none !important;         /* بدون ظل */
+                        padding: 0 !important;               /* إلغاء الحواف الداخلية */
+                        margin-bottom: 20px !important;      /* مسافة بين الفقرات */
+                        border-radius: 0 !important;
+                    }
+
+                    /* 2. تنسيق العناوين لتظهر كعناوين كتب (لون مميز فقط) */
+                    [data-theme="dark"] h4,
+                    [data-theme="dark"] h4 span,
+                    [data-theme="dark"] strong[style],
+                    [data-theme="dark"] strong {
+                        color: #41b8a6 !important; /* لون أخضر فاتح للعناوين */
+                        background: transparent !important;
+                        display: block !important;
+                        margin-bottom: 8px !important;
+                        font-size: 1.1em !important;
+                    }
+
+                    /* 3. تنسيق النصوص العادية (لون أبيض مريح للقراءة) */
+                    [data-theme="dark"] p, 
+                    [data-theme="dark"] li, 
+                    [data-theme="dark"] .explanation,
+                    [data-theme="dark"] div {
+                        color: #e8f5f1 !important;
+                        line-height: 2 !important; /* تباعد أسطر مريح مثل الكتب */
+                        text-align: justify !important; /* محاذاة النص من الجانبين */
+                    }
+
+                    /* 4. تنسيق الآيات القرآنية لتبدو مميزة بدون صندوق */
+                    [data-theme="dark"] .quran-text {
+                        color: #41b8a6 !important;
+                        font-family: 'Amiri', serif !important;
+                        font-size: 1.4em !important;
+                        text-align: center !important;
+                        margin: 30px 0 !important;
+                        padding: 0 !important;
+                    }
+
+                    /* 5. إضافة خط فاصل خفيف جداً بين الفقرات الكبيرة بدلاً من الصناديق */
+                    [data-theme="dark"] div[style*="background"] {
+                        border-bottom: 1px solid rgba(65, 184, 166, 0.1) !important;
+                        padding-bottom: 15px !important;
+                    }
+
+                    /* ================================================= */
+                    /* تنسيق الجداول لتشبه جداول الكتب (بدون ألوان خلفية) */
+                    /* ================================================= */
+
+                    /* 1. إزالة خلفية الحاوية والجدول */
+                    [data-theme="dark"] .table-responsive,
+                    [data-theme="dark"] table {
+                        background: transparent !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                        margin: 20px 0 !important;
+                    }
+
+                    /* 2. تنسيق رأس الجدول (العناوين: عدد الإبل، الواجب...) */
+                    [data-theme="dark"] thead {
+                        background: transparent !important; /* إزالة الخلفية الملونة */
+                    }
+
+                    [data-theme="dark"] th {
+                        background: transparent !important;
+                        color: #41b8a6 !important; /* لون أخضر فاتح للعناوين */
+                        border: none !important;
+                        border-bottom: 2px solid #41b8a6 !important; /* خط فاصل واضح تحت العناوين */
+                        padding: 10px 5px !important;
+                        font-size: 1.1em !important;
+                    }
+
+                    /* 3. تنسيق صفوف البيانات */
+                    [data-theme="dark"] tbody tr {
+                        background: transparent !important;
+                    }
+                    
+                    /* إزالة تأثير التمرير (Hover) */
+                    [data-theme="dark"] tbody tr:hover {
+                        background: transparent !important;
+                    }
+
+                    /* 4. تنسيق الخلايا (الأرقام والنصوص) */
+                    [data-theme="dark"] td {
+                        background: transparent !important;
+                        color: #e8f5f1 !important; /* لون النص الأبيض */
+                        border: none !important;
+                        border-bottom: 1px solid rgba(65, 184, 166, 0.15) !important; /* خط فاصل خفيف جداً بين الصفوف */
+                        padding: 12px 5px !important;
+                    }
+
+                    /* 5. إزالة الألوان الخاصة ببعض الخلايا (مثل العمود الثاني الملون) */
+                    [data-theme="dark"] td[style*="color"],
+                    [data-theme="dark"] td span {
+                        color: #e8f5f1 !important; /* توحيد لون النص */
+                        font-weight: normal !important;
+                    }
+
+
+
+
+
+                    /* ================================================= */
+                    /* نمط الكتاب (Sepia) - تنظيف كامل ولونين فقط */
+                    /* ================================================= */
+
+                    /* 1. إزالة الخلفيات والحدود من جميع الصناديق */
+                    [data-theme="sepia"] div[style*="background"],
+                    [data-theme="sepia"] .madhab-box,
+                    [data-theme="sepia"] .warning-box,
+                    [data-theme="sepia"] .info-box,
+                    [data-theme="sepia"] .tip-box,
+                    [data-theme="sepia"] .quran-text {
+                        background: transparent !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                        padding: 0 !important;
+                        margin-bottom: 20px !important;
+                        border-radius: 0 !important;
+                    }
+
+                    /* 2. توحيد العناوين والنصوص البارزة (لون بني محروق) */
+                    /* هذا يلغي الألوان الفاقعة مثل الأحمر والأزرق */
+                    [data-theme="sepia"] h1, [data-theme="sepia"] h2, 
+                    [data-theme="sepia"] h3, [data-theme="sepia"] h4,
+                    [data-theme="sepia"] strong,
+                    [data-theme="sepia"] b,
+                    [data-theme="sepia"] span[style*="color"],
+                    [data-theme="sepia"] div[style*="color"],
+                    [data-theme="sepia"] .quran-text {
+                        color: #8b4513 !important; /* بني محروق للعناوين */
+                        background: transparent !important;
+                    }
+
+                    /* 3. توحيد النص العادي (لون بني غامق جداً للقراءة) */
+                    [data-theme="sepia"] body,
+                    [data-theme="sepia"] p, 
+                    [data-theme="sepia"] li, 
+                    [data-theme="sepia"] .explanation,
+                    [data-theme="sepia"] div {
+                        color: #433422 !important; /* بني غامق جداً (لون القهوة) */
+                        line-height: 2 !important;
+                        text-align: justify !important;
+                    }
+
+                    /* 4. تنظيف الجداول لتشبه الكتب المطبوعة */
+                    [data-theme="sepia"] table, 
+                    [data-theme="sepia"] thead, 
+                    [data-theme="sepia"] tbody tr,
+                    [data-theme="sepia"] tbody tr:hover {
+                        background: transparent !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                    }
+
+                    [data-theme="sepia"] th {
+                        background: transparent !important;
+                        color: #8b4513 !important; /* لون العناوين */
+                        border: none !important;
+                        border-bottom: 2px solid #8b4513 !important;
+                        padding: 10px 5px !important;
+                    }
+
+                    [data-theme="sepia"] td {
+                        background: transparent !important;
+                        color: #433422 !important; /* لون النص */
+                        border: none !important;
+                        border-bottom: 1px solid rgba(139, 69, 19, 0.2) !important; /* خط فاصل خفيف */
+                        padding: 12px 5px !important;
+                    }
+                    
+                    /* إزالة ألوان الخلايا الفاقعة */
+                    [data-theme="sepia"] td[style*="color"],
+                    [data-theme="sepia"] td span {
+                        color: #433422 !important;
+                        font-weight: normal !important;
+                    }
+
+                    /* 5. فواصل خفيفة جداً بين الفقرات */
+                    [data-theme="sepia"] div[style*="background"] {
+                        border-bottom: 1px solid rgba(139, 69, 19, 0.1) !important;
+                        padding-bottom: 15px !important;
+                    }
+
+
+
+
+
+                    /* ================================================= */
+                    /* نمط الكتاب (الوضع النهاري) - تصميم نظيف (أبيض وأسود) */
+                    /* ================================================= */
+
+                    /* 1. إزالة الخلفيات والحدود والظلال من جميع الصناديق */
+                    [data-theme="light"] div[style*="background"],
+                    [data-theme="light"] .madhab-box,
+                    [data-theme="light"] .warning-box,
+                    [data-theme="light"] .info-box,
+                    [data-theme="light"] .tip-box,
+                    [data-theme="light"] .quran-text {
+                        background: transparent !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                        padding: 0 !important;
+                        margin-bottom: 20px !important;
+                        border-radius: 0 !important;
+                    }
+
+                    /* 2. توحيد العناوين والنصوص البارزة (لون أخضر زيتي داكن وقور) */
+                    [data-theme="light"] h1, [data-theme="light"] h2, 
+                    [data-theme="light"] h3, [data-theme="light"] h4,
+                    [data-theme="light"] strong,
+                    [data-theme="light"] b,
+                    [data-theme="light"] span[style*="color"],
+                    [data-theme="light"] div[style*="color"],
+                    [data-theme="light"] .quran-text {
+                        color: #006d5b !important; /* أخضر زيتي داكن */
+                        background: transparent !important;
+                    }
+
+                    /* 3. توحيد النص العادي (لون رمادي داكن جداً لراحة العين) */
+                    [data-theme="light"] body,
+                    [data-theme="light"] p, 
+                    [data-theme="light"] li, 
+                    [data-theme="light"] .explanation,
+                    [data-theme="light"] div {
+                        color: #333333 !important; /* رمادي داكن (ليس أسود تماماً لتجنب إجهاد العين) */
+                        line-height: 2 !important;
+                        text-align: justify !important;
+                    }
+
+                    /* 4. تنظيف الجداول (نمط طباعة رسمي) */
+                    [data-theme="light"] table, 
+                    [data-theme="light"] thead, 
+                    [data-theme="light"] tbody tr,
+                    [data-theme="light"] tbody tr:hover {
+                        background: transparent !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                    }
+
+                    [data-theme="light"] th {
+                        background: transparent !important;
+                        color: #006d5b !important; /* لون العناوين */
+                        border: none !important;
+                        border-bottom: 2px solid #006d5b !important;
+                        padding: 10px 5px !important;
+                    }
+
+                    [data-theme="light"] td {
+                        background: transparent !important;
+                        color: #333333 !important; /* لون النص */
+                        border: none !important;
+                        border-bottom: 1px solid #e0e0e0 !important; /* خط فاصل رمادي خفيف */
+                        padding: 12px 5px !important;
+                    }
+                    
+                    /* إزالة ألوان الخلايا الفاقعة */
+                    [data-theme="light"] td[style*="color"],
+                    [data-theme="light"] td span {
+                        color: #333333 !important;
+                        font-weight: normal !important;
+                    }
+
+                    /* 5. فواصل خفيفة جداً بين الفقرات الكبيرة */
+                    [data-theme="light"] div[style*="background"] {
+                        border-bottom: 1px solid #eeeeee !important;
+                        padding-bottom: 15px !important;
+                    }
+
+
+
+
+
+
+                    /* ================================================= */
+                    /* طباعة غامقة (Bold) لجميع الأوضاع */
+                    /* ================================================= */
+
+                    /* 1. زيادة سماكة النصوص العادية (المتن) */
+                    [data-theme="dark"] p, [data-theme="sepia"] p, [data-theme="light"] p,
+                    [data-theme="dark"] li, [data-theme="sepia"] li, [data-theme="light"] li,
+                    [data-theme="dark"] td, [data-theme="sepia"] td, [data-theme="light"] td,
+                    [data-theme="dark"] div, [data-theme="sepia"] div, [data-theme="light"] div,
+                    [data-theme="dark"] span, [data-theme="sepia"] span, [data-theme="light"] span {
+                        font-weight: 600 !important; /* خط سميك وواضح للقراءة */
+                    }
+
+                    /* 2. زيادة سماكة العناوين لتكون بارزة جداً */
+                    [data-theme="dark"] h1, [data-theme="sepia"] h1, [data-theme="light"] h1,
+                    [data-theme="dark"] h2, [data-theme="sepia"] h2, [data-theme="light"] h2,
+                    [data-theme="dark"] h3, [data-theme="sepia"] h3, [data-theme="light"] h3,
+                    [data-theme="dark"] h4, [data-theme="sepia"] h4, [data-theme="light"] h4,
+                    [data-theme="dark"] strong, [data-theme="sepia"] strong, [data-theme="light"] strong,
+                    [data-theme="dark"] th, [data-theme="sepia"] th, [data-theme="light"] th,
+                    [data-theme="dark"] b, [data-theme="sepia"] b, [data-theme="light"] b {
+                        font-weight: 900 !important; /* سمك عالي جداً (Extra Bold) */
+                    }
+
+                    /* 3. تحسين تباين الألوان لزيادة الوضوح (تأثير الحبر) */
+                    
+                    /* للوضع النهاري: أسود حالك */
+                    [data-theme="light"] p, [data-theme="light"] li, [data-theme="light"] td {
+                        color: #000000 !important; 
+                    }
+                    
+                    /* لوضع الكتاب: بني غامق جداً */
+                    [data-theme="sepia"] p, [data-theme="sepia"] li, [data-theme="sepia"] td {
+                        color: #2b1d0e !important; 
+                    }
+                    
+                    /* للوضع الليلي: أبيض ناصع (لزيادة التباين مع السماكة) */
+                    [data-theme="dark"] p, [data-theme="dark"] li, [data-theme="dark"] td {
+                        color: #ffffff !important; 
+                    }
+
+
+
+
+                    /* ================================================= */
+                    /* إعدادات الطباعة (أسود حالك - تصحيح النص الباهت) */
+                    /* ================================================= */
+                    @media print {
+                        
+                        /* 1. القاعدة الشاملة: إجبار كل شيء على الأسود */
+                        *, 
+                        *:before, 
+                        *:after,
+                        [data-theme] *,
+                        [data-theme] h4,
+                        [data-theme] span,
+                        [data-theme] div {
+                            color: #000000 !important; /* أسود نقي */
+                            -webkit-text-fill-color: #000000 !important; /* دعم إضافي للمتصفحات */
+                            background: transparent !important;
+                            box-shadow: none !important;
+                            text-shadow: none !important;
+                            opacity: 1 !important; /* إلغاء أي شفافية */
+                            filter: none !important; /* إلغاء أي فلاتر */
+                        }
+
+                        /* 2. إخفاء خلفية الصفحة بالكامل */
+                        body, html, [data-theme] {
+                            background-color: #ffffff !important;
+                            background-image: none !important;
+                        }
+
+                        /* 3. تنسيق الجداول للطباعة (حدود سوداء رفيعة) */
+                        table {
+                            width: 100% !important;
+                            border-collapse: collapse !important;
+                            border: 1px solid #000000 !important;
+                        }
+                        
+                        th, td {
+                            border: 1px solid #000000 !important;
+                            color: #000000 !important;
+                            padding: 8px !important;
+                        }
+
+                        /* 4. إخفاء العناصر غير الضرورية */
+                        .btn, button, .close-btn, .no-print {
+                            display: none !important;
+                        }
+
+                        /* 5. تحسين الخط للطباعة */
+                        body {
+                            font-size: 12pt !important; /* حجم خط مناسب للورق */
+                        }
+                        
+                        /* 6. منع انقسام الفقرات */
+                        h1, h2, h3, h4, p, tr {
+                            page-break-inside: avoid;
+                        }
+                    }
+
+
+
+
+
+
                 </style>
             </head>
             <body>
