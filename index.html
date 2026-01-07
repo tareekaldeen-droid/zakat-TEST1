@@ -22602,9 +22602,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
                 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;700&family=Merriweather:wght@300;400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-                <style>             
-                                      
-                  
+                <style>                    /* ================================================= */
+                    /* ضبط هوامش الصفحة (لحل مشكلة التصاق النص بالحواف) */
+                    /* ================================================= */
+                    
+                    body {
+                        /* إضافة مسافة بيضاء حول النص من جميع الجهات */
+                        /* الرقم الأول (10px) للأعلى والأسفل */
+                        /* الرقم الثاني (20px) لليمين واليسار - وهو الأهم للتابلت */
+                        padding: 20px 30px !important;
+
+                        /* ضروري جداً: لضمان أن المسافة لا تسبب ظهور شريط تمرير أفقي */
+                        box-sizing: border-box !important;
+                        
+                        /* جعل المحتوى يتوسط الشاشة في الشاشات الكبيرة جداً */
+                        margin: 0 auto !important;
+                        max-width: 100% !important;
+                    }
+
+                    /* تحسين خاص للموبايلات الصغيرة جداً (اختياري) */
+                    @media screen and (max-width: 480px) {
+                        body {
+                            padding: 10px 10px !important; /* تقليل الهامش قليلاً للشاشات الصغيرة */
+                        }
+                    }
 
                     /* --- CSS الشاشة العادية --- */
                     :root {
@@ -22845,36 +22866,82 @@ document.addEventListener('DOMContentLoaded', function() {
                         outline-offset: 2px;
                     }
                     
-                    .theme-options { 
-                        display: flex; 
-                        gap: 15px; 
-                        justify-content: center; 
-                        margin-top: 5px; 
-                    }
-                    
-                    .theme-circle {
-                        width: 44px; 
-                        height: 44px; 
-                        border-radius: 50%; 
-                        cursor: pointer;
-                        border: 2px solid var(--border-color); 
-                        display: flex; 
-                        align-items: center; 
-                        justify-content: center;
-                        font-size: 1.2rem; 
-                        transition: 0.2s;
-                    }
-                    
-                    .theme-circle.selected { 
-                        border-color: var(--primary-color); 
-                        transform: scale(1.15); 
-                        box-shadow: 0 0 10px rgba(0,0,0,0.1); 
-                    }
-                    
-                    .theme-circle:focus {
-                        outline: 2px solid var(--primary-color);
-                        outline-offset: 2px;
-                    }
+                 .theme-options { 
+    display: flex; 
+    gap: 20px; 
+    justify-content: center; 
+    margin-top: 10px; 
+}
+
+.theme-circle {
+    width: 55px; 
+    height: 55px; 
+    border-radius: 50%; 
+    cursor: pointer;
+    border: 3px solid transparent; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 1.4rem; 
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* تأثير الـ Hover */
+.theme-circle:hover { 
+    transform: scale(1.1); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+}
+
+/* الدائرة المختارة */
+.theme-circle.selected { 
+    border-color: var(--primary-color); 
+    transform: scale(1.15); 
+    box-shadow: 0 0 0 4px rgba(13, 124, 102, 0.2);
+}
+
+/* علامة الصح للمختار */
+.theme-circle.selected::after {
+    content: '✓';
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    background: var(--primary-color);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.theme-circle:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
+}
+
+/* ألوان واضحة لكل دائرة */
+.theme-light {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    border: 3px solid #e0e0e0;
+}
+
+.theme-sepia {
+    background: linear-gradient(135deg, #f4ecd8 0%, #e9dcc0 100%);
+    border: 3px solid #d3c0a3;
+}
+
+.theme-dark {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    color: white;
+    border: 3px solid #444;
+}
+
                     
                     .container { 
                         margin: 0 auto; 
@@ -23464,6 +23531,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+/* تحسين أزرار تباعد الأسطر */
+.setting-group .btn-row .set-btn {
+    font-size: 1.3rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.setting-group .btn-row .set-btn:active {
+    transform: scale(0.95);
+    background: var(--primary-color);
+    color: white;
+}
+
+/* إضافة تسميات توضيحية */
+.setting-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+
+
+
                 </style>
             </head>
             <body>
@@ -23522,38 +23615,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 <!-- الإعدادات -->
                 <div id="settingsPanel" class="settings-panel" onclick="event.stopPropagation()">
-                    <div class="setting-group">
-                        <div class="setting-label">${isRTL ? 'لون الصفحة' : 'Sayfa Rengi'}</div>
-                        <div class="theme-options">
-                            <div class="theme-circle" 
-                                 onclick="setTheme('light')" 
-                                 style="background:#fff;" 
-                                 title="Light"
-                                 tabindex="0"
-                                 role="button"
-                                 aria-label="${isRTL ? 'وضع فاتح' : 'Açık mod'}">
-                                ☀️
-                            </div>
-                            <div class="theme-circle" 
-                                 onclick="setTheme('sepia')" 
-                                 style="background:#f4ecd8;" 
-                                 title="Book"
-                                 tabindex="0"
-                                 role="button"
-                                 aria-label="${isRTL ? 'وضع الكتاب' : 'Kitap modu'}">
-                                📖
-                            </div>
-                            <div class="theme-circle" 
-                                 onclick="setTheme('dark')" 
-                                 style="background:#1e1e1e; color:white;" 
-                                 title="Dark"
-                                 tabindex="0"
-                                 role="button"
-                                 aria-label="${isRTL ? 'وضع داكن' : 'Koyu mod'}">
-                                🌙
-                            </div>
-                        </div>
-                    </div>
+<div class="theme-options">
+    <div class="theme-circle theme-light" 
+         onclick="setTheme('light')" 
+         title="${isRTL ? 'نهاري' : 'Gündüz'}"
+         tabindex="0"
+         role="button"
+         aria-label="${isRTL ? 'وضع نهاري' : 'Gündüz modu'}">
+        ☀️
+    </div>
+    <div class="theme-circle theme-sepia" 
+         onclick="setTheme('sepia')" 
+         title="${isRTL ? 'كتاب' : 'Kitap'}"
+         tabindex="0"
+         role="button"
+         aria-label="${isRTL ? 'وضع الكتاب' : 'Kitap modu'}">
+        📖
+    </div>
+    <div class="theme-circle theme-dark" 
+         onclick="setTheme('dark')" 
+         title="${isRTL ? 'ليلي' : 'Gece'}"
+         tabindex="0"
+         role="button"
+         aria-label="${isRTL ? 'وضع ليلي' : 'Gece modu'}">
+        🌙
+    </div>
+</div>
+
                     
                     <hr style="width:100%; border:0; border-top:1px solid var(--border-color); opacity:0.3">
                     
@@ -23611,28 +23699,46 @@ document.addEventListener('DOMContentLoaded', function() {
                     let prefs = ${initialPrefs};
                     const isRTL = ${isRTL};
 
-                    function applyAllSettings() {
-                        document.documentElement.style.setProperty('--read-font-size', prefs.fontSize + 'px');
-                        document.documentElement.style.setProperty('--read-line-height', prefs.lineHeight);
-                        document.documentElement.setAttribute('data-theme', prefs.theme);
-                        
-                        // تحديث الثيمات
-                        document.querySelectorAll('.theme-circle').forEach(c => c.classList.remove('selected'));
-                        const themeMap = { 'light': 'Light', 'sepia': 'Book', 'dark': 'Dark' };
-                        const themeBtn = document.querySelector(\`.theme-circle[title="\${themeMap[prefs.theme]}"]\`);
-                        if(themeBtn) themeBtn.classList.add('selected');
-                        
-                        // تحديث الخط
-                        let fontVal = isRTL 
-                            ? (prefs.fontType === 'modern' ? "'Cairo', sans-serif" : "'Amiri', serif") 
-                            : (prefs.fontType === 'modern' ? "'Roboto', sans-serif" : "'Merriweather', serif");
-                        document.documentElement.style.setProperty('--read-font-family', fontVal);
-                        
-                        // تحديث حالة النص (للتركية فقط)
-                        if (!isRTL) {
-                            document.documentElement.style.setProperty('--read-text-transform', prefs.textCase);
-                        }
-                    }
+            function applyAllSettings() {
+    // تطبيق حجم الخط
+    document.documentElement.style.setProperty('--read-font-size', prefs.fontSize + 'px');
+    
+      // 2. تطبيق تباعد الأسطر (التصحيح الكامل هنا)
+    document.documentElement.style.setProperty('--read-line-height', prefs.lineHeight);
+    document.body.style.lineHeight = prefs.lineHeight;
+    
+    // تطبيق على المحتوى مباشرة
+    const mainContent = document.getElementById('mainContent');
+    if(mainContent) {
+        mainContent.style.lineHeight = prefs.lineHeight;
+    }
+    
+    // تطبيق على جميع الفقرات والعناصر النصية
+    const textElements = document.querySelectorAll('p, li, div, td, th, span, h1, h2, h3, h4, h5, h6');
+    textElements.forEach(function(el) {
+        el.style.lineHeight = prefs.lineHeight;
+    });
+    
+    // تطبيق الثيم
+    document.documentElement.setAttribute('data-theme', prefs.theme);
+    
+    // تحديث الدوائر المختارة
+    document.querySelectorAll('.theme-circle').forEach(c => c.classList.remove('selected'));
+    const selectedCircle = document.querySelector('.theme-circle.theme-' + prefs.theme);
+    if(selectedCircle) selectedCircle.classList.add('selected');
+    
+    // تطبيق نوع الخط
+    let fontVal = isRTL 
+        ? (prefs.fontType === 'modern' ? "'Cairo', sans-serif" : "'Amiri', serif") 
+        : (prefs.fontType === 'modern' ? "'Roboto', sans-serif" : "'Merriweather', serif");
+    document.documentElement.style.setProperty('--read-font-family', fontVal);
+    
+    // تطبيق حالة النص (للتركية فقط)
+    if (!isRTL) {
+        document.documentElement.style.setProperty('--read-text-transform', prefs.textCase);
+    }
+}
+
 
                     function saveAndApply() {
                         applyAllSettings();
@@ -23665,10 +23771,27 @@ document.addEventListener('DOMContentLoaded', function() {
                         saveAndApply(); 
                     }
                     
-                    function changeLineHeight(d) { 
-                        prefs.lineHeight = Math.max(1.2, Math.min(2.5, parseFloat((prefs.lineHeight + d).toFixed(1)))); 
-                        saveAndApply(); 
-                    }
+                   function changeLineHeight(d) { 
+    // حساب القيمة الجديدة
+    let newValue = parseFloat((prefs.lineHeight + d).toFixed(1));
+    
+    // التأكد من البقاء ضمن الحدود
+    newValue = Math.max(1.2, Math.min(2.5, newValue));
+    
+    // حفظ القيمة
+    prefs.lineHeight = newValue;
+    
+    // تطبيق فوري
+    document.body.style.lineHeight = newValue;
+    document.documentElement.style.setProperty('--read-line-height', newValue);
+    
+    // حفظ الإعدادات
+    saveAndApply();
+    
+    // رسالة تأكيد (اختياري)
+    console.log('Line height changed to:', newValue);
+}
+
 
                     function toggleSettings(e) {
                         if(e) e.stopPropagation();
@@ -24225,16 +24348,6 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
 
 
 
