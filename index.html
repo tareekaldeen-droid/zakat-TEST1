@@ -22605,6 +22605,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 <style>                  
 
 
+        /* ============================================ */
+        /* 📱 تعديل خاص للتابلت (Tablet Specific) */
+        /* لعمل مسافة يمين ويسار */
+        /* ============================================ */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .container {
+                padding-left: 2.5rem !important;  /* مسافة داخلية يسار */
+                padding-right: 2.5rem !important; /* مسافة داخلية يمين */
+                max-width: 90% !important;        /* تقليص عرض المحتوى لترك فراغ */
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+            
+            /* تحسين عرض الشبكات في التابليت لكي لا تكون ملتصقة */
+            .modern-menu-grid, 
+            .settings-dashboard,
+            .form-grid {
+                gap: 1.5rem !important; /* زيادة المسافة بين العناصر */
+            }
+        }
 
                 
 
@@ -24329,6 +24349,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
