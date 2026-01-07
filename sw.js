@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zakat-app-v55.6'; // قم بتغيير الرقم عند كل تحديث للكود
+const CACHE_NAME = 'zakat-app-v55.7'; // قم بتغيير الرقم عند كل تحديث للكود
 const NOTIFICATIONS_FILE = 'notifications.json';
 
 // الملفات التي سيتم تخزينها للعمل بدون إنترنت
@@ -89,6 +89,7 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
 
 
 
