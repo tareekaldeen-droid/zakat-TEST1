@@ -24288,22 +24288,89 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').then(registration => {
             console.log('SW registered');
             
-            // التحقق من وجود تحديثات في الكود (HTML/JS/CSS)
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        // تم تثبيت تحديث جديد في الخلفية
-                        const msg = currentLanguage === 'ar' ? 'تحديث جديد للتطبيق متوفر. هل تريد التحديث الآن؟' : 'Uygulama için yeni güncelleme mevcut. Şimdi güncellemek ister misiniz?';
-                        if(confirm(msg)) {
-                            window.location.reload();
-                        }
-                    }
-                });
-            });
-        });
-    });
+          // ============================================
+// نظام التحقق من التحديثات المطور
+// ============================================
+async function checkForSmartUpdates() {
+    try {
+        // إضافة وقت عشوائي لمنع الكاش والتأكد من جلب أحدث ملف
+        const response = await fetch('notifications.json?t=' + new Date().getTime());
+        const data = await response.json();
+        
+        if (!data.latest) return;
+
+        const serverVersion = data.latest.id;
+        const localVersion = localStorage.getItem('app_installed_version');
+
+        // إذا كان هناك إصدار جديد مختلف عن المحفوظ
+        if (serverVersion !== localVersion) {
+            showModernUpdateModal(data.latest);
+        }
+    } catch (error) {
+        console.log('No internet or update check failed');
+    }
 }
+
+function showModernUpdateModal(updateData) {
+    const lang = currentLanguage; // 'ar' or 'tr'
+    const content = updateData[lang];
+    
+    // تعيين النصوص والصور
+    document.getElementById('update-headline').textContent = content.title;
+    document.getElementById('update-details').textContent = content.body;
+    document.getElementById('update-feature-img').src = content.image;
+    document.getElementById('update-version-tag').textContent = updateData.id.split('_')[0]; // يأخذ v57 مثلاً
+    
+    // تعيين اللوجو حسب اللغة
+    const logoSrc = lang === 'ar' ? 
+        "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png" : 
+        "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/__gemini_generated_image_l7bj58l7bj58l7bj---uo3o-r-o-c-1-Egn1jwHegFrVqeor.png";
+    document.getElementById('update-app-logo').src = logoSrc;
+
+    // نصوص الأزرار
+    document.getElementById('btn-update-text').textContent = lang === 'ar' ? 'تحديث الآن' : 'Şimdi Güncelle';
+    document.getElementById('btn-later-text').textContent = lang === 'ar' ? 'تذكيري لاحقاً' : 'Daha Sonra Hatırlat';
+
+    // إظهار النافذة
+    const overlay = document.getElementById('pro-update-overlay');
+    overlay.classList.add('active');
+
+    // برمجة زر التحديث
+    document.getElementById('btn-do-update').onclick = () => {
+        // حفظ الإصدار الجديد
+        localStorage.setItem('app_installed_version', updateData.id);
+        
+        // إظهار رسالة تحميل صغيرة
+        showToast(lang === 'ar' ? 'جاري تثبيت التحديث...' : 'Güncelleme yükleniyor...', 'info');
+        
+        // تحديث الكاش والصفحة
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.update(); // طلب التحديث من السيرفر
+                }
+                // إعادة تحميل الصفحة بعد ثانية ونصف لتطبيق التغييرات
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 1500);
+            });
+        } else {
+            window.location.reload(true);
+        }
+    };
+
+    // برمجة زر لاحقاً
+    document.getElementById('btn-later-update').onclick = () => {
+        overlay.classList.remove('active');
+    };
+}
+
+// تشغيل التحقق عند بدء التطبيق
+document.addEventListener('DOMContentLoaded', () => {
+    // ننتظر قليلاً حتى يفتح التطبيق بالكامل
+    setTimeout(checkForSmartUpdates, 2000);
+});
+
 
 
 
@@ -24349,6 +24416,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
