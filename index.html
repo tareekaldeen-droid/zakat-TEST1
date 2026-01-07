@@ -24282,13 +24282,7 @@ document.getElementById('languageSelect').addEventListener('change', function(e)
     }
 });
 
-// 6. تسجيل Service Worker (للتحديث التلقائي والعمل دون إنترنت)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').then(registration => {
-            console.log('SW registered');
-            
-          // ============================================
+// ============================================
 // نظام التحقق من التحديثات المطور
 // ============================================
 async function checkForSmartUpdates() {
@@ -24416,6 +24410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
 </body>
 </html>
+
 
 
 
