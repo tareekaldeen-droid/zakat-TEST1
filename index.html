@@ -4017,393 +4017,152 @@ body.dark-mode .smart-logo-box {
         
 
 
-/* تنسيق إشعار التحديث */
-.update-notification {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+/* ========== شاشة التحديث ========== */
+
+.update-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  display: none; /* مخفي افتراضياً */
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+  opacity: 0;
 }
 
-.update-notification.show {
-    opacity: 1;
+.update-overlay.show {
+  display: flex;
+  opacity: 1;
 }
 
-/* الوضع العادي (Light Mode) - تصميم إسلامي */
-.update-card {
-    background: linear-gradient(135deg, #0a8754 0%, #0d6e49 100%);
-    padding: 50px 40px;
-    border-radius: 25px;
-    text-align: center;
-    color: white;
-    max-width: 450px;
-    box-shadow: 0 25px 70px rgba(10, 135, 84, 0.4);
-    animation: slideUp 0.5s ease-out;
-    position: relative;
-    overflow: hidden;
-    border: 3px solid rgba(255, 215, 0, 0.3);
+.update-modal {
+  background: var(--update-bg, #ffffff);
+  color: var(--update-text, #111827);
+  border-radius: 18px;
+  padding: 24px 28px;
+  max-width: 360px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+  animation: popIn 0.4s ease-out;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 }
 
-/* النمط الإسلامي في الخلفية */
-.islamic-pattern {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.1;
-    background-image: 
-        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px),
-        repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);
-    pointer-events: none;
+.update-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
 }
 
-/* البسملة */
-.bismillah-text {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffd700;
-    margin-bottom: 25px;
-    text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
-    font-family: 'Traditional Arabic', 'Amiri', serif;
-    letter-spacing: 1px;
-    animation: fadeIn 1s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* حاوية اللوجو */
-.update-logo-container {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 25px;
-    animation: float 2.5s ease-in-out infinite;
-}
-
-/* اللوجو */
 .update-logo {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 5px 20px rgba(255, 215, 0, 0.4));
-    animation: rotate 3s linear infinite;
-    position: relative;
-    z-index: 2;
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8),
+    0 0 18px rgba(0, 173, 181, 0.6);
+  animation: pulseLogo 1.6s infinite ease-in-out;
 }
 
-/* توهج خلف اللوجو */
-.logo-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120%;
-    height: 120%;
-    background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    animation: pulse 2s ease-in-out infinite;
-    border-radius: 50%;
-    z-index: 1;
+.update-text {
+  margin-bottom: 16px;
 }
 
-@keyframes float {
-    0%, 100% { 
-        transform: translateY(0px); 
-    }
-    50% { 
-        transform: translateY(-10px); 
-    }
+.update-title-ar,
+.update-title-tr {
+  font-weight: 700;
+  margin: 4px 0;
+  font-size: 1.05rem;
 }
 
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.update-subtitle-ar,
+.update-subtitle-tr {
+  font-size: 0.85rem;
+  margin: 2px 0;
+  opacity: 0.9;
 }
 
-/* الوضع الليلي (Dark Mode) */
-.update-notification.dark-mode {
-    background: rgba(0, 0, 0, 0.95);
+/* مؤشر التحميل (ثلاث نقاط متحركة) */
+.update-loader {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 6px;
 }
 
-.update-notification.dark-mode .update-card {
-    background: linear-gradient(135deg, #1a3a2e 0%, #0f2419 100%);
-    border: 3px solid rgba(10, 135, 84, 0.5);
-    box-shadow: 0 25px 70px rgba(10, 135, 84, 0.6),
-                0 0 50px rgba(255, 215, 0, 0.2);
+.update-loader span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #00adb5;
+  animation: bounce 0.9s infinite ease-in-out;
 }
 
-.update-notification.dark-mode .bismillah-text {
-    color: #ffd700;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+.update-loader span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.update-loader span:nth-child(3) {
+  animation-delay: 0.3s;
 }
 
-.update-notification.dark-mode .update-logo {
-    filter: drop-shadow(0 5px 25px rgba(255, 215, 0, 0.6)) 
-            drop-shadow(0 0 15px rgba(10, 135, 84, 0.5));
+/* ========== دعم الوضع الليلي ========== */
+
+/* الوضع بحسب نظام المستخدم */
+@media (prefers-color-scheme: dark) {
+  .update-modal {
+    --update-bg: #111827;
+    --update-text: #e5e7eb;
+  }
 }
 
-.update-notification.dark-mode .logo-glow {
-    background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(10, 135, 84, 0.2) 50%, transparent 70%);
+/* class لو حبيت تفعّل الوضع الليلي يدويًا على الـ body */
+body.dark-mode .update-modal {
+  --update-bg: #0b1120;
+  --update-text: #e5e7eb;
 }
 
-.update-notification.dark-mode h2 {
-    color: #e0e0e0;
-    text-shadow: 0 2px 10px rgba(10, 135, 84, 0.4);
+/* ========== الحركات (Animations) ========== */
+
+@keyframes popIn {
+  from {
+    transform: scale(0.9) translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
 
-.update-notification.dark-mode p {
-    color: #b0b0b0;
+@keyframes pulseLogo {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 173, 181, 0.6);
+  }
+  70% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 12px rgba(0, 173, 181, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 173, 181, 0);
+  }
 }
 
-.update-notification.dark-mode .spinner-segment {
-    background: linear-gradient(135deg, #0a8754, #ffd700);
-    box-shadow: 0 0 15px rgba(10, 135, 84, 0.5);
-}
-
-.update-notification.dark-mode .progress-bar {
-    background: rgba(10, 135, 84, 0.2);
-    border: 1px solid rgba(10, 135, 84, 0.3);
-}
-
-.update-notification.dark-mode .progress-fill {
-    background: linear-gradient(90deg, #0a8754, #ffd700, #0a8754);
-    box-shadow: 0 0 15px rgba(10, 135, 84, 0.6);
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(80px) scale(0.9);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-}
-
-.update-card h2 {
-    font-size: 28px;
-    margin: 20px 0 10px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
-
-.update-card p {
-    font-size: 16px;
-    opacity: 0.95;
-    margin-bottom: 30px;
-}
-
-/* Spinner إسلامي (4 قطع تدور) */
-.spinner-islamic {
-    width: 60px;
-    height: 60px;
-    margin: 20px auto;
-    position: relative;
-    animation: rotateSpinner 2s linear infinite;
-}
-
-.spinner-segment {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(135deg, #ffd700, #fff);
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-}
-
-.spinner-segment:nth-child(1) {
-    top: 0;
-    left: 0;
-    animation: pulse1 1.5s ease-in-out infinite;
-}
-
-.spinner-segment:nth-child(2) {
-    top: 0;
-    right: 0;
-    animation: pulse2 1.5s ease-in-out infinite;
-}
-
-.spinner-segment:nth-child(3) {
-    bottom: 0;
-    left: 0;
-    animation: pulse3 1.5s ease-in-out infinite;
-}
-
-.spinner-segment:nth-child(4) {
-    bottom: 0;
-    right: 0;
-    animation: pulse4 1.5s ease-in-out infinite;
-}
-
-@keyframes rotateSpinner {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes pulse1 {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.7; }
-}
-
-@keyframes pulse2 {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.7; }
-    25% { transform: scale(1.15); }
-}
-
-@keyframes pulse3 {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.7; }
-    75% { transform: scale(1.15); }
-}
-
-@keyframes pulse4 {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.7; }
-}
-
-/* شريط التقدم */
-.progress-bar {
-    width: 100%;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    margin-top: 25px;
-    overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #ffd700, #fff, #ffd700);
-    background-size: 200% 100%;
-    border-radius: 10px;
-    animation: progress 2s ease-in-out, shimmer 1.5s infinite;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-}
-
-@keyframes progress {
-    0% { width: 0%; }
-    100% { width: 100%; }
-}
-
-@keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-
-/* تأثير النبض للخلفية */
-.update-card::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    animation: pulse 2s ease-in-out infinite;
-    border-radius: 25px;
-    pointer-events: none;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
-}
-
-.updating-animation {
-    position: relative;
-    z-index: 1;
-}
-
-/* تأثيرات إضافية للوضع الليلي */
-.update-notification.dark-mode .update-card {
-    animation: slideUp 0.5s ease-out, glow 3s ease-in-out infinite;
-}
-
-@keyframes glow {
-    0%, 100% {
-        box-shadow: 0 25px 70px rgba(10, 135, 84, 0.6),
-                    0 0 50px rgba(255, 215, 0, 0.2);
-    }
-    50% {
-        box-shadow: 0 25px 70px rgba(10, 135, 84, 0.8),
-                    0 0 80px rgba(255, 215, 0, 0.4);
-    }
-}
-
-/* للهواتف */
-@media (max-width: 480px) {
-    .update-card {
-        padding: 40px 25px;
-        margin: 20px;
-        max-width: 90%;
-    }
-    
-    .bismillah-text {
-        font-size: 15px;
-    }
-    
-    .update-logo-container {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .update-card h2 {
-        font-size: 22px;
-    }
-    
-    .spinner-islamic {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .spinner-segment {
-        width: 16px;
-        height: 16px;
-    }
-}
-
-/* تأثير النجوم المتلألئة للوضع الليلي */
-.update-notification.dark-mode .update-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(10, 135, 84, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
-    border-radius: 25px;
-    animation: stars 4s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes stars {
-    0%, 100% {
-        opacity: 0.3;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.6;
-        transform: scale(1.05);
-    }
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  40% {
+    transform: translateY(-5px);
+    opacity: 1;
+  }
 }
 
 
@@ -4480,6 +4239,30 @@ body.dark-mode .smart-logo-box {
 </div>
 
 
+<!-- شاشة التحديث المتحركة -->
+<div id="update-overlay" class="update-overlay" aria-hidden="true">
+  <div class="update-modal">
+    <div class="update-logo-wrapper">
+      <img
+        src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/37q072n986bg8r1rlj5ljk2iqkt-UbHFLyXccdPR0FBy.png"
+        alt="شعار التطبيق"
+        class="update-logo"
+      />
+    </div>
+
+    <div class="update-text">
+      <p class="update-title-ar">جاري تحديث البرنامج…</p>
+      <p class="update-subtitle-ar">الرجاء الانتظار للحظات، سيتم فتح النسخة المحدّثة تلقائيًا.</p>
+
+      <p class="update-title-tr">Uygulama güncelleniyor…</p>
+      <p class="update-subtitle-tr">Lütfen birkaç saniye bekleyin, güncellenmiş sürüm otomatik açılacaktır.</p>
+    </div>
+
+    <div class="update-loader">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
 
 
 
@@ -24673,91 +24456,65 @@ document.getElementById('languageSelect').addEventListener('change', function(e)
 });
 
 // 6. تسجيل Service Worker (للتحديث التلقائي والعمل دون إنترنت)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').then(registration => {
-            console.log('SW registered');
-            
-            // التحقق من وجود تحديثات في الكود (HTML/JS/CSS)
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        // عرض رسالة التحديث مباشرة
-                        showUpdateNotification();
-                    }
-                });
-            });
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((registration) => {
+        console.log("SW registered");
+
+        registration.addEventListener("updatefound", () => {
+          const newWorker = registration.installing;
+          if (!newWorker) return;
+
+          newWorker.addEventListener("statechange", () => {
+            // عندما يتم تثبيت نسخة جديدة وهناك SW قديم مسيطر
+            if (
+              newWorker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              // هنا نعرض شاشة "جاري التحديث..."
+              showUpdateOverlayAndReload();
+            }
+          });
         });
-    });
+      })
+      .catch((error) => {
+        console.error("فشل تسجيل Service Worker:", error);
+      });
+  });
 }
 
-// دالة عرض إشعار التحديث مع تأثيرات متحركة
-function showUpdateNotification() {
-    // النصوص بالغتين
-    const messages = {
-        ar: {
-            updating: 'جاري تحديث البرنامج',
-            subtitle: 'بارك الله فيك، يرجى الانتظار...',
-            bismillah: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ'
-        },
-        tr: {
-            updating: 'Program güncelleniyor',
-            subtitle: 'Allah razı olsun, lütfen bekleyin...',
-            bismillah: 'Bismillahirrahmanirrahim'
-        }
-    };
+/**
+ * إظهار شاشة التحديث المتحركة ثم إعادة تحميل الصفحة
+ */
+function showUpdateOverlayAndReload() {
+  const overlay = document.getElementById("update-overlay");
+  if (!overlay) {
+    // احتياط: إذا لم تُضف الـ HTML الخاص بالـ overlay
+    window.location.reload();
+    return;
+  }
 
-    const lang = currentLanguage === 'ar' ? 'ar' : 'tr';
-    const msg = messages[lang];
+  overlay.setAttribute("aria-hidden", "false");
+  overlay.classList.add("show");
 
-    // التحقق من الوضع الليلي
-    const isDarkMode = document.body.classList.contains('dark-mode');
+  // منع سكول الخلفية (اختياري)
+  document.body.style.overflow = "hidden";
 
-    // إنشاء عنصر الإشعار
-    const notification = document.createElement('div');
-    notification.className = `update-notification ${isDarkMode ? 'dark-mode' : ''}`;
-    notification.innerHTML = `
-        <div class="update-card">
-            <div class="islamic-pattern"></div>
-            <div class="updating-animation">
-                <div class="bismillah-text">${msg.bismillah}</div>
-                <div class="update-logo-container">
-                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/37q072n986bg8r1rlj5ljk2iqkt-UbHFLyXccdPR0FBy.png" 
-                         alt="Logo" 
-                         class="update-logo">
-                    <div class="logo-glow"></div>
-                </div>
-                <h2>${msg.updating}</h2>
-                <p>${msg.subtitle}</p>
-                <div class="spinner-islamic">
-                    <div class="spinner-segment"></div>
-                    <div class="spinner-segment"></div>
-                    <div class="spinner-segment"></div>
-                    <div class="spinner-segment"></div>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-            </div>
-        </div>
-    `;
+  // حفظ أننا أعدنا التحميل من أجل التحديث
+  sessionStorage.setItem("reloadedForUpdate", "1");
 
-    document.body.appendChild(notification);
-
-    // تفعيل الأنيميشن
-    setTimeout(() => notification.classList.add('show'), 10);
-
-    // إعادة تحميل الصفحة بعد ثانيتين
-    setTimeout(() => {
-        window.location.reload();
-    }, 2000);
+  // تأخير بسيط لإعطاء انطباع أن التحديث يجري
+  setTimeout(() => {
+    window.location.reload();
+  }, 2000); // 2 ثانية، يمكن تعديلها
 }
-   }
-                });
-            });
-        });
-    });
+
+// بعد فتح النسخة الجديدة
+if (sessionStorage.getItem("reloadedForUpdate")) {
+  sessionStorage.removeItem("reloadedForUpdate");
+  console.log("تم التحديث إلى النسخة الجديدة بنجاح.");
 }
 
 
@@ -24806,6 +24563,7 @@ function showUpdateNotification() {
     
 </body>
 </html>
+
 
 
 
