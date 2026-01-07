@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zakat-app-v57.1'; // قم بتغيير الرقم عند كل تحديث للكود
+  const CACHE_NAME = 'zakat-app-v57.1'; // قم بتغيير الرقم عند كل تحديث للكود
 const NOTIFICATIONS_FILE = 'notifications.json';
 
 // الملفات التي سيتم تخزينها للعمل بدون إنترنت
@@ -18,13 +18,6 @@ const ASSETS_TO_CACHE = [
   'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/gemini_generated_image_l7bj58l7bj58l7bj-1-1-okXWwLISbvVl1n90.png',
   'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/__gemini_generated_image_l7bj58l7bj58l7bj---uo3o-r-o-c-1-Egn1jwHegFrVqeor.png'
 ];
-
-// استقبال رسائل من الصفحة الرئيسية
-self.addEventListener('message', (event) => {
-  if (event.data.action === 'skipWaiting') {
-    self.skipWaiting();
-  }
-});
 
 // 1. التثبيت: تخزين الملفات الأساسية
 self.addEventListener('install', (event) => {
@@ -96,4 +89,69 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
