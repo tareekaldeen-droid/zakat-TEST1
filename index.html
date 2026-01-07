@@ -4014,7 +4014,8 @@ body.dark-mode .smart-logo-box {
 
 
 
-        
+
+
 
 
 
@@ -4089,30 +4090,6 @@ body.dark-mode .smart-logo-box {
 </div>
 
 
-<!-- شاشة التحديث المتحركة -->
-<div id="update-overlay" class="update-overlay" aria-hidden="true">
-  <div class="update-modal">
-    <div class="update-logo-wrapper">
-      <img
-        src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/37q072n986bg8r1rlj5ljk2iqkt-UbHFLyXccdPR0FBy.png"
-        alt="شعار التطبيق"
-        class="update-logo"
-      />
-    </div>
-
-    <div class="update-text">
-      <p class="update-title-ar">جاري تحديث البرنامج…</p>
-      <p class="update-subtitle-ar">الرجاء الانتظار للحظات، سيتم فتح النسخة المحدّثة تلقائيًا.</p>
-
-      <p class="update-title-tr">Uygulama güncelleniyor…</p>
-      <p class="update-subtitle-tr">Lütfen birkaç saniye bekleyin, güncellenmiş sürüm otomatik açılacaktır.</p>
-    </div>
-
-    <div class="update-loader">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
-</div>
 
 
 
@@ -5138,7 +5115,7 @@ body.dark-mode .smart-logo-box {
     <div class="accordion-header" onclick="openDefinitionWindow()">
         <span>
             <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">1</span>
-            <span data-ar="📖 تعريف الزكاة وحكمها الشرعي " data-tr="📖 Zekâtın Tanımı ve Hükmü ">📖 تعريف الزكاة وحكمها الشرعي </span>
+            <span data-ar="📖 تعريف الزكاة وحكمها الشرعي (اضغط لفتح الصفحة)" data-tr="📖 Zekâtın Tanımı ve Hükmü (Açmak için tıklayın)">📖 تعريف الزكاة وحكمها الشرعي (اضغط لفتح الصفحة)</span>
         </span>
         <span class="accordion-icon">↗️</span>
     </div>
@@ -5678,7 +5655,7 @@ rin Zekât Vermeyenlere Karşı Kararlı Tutumu:">⚔️ موقف الصحابة
     <div class="accordion-header" onclick="openDefinitionWindow('hiddenConditionsContent')">
         <span>
             <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">2</span>
-            <span data-ar="⚖️ شروط وجوب الزكاة في المذاهب الأربعة " data-tr="⚖️ Dört Mezhebe Göre Zekât Vacip Olma Şartları ">⚖️ شروط وجوب الزكاة في المذاهب الأربعة </span>
+            <span data-ar="⚖️ شروط وجوب الزكاة في المذاهب الأربعة (اضغط لفتح الصفحة)" data-tr="⚖️ Dört Mezhebe Göre Zekât Vacip Olma Şartları (Sayfayı açmak için tıklayın)">⚖️ شروط وجوب الزكاة في المذاهب الأربعة (اضغط لفتح الصفحة)</span>
         </span>
         <!-- تغيير الأيقونة لتشير إلى فتح نافذة -->
         <span class="accordion-icon">↗️</span>
@@ -6109,7 +6086,7 @@ rin Zekât Vermeyenlere Karşı Kararlı Tutumu:">⚔️ موقف الصحابة
     <div class="accordion-header" onclick="openDefinitionWindow('hiddenZakatableWealthContent')">
         <span>
             <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-left: 10px;">3</span>
-            <span data-ar="💰 الأموال التي تجب فيها الزكاة في المذاهب الأربعة " data-tr="💰 Dört Mezhebe Göre Zekâtın Vacip Olduğu Mallar ">💰 الأموال التي تجب فيها الزكاة في المذاهب الأربعة </span>
+            <span data-ar="💰 الأموال التي تجب فيها الزكاة في المذاهب الأربعة (اضغط لفتح الصفحة)" data-tr="💰 Dört Mezhebe Göre Zekâtın Vacip Olduğu Mallar (Açmak için tıklayın)">💰 الأموال التي تجب فيها الزكاة في المذاهب الأربعة (اضغط لفتح الصفحة)</span>
         </span>
         <span class="accordion-icon">↗️</span>
     </div>
@@ -24305,165 +24282,28 @@ document.getElementById('languageSelect').addEventListener('change', function(e)
     }
 });
 
-  // 1. دالة بناء وعرض شاشة التحديث
-    function showForceUpdateScreen() {
-        // تحديد اللغة (عربي افتراضي)
-        const lang = localStorage.getItem('appLanguage') || (navigator.language.startsWith('tr') ? 'tr' : 'ar');
-        
-        // تحديد الوضع الليلي (من الـ HTML tag)
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        
-        // نصوص الواجهة
-        const texts = {
-            ar: {
-                title: "جاري تحديث التطبيق...",
-                subtitle: "يتم الآن تثبيت أحدث نسخة مع التحسينات",
-                footer: "يرجى الانتظار قليلاً، سيتم إعادة التشغيل تلقائياً"
-            },
-            tr: {
-                title: "Uygulama Güncelleniyor...",
-                subtitle: "En son sürüm ve iyileştirmeler yükleniyor",
-                footer: "Lütfen bekleyin, otomatik olarak yeniden başlatılacak"
-            }
-        };
-        const t = texts[lang];
-
-        // ألوان الثيم (متوافق مع الوضع الليلي)
-        const theme = isDark ? {
-            overlay: "rgba(15, 30, 26, 0.95)", // خلفية داكنة جداً
-            card: "#1a3a2e",
-            text: "#ffffff",
-            subText: "#a8c5ba",
-            accent: "#41b8a6"
-        } : {
-            overlay: "rgba(245, 249, 247, 0.95)", // خلفية فاتحة
-            card: "#ffffff",
-            text: "#0d7c66",
-            subText: "#4a6b5e",
-            accent: "#0d7c66"
-        };
-
-        // إنشاء العنصر الحاوي
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: ${theme.overlay};
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            z-index: 2147483647; /* أعلى طبقة ممكنة */
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-family: 'Cairo', sans-serif;
-            opacity: 0; transition: opacity 0.3s ease;
-        `;
-
-        // محتوى الشاشة (HTML + CSS داخلي)
-        overlay.innerHTML = `
-            <style>
-                .update-card {
-                    background: ${theme.card};
-                    padding: 40px;
-                    border-radius: 20px;
-                    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-                    text-align: center;
-                    max-width: 90%;
-                    width: 320px;
-                    border: 1px solid ${theme.accent}30;
-                    transform: translateY(20px);
-                    animation: slideUp 0.5s ease forwards;
-                }
-                .logo-pulse {
-                    width: 80px; height: 80px;
-                    margin-bottom: 20px;
-                    border-radius: 50%;
-                    padding: 5px;
-                    background: white;
-                    box-shadow: 0 0 0 0 ${theme.accent}60;
-                    animation: pulse-green 2s infinite;
-                }
-                .progress-track {
-                    width: 100%; height: 6px;
-                    background: ${theme.accent}20;
-                    border-radius: 10px;
-                    margin: 20px 0;
-                    overflow: hidden;
-                }
-                .progress-fill {
-                    height: 100%;
-                    width: 0%;
-                    background: ${theme.accent};
-                    border-radius: 10px;
-                    animation: fill-bar 3.5s ease-in-out forwards;
-                }
-                @keyframes pulse-green {
-                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 ${theme.accent}70; }
-                    70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(0,0,0,0); }
-                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0,0,0,0); }
-                }
-                @keyframes fill-bar {
-                    0% { width: 0%; }
-                    100% { width: 100%; }
-                }
-                @keyframes slideUp {
-                    to { transform: translateY(0); }
-                }
-            </style>
-
-            <div class="update-card">
-                <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/37q072n986bg8r1rlj5ljk2iqkt-UbHFLyXccdPR0FBy.png" class="logo-pulse">
-                
-                <h2 style="margin: 0 0 10px; color: ${theme.text}; font-size: 1.3rem;">${t.title}</h2>
-                <p style="margin: 0; color: ${theme.subText}; font-size: 0.9rem;">${t.subtitle}</p>
-                
-                <div class="progress-track">
-                    <div class="progress-fill"></div>
-                </div>
-                
-                <p style="margin: 0; font-size: 0.75rem; color: ${theme.subText}; opacity: 0.8;">${t.footer}</p>
-            </div>
-        `;
-
-        document.body.appendChild(overlay);
-        
-        // إظهار الشاشة بنعومة
-        requestAnimationFrame(() => { overlay.style.opacity = '1'; });
-
-        // إعادة التحميل بعد 3.5 ثانية
-        setTimeout(() => {
-            window.location.reload();
-        }, 3500);
-    }
-
-    // 2. تسجيل Service Worker ومراقبة التحديثات
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').then(registration => {
-                
-                // عند العثور على تحديث جديد
-                registration.addEventListener('updatefound', () => {
-                    const newWorker = registration.installing;
-                    
-                    newWorker.addEventListener('statechange', () => {
-                        // حالة: تم التثبيت وجاهز للتفعيل
-                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            // 🔥 تشغيل شاشة التحديث فوراً
-                            showForceUpdateScreen();
+// 6. تسجيل Service Worker (للتحديث التلقائي والعمل دون إنترنت)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(registration => {
+            console.log('SW registered');
+            
+            // التحقق من وجود تحديثات في الكود (HTML/JS/CSS)
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        // تم تثبيت تحديث جديد في الخلفية
+                        const msg = currentLanguage === 'ar' ? 'تحديث جديد للتطبيق متوفر. هل تريد التحديث الآن؟' : 'Uygulama için yeni güncelleme mevcut. Şimdi güncellemek ister misiniz?';
+                        if(confirm(msg)) {
+                            window.location.reload();
                         }
-                    });
+                    }
                 });
             });
-
-            // ضمان تحديث الصفحة إذا تحكم الـ SW الجديد
-            let refreshing;
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (refreshing) return;
-                window.location.reload();
-                refreshing = true;
-            });
         });
-    }
-
-
-
-
+    });
+}
 
 
 
@@ -24506,23 +24346,9 @@ document.getElementById('languageSelect').addEventListener('change', function(e)
 
 
 
-
-
-
     
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
