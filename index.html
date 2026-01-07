@@ -4024,7 +4024,7 @@ body.dark-mode .smart-logo-box {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 9999999; /* أعلى طبقة */
+    z-index: 9999999;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -4036,41 +4036,56 @@ body.dark-mode .smart-logo-box {
     transition: opacity 0.5s ease;
 }
 
-/* دعم الوضع الليلي */
 [data-theme="dark"] #update-overlay {
     background: rgba(18, 18, 18, 0.95);
     color: #ffffff;
 }
 
-/* حاوية اللوجو مع تأثير الهالة */
+/* --- تعديل اللوجو ليصبح دائرياً --- */
 .update-logo-container {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 130px;  /* حجم الدائرة */
+    height: 130px;
     margin-bottom: 30px;
+    border-radius: 50%; /* جعل الشكل دائري */
+    background: #ffffff; /* خلفية بيضاء للوجو ليكون واضحاً */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* ظل لإبراز الدائرة */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px; /* مسافة داخلية حتى لا يلمس اللوجو الحواف */
+    z-index: 2;
+}
+
+/* في الوضع الليلي نجعل خلفية الدائرة غامقة قليلاً لتناسب العين */
+[data-theme="dark"] .update-logo-container {
+    background: #2d2d2d;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #444;
 }
 
 .update-logo {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    border-radius: 50%;
     position: relative;
-    z-index: 2;
+    z-index: 3;
     animation: pulseLogo 2s infinite ease-in-out;
 }
 
-/* تأثيرات الخلفية المشعة */
+/* تأثير الهالة خلف الدائرة */
 .update-glow {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 140px;
-    height: 140px;
-    background: radial-gradient(circle, rgba(13, 124, 102, 0.4) 0%, transparent 70%);
+    width: 160px; /* أكبر من الدائرة قليلاً */
+    height: 160px;
+    background: radial-gradient(circle, rgba(13, 124, 102, 0.3) 0%, transparent 70%);
     border-radius: 50%;
     animation: pulseGlow 2s infinite;
-    z-index: 1;
+    z-index: 1; /* خلف الدائرة البيضاء */
 }
 
 /* النصوص */
@@ -4080,6 +4095,7 @@ body.dark-mode .smart-logo-box {
     color: var(--primary-color);
     margin-bottom: 10px;
     font-family: 'Cairo', sans-serif;
+    z-index: 2;
 }
 
 .update-subtitle {
@@ -4087,6 +4103,7 @@ body.dark-mode .smart-logo-box {
     color: var(--text-secondary);
     margin-bottom: 30px;
     font-family: 'Amiri', serif;
+    z-index: 2;
 }
 
 /* شريط التقدم */
@@ -4097,6 +4114,7 @@ body.dark-mode .smart-logo-box {
     border-radius: 10px;
     overflow: hidden;
     position: relative;
+    z-index: 2;
 }
 
 .update-progress-bar {
@@ -4104,7 +4122,7 @@ body.dark-mode .smart-logo-box {
     height: 100%;
     background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     border-radius: 10px;
-    transition: width 3.5s cubic-bezier(0.22, 1, 0.36, 1); /* توقيت متزامن مع التحديث */
+    transition: width 3.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* الأنيميشن */
@@ -4115,9 +4133,9 @@ body.dark-mode .smart-logo-box {
 }
 
 @keyframes pulseGlow {
-    0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.8); }
-    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
-    100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.8); }
+    0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+    100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
 }
 
 
@@ -24492,6 +24510,7 @@ function showUpdateScreen() {
     
 </body>
 </html>
+
 
 
 
