@@ -22602,43 +22602,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
                 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;700&family=Merriweather:wght@300;400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-                <style>                    /* ================================================= */
-                                      /* ================================================= */
-
+                <style>             
                                       
-                                      /* ================================================= */
-                    /* حل نهائي للتابلت: توسيط المحتوى مع تمدد الخلفية */
-                    /* ================================================= */
-                    
-                    @media screen and (min-width: 600px) and (max-width: 1280px) {
-                        
-                        /* 1. الخلفية تملأ الشاشة تماماً من الحافة للحافة */
-                        body, html {
-                            margin: 0 !important;
-                            padding: 0 !important;
-                            width: 100% !important;
-                            overflow-x: hidden !important;
-                        }
-
-                        /* 2. إجبار كل العناصر المباشرة داخل الصفحة على ترك مسافة */
-                        /* هذا يجعل النص يأخذ 90% فقط من العرض ويتوسط الشاشة */
-                        body > * {
-                            width: 90% !important;       /* عرض المحتوى أقل من الشاشة */
-                            margin-left: auto !important;  /* توسيط تلقائي */
-                            margin-right: auto !important; /* توسيط تلقائي */
-                            
-                            /* في حال وجود عناصر لها خلفية خاصة، نلغيها لتندمج مع الصفحة */
-                            box-sizing: border-box !important;
-                        }
-                        
-                        /* 3. ضمان عدم التصاق النصوص الطويلة جداً */
-                        p, .quran-text, h1, h2, h3, h4 {
-                            max-width: 100% !important;
-                        }
-                    }
-
-
-
                   
 
                     /* --- CSS الشاشة العادية --- */
@@ -24260,6 +24225,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
