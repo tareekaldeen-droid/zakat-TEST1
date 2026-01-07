@@ -22603,26 +22603,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
                 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;700&family=Merriweather:wght@300;400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
                 <style>                    /* ================================================= */
-                    /* ضبط هوامش الصفحة (لحل مشكلة التصاق النص بالحواف) */
-                    /* ================================================= */
-                    
-                    body {
-                        /* إضافة مسافة بيضاء حول النص من جميع الجهات */
-                        /* الرقم الأول (15px) للأعلى والأسفل */
-                        /* الرقم الثاني (10px) لليمين واليسار - وهو الأهم للتابلت */
-                        padding: 20px 30px !important;
+                                      /* ================================================= */
 
-                        /* ضروري جداً: لضمان أن المسافة لا تسبب ظهور شريط تمرير أفقي */
-                        box-sizing: border-box !important;
-                        
-                        /* جعل المحتوى يتوسط الشاشة في الشاشات الكبيرة جداً */
-                        margin: 0 auto !important;
-                        max-width: 100% !important;
-                    }
-                 /* تحسين خاص للموبايلات الصغيرة جداً (اختياري) */
-                    @media screen and (max-width: 480px) {
+                                      
+                    /* هوامش خاصة للأجهزة اللوحية (Tablets) فقط */
+                    /* ================================================= */
+
+                    /* هذا الكود يعمل فقط عندما يكون عرض الشاشة بين 600 بكسل و 1200 بكسل */
+                    @media screen and (min-width: 601px) and (max-width: 1200px) {
                         body {
-                            padding: 15px 15px !important; /* تقليل الهامش قليلاً للشاشات الصغيرة */
+                            /* إضافة مسافة جانبية كبيرة نسبياً لراحة اليد أثناء حمل التابلت */
+                            padding-left: 30px !important;
+                            padding-right: 30px !important;
+                            
+                            /* ضمان عدم ظهور شريط تمرير أفقي */
+                            box-sizing: border-box !important;
                         }
                     }
 
@@ -24247,6 +24242,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
