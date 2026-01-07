@@ -4015,130 +4015,6 @@ body.dark-mode .smart-logo-box {
 
 
 
-/* ============================================ */
-/* شاشة التحديث الذكية (Smart Update Overlay) */
-/* ============================================ */
-#update-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-[data-theme="dark"] #update-overlay {
-    background: rgba(18, 18, 18, 0.95);
-    color: #ffffff;
-}
-
-/* --- تعديل اللوجو ليصبح دائرياً --- */
-.update-logo-container {
-    position: relative;
-    width: 130px;  /* حجم الدائرة */
-    height: 130px;
-    margin-bottom: 30px;
-    border-radius: 50%; /* جعل الشكل دائري */
-    background: #ffffff; /* خلفية بيضاء للوجو ليكون واضحاً */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* ظل لإبراز الدائرة */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px; /* مسافة داخلية حتى لا يلمس اللوجو الحواف */
-    z-index: 2;
-}
-
-/* في الوضع الليلي نجعل خلفية الدائرة غامقة قليلاً لتناسب العين */
-[data-theme="dark"] .update-logo-container {
-    background: #2d2d2d;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border: 1px solid #444;
-}
-
-.update-logo {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 50%;
-    position: relative;
-    z-index: 3;
-    animation: pulseLogo 2s infinite ease-in-out;
-}
-
-/* تأثير الهالة خلف الدائرة */
-.update-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 160px; /* أكبر من الدائرة قليلاً */
-    height: 160px;
-    background: radial-gradient(circle, rgba(13, 124, 102, 0.3) 0%, transparent 70%);
-    border-radius: 50%;
-    animation: pulseGlow 2s infinite;
-    z-index: 1; /* خلف الدائرة البيضاء */
-}
-
-/* النصوص */
-.update-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    font-family: 'Cairo', sans-serif;
-    z-index: 2;
-}
-
-.update-subtitle {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    margin-bottom: 30px;
-    font-family: 'Amiri', serif;
-    z-index: 2;
-}
-
-/* شريط التقدم */
-.update-progress-container {
-    width: 200px;
-    height: 4px;
-    background: rgba(13, 124, 102, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    z-index: 2;
-}
-
-.update-progress-bar {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    border-radius: 10px;
-    transition: width 3.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* الأنيميشن */
-@keyframes pulseLogo {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-@keyframes pulseGlow {
-    0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
-    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
-    100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
-}
-
-
 
 
 
@@ -24404,67 +24280,35 @@ document.getElementById('languageSelect').addEventListener('change', function(e)
     }
 });
 
-// 6. تسجيل Service Worker (تحديث تلقائي فوري مع واجهة بصرية)
+// 6. تسجيل Service Worker (تحديث صامت وتلقائي في الخلفية)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js').then(registration => {
-            console.log('SW registered');
+            console.log('✅ Service Worker Registered');
             
+            // التحقق من التحديثات في الخلفية دون إزعاج المستخدم
             registration.addEventListener('updatefound', () => {
                 const newWorker = registration.installing;
                 newWorker.addEventListener('statechange', () => {
-                    // عندما يصبح التحديث جاهزاً (installed)
                     if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        // تشغيل واجهة التحديث فوراً
-                        showUpdateScreen();
+                        console.log('🚀 تم تثبيت تحديث جديد في الخلفية');
+                        // التحديث سيتم تفعيله تلقائياً بفضل skipWaiting في ملف sw.js
+                        // وسيظهر للمستخدم في المرة القادمة التي يفتح فيها التطبيق أو يحدث الصفحة
                     }
                 });
             });
-        });
+        }).catch(err => console.log('❌ SW Error:', err));
     });
-}
-
-// دالة عرض شاشة التحديث
-function showUpdateScreen() {
-    // 1. تحديد النصوص حسب اللغة الحالية
-    const isAr = currentLanguage === 'ar';
-    const titleText = isAr ? 'جاري تحديث التطبيق...' : 'Uygulama Güncelleniyor...';
-    const subText = isAr ? 'إصدار جديد مع ميزات محسنة' : 'Yeni özelliklerle yeni sürüm';
-    const logoUrl = "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/37q072n986bg8r1rlj5ljk2iqkt-UbHFLyXccdPR0FBy.png";
-
-    // 2. إنشاء عناصر HTML
-    const overlay = document.createElement('div');
-    overlay.id = 'update-overlay';
     
-    overlay.innerHTML = `
-        <div class="update-logo-container">
-            <div class="update-glow"></div>
-            <img src="${logoUrl}" class="update-logo" alt="Logo">
-        </div>
-        <div class="update-title">${titleText}</div>
-        <div class="update-subtitle">${subText}</div>
-        <div class="update-progress-container">
-            <div class="update-progress-bar" id="update-bar"></div>
-        </div>
-    `;
-
-    // 3. الإضافة للصفحة
-    document.body.appendChild(overlay);
-
-    // 4. تفعيل الأنيميشن (Fade In)
-    requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
-        // بدء شريط التقدم
-        setTimeout(() => {
-            document.getElementById('update-bar').style.width = '100%';
-        }, 100);
-    });
-
-    // 5. الانتظار ثم إعادة التحميل (3.5 ثانية)
-    setTimeout(() => {
+    // اختياري: إذا أردت إجبار الصفحة على التحديث فوراً بمجرد جاهزية الملفات الجديدة
+    // (قد يؤدي هذا لتحديث الصفحة فجأة أثناء استخدام المستخدم)
+    /*
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
         window.location.reload();
-    }, 3500);
+    });
+    */
 }
+
 
 
 
@@ -24510,6 +24354,7 @@ function showUpdateScreen() {
     
 </body>
 </html>
+
 
 
 
