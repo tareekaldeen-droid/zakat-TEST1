@@ -22619,7 +22619,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         margin: 0 auto !important;
                         max-width: 100% !important;
                     }
-   }
+                 /* تحسين خاص للموبايلات الصغيرة جداً (اختياري) */
+                    @media screen and (max-width: 480px) {
+                        body {
+                            padding: 17px 17px !important; /* تقليل الهامش قليلاً للشاشات الصغيرة */
+                        }
+                    }
+
                   
 
                     /* --- CSS الشاشة العادية --- */
@@ -24241,6 +24247,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
