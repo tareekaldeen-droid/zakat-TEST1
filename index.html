@@ -4017,156 +4017,6 @@ body.dark-mode .smart-logo-box {
         
 
 
-/* ========== شاشة التحديث ========== */
-
-.update-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(6px);
-  display: none; /* مخفي افتراضياً */
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  transition: opacity 0.3s ease;
-  opacity: 0;
-}
-
-.update-overlay.show {
-  display: flex;
-  opacity: 1;
-}
-
-.update-modal {
-  background: var(--update-bg, #ffffff);
-  color: var(--update-text, #111827);
-  border-radius: 18px;
-  padding: 24px 28px;
-  max-width: 360px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
-  animation: popIn 0.4s ease-out;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-}
-
-.update-logo-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 16px;
-}
-
-.update-logo {
-  width: 96px;
-  height: 96px;
-  object-fit: contain;
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8),
-    0 0 18px rgba(0, 173, 181, 0.6);
-  animation: pulseLogo 1.6s infinite ease-in-out;
-}
-
-.update-text {
-  margin-bottom: 16px;
-}
-
-.update-title-ar,
-.update-title-tr {
-  font-weight: 700;
-  margin: 4px 0;
-  font-size: 1.05rem;
-}
-
-.update-subtitle-ar,
-.update-subtitle-tr {
-  font-size: 0.85rem;
-  margin: 2px 0;
-  opacity: 0.9;
-}
-
-/* مؤشر التحميل (ثلاث نقاط متحركة) */
-.update-loader {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.update-loader span {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #00adb5;
-  animation: bounce 0.9s infinite ease-in-out;
-}
-
-.update-loader span:nth-child(2) {
-  animation-delay: 0.15s;
-}
-.update-loader span:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-/* ========== دعم الوضع الليلي ========== */
-
-/* الوضع بحسب نظام المستخدم */
-@media (prefers-color-scheme: dark) {
-  .update-modal {
-    --update-bg: #111827;
-    --update-text: #e5e7eb;
-  }
-}
-
-/* class لو حبيت تفعّل الوضع الليلي يدويًا على الـ body */
-body.dark-mode .update-modal {
-  --update-bg: #0b1120;
-  --update-text: #e5e7eb;
-}
-
-/* ========== الحركات (Animations) ========== */
-
-@keyframes popIn {
-  from {
-    transform: scale(0.9) translateY(10px);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes pulseLogo {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(0, 173, 181, 0.6);
-  }
-  70% {
-    transform: scale(1.04);
-    box-shadow: 0 0 0 12px rgba(0, 173, 181, 0);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(0, 173, 181, 0);
-  }
-}
-
-@keyframes bounce {
-  0%,
-  80%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.35;
-  }
-  40% {
-    transform: translateY(-5px);
-    opacity: 1;
-  }
-}
-
-
-
 
 
 
@@ -24455,73 +24305,166 @@ document.getElementById('languageSelect').addEventListener('change', function(e)
     }
 });
 
-// 6. تسجيل Service Worker (للتحديث التلقائي والعمل دون إنترنت)
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then((registration) => {
-        console.log("SW registered");
-
-        registration.addEventListener("updatefound", () => {
-          const newWorker = registration.installing;
-          if (!newWorker) return;
-
-          newWorker.addEventListener("statechange", () => {
-            // عندما يتم تثبيت نسخة جديدة وهناك SW قديم مسيطر
-            if (
-              newWorker.state === "installed" &&
-              navigator.serviceWorker.controller
-            ) {
-              // هنا نعرض شاشة "جاري التحديث..."
-              showUpdateOverlayAndReload();
+<!-- ============================================ -->
+<!-- نظام التحديث الذكي (Auto-Updater) v3.0 -->
+<!-- ============================================ -->
+<script>
+    // 1. دالة بناء وعرض شاشة التحديث
+    function showForceUpdateScreen() {
+        // تحديد اللغة (عربي افتراضي)
+        const lang = localStorage.getItem('appLanguage') || (navigator.language.startsWith('tr') ? 'tr' : 'ar');
+        
+        // تحديد الوضع الليلي (من الـ HTML tag)
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        
+        // نصوص الواجهة
+        const texts = {
+            ar: {
+                title: "جاري تحديث التطبيق...",
+                subtitle: "يتم الآن تثبيت أحدث نسخة مع التحسينات",
+                footer: "يرجى الانتظار قليلاً، سيتم إعادة التشغيل تلقائياً"
+            },
+            tr: {
+                title: "Uygulama Güncelleniyor...",
+                subtitle: "En son sürüm ve iyileştirmeler yükleniyor",
+                footer: "Lütfen bekleyin, otomatik olarak yeniden başlatılacak"
             }
-          });
-        });
-      })
-      .catch((error) => {
-        console.error("فشل تسجيل Service Worker:", error);
-      });
-  });
-}
+        };
+        const t = texts[lang];
 
-/**
- * إظهار شاشة التحديث المتحركة ثم إعادة تحميل الصفحة
- */
-function showUpdateOverlayAndReload() {
-  const overlay = document.getElementById("update-overlay");
-  if (!overlay) {
-    // احتياط: إذا لم تُضف الـ HTML الخاص بالـ overlay
-    window.location.reload();
-    return;
-  }
+        // ألوان الثيم (متوافق مع الوضع الليلي)
+        const theme = isDark ? {
+            overlay: "rgba(15, 30, 26, 0.95)", // خلفية داكنة جداً
+            card: "#1a3a2e",
+            text: "#ffffff",
+            subText: "#a8c5ba",
+            accent: "#41b8a6"
+        } : {
+            overlay: "rgba(245, 249, 247, 0.95)", // خلفية فاتحة
+            card: "#ffffff",
+            text: "#0d7c66",
+            subText: "#4a6b5e",
+            accent: "#0d7c66"
+        };
 
-  overlay.setAttribute("aria-hidden", "false");
-  overlay.classList.add("show");
+        // إنشاء العنصر الحاوي
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: ${theme.overlay};
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 2147483647; /* أعلى طبقة ممكنة */
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-family: 'Cairo', sans-serif;
+            opacity: 0; transition: opacity 0.3s ease;
+        `;
 
-  // منع سكول الخلفية (اختياري)
-  document.body.style.overflow = "hidden";
+        // محتوى الشاشة (HTML + CSS داخلي)
+        overlay.innerHTML = `
+            <style>
+                .update-card {
+                    background: ${theme.card};
+                    padding: 40px;
+                    border-radius: 20px;
+                    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+                    text-align: center;
+                    max-width: 90%;
+                    width: 320px;
+                    border: 1px solid ${theme.accent}30;
+                    transform: translateY(20px);
+                    animation: slideUp 0.5s ease forwards;
+                }
+                .logo-pulse {
+                    width: 80px; height: 80px;
+                    margin-bottom: 20px;
+                    border-radius: 50%;
+                    padding: 5px;
+                    background: white;
+                    box-shadow: 0 0 0 0 ${theme.accent}60;
+                    animation: pulse-green 2s infinite;
+                }
+                .progress-track {
+                    width: 100%; height: 6px;
+                    background: ${theme.accent}20;
+                    border-radius: 10px;
+                    margin: 20px 0;
+                    overflow: hidden;
+                }
+                .progress-fill {
+                    height: 100%;
+                    width: 0%;
+                    background: ${theme.accent};
+                    border-radius: 10px;
+                    animation: fill-bar 3.5s ease-in-out forwards;
+                }
+                @keyframes pulse-green {
+                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 ${theme.accent}70; }
+                    70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(0,0,0,0); }
+                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+                }
+                @keyframes fill-bar {
+                    0% { width: 0%; }
+                    100% { width: 100%; }
+                }
+                @keyframes slideUp {
+                    to { transform: translateY(0); }
+                }
+            </style>
 
-  // حفظ أننا أعدنا التحميل من أجل التحديث
-  sessionStorage.setItem("reloadedForUpdate", "1");
+            <div class="update-card">
+                <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/37q072n986bg8r1rlj5ljk2iqkt-UbHFLyXccdPR0FBy.png" class="logo-pulse">
+                
+                <h2 style="margin: 0 0 10px; color: ${theme.text}; font-size: 1.3rem;">${t.title}</h2>
+                <p style="margin: 0; color: ${theme.subText}; font-size: 0.9rem;">${t.subtitle}</p>
+                
+                <div class="progress-track">
+                    <div class="progress-fill"></div>
+                </div>
+                
+                <p style="margin: 0; font-size: 0.75rem; color: ${theme.subText}; opacity: 0.8;">${t.footer}</p>
+            </div>
+        `;
 
-  // تأخير بسيط لإعطاء انطباع أن التحديث يجري
-  setTimeout(() => {
-    window.location.reload();
-  }, 2000); // 2 ثانية، يمكن تعديلها
-}
+        document.body.appendChild(overlay);
+        
+        // إظهار الشاشة بنعومة
+        requestAnimationFrame(() => { overlay.style.opacity = '1'; });
 
-// بعد فتح النسخة الجديدة
-if (sessionStorage.getItem("reloadedForUpdate")) {
-  sessionStorage.removeItem("reloadedForUpdate");
-  console.log("تم التحديث إلى النسخة الجديدة بنجاح.");
- }
-                    }
+        // إعادة التحميل بعد 3.5 ثانية
+        setTimeout(() => {
+            window.location.reload();
+        }, 3500);
+    }
+
+    // 2. تسجيل Service Worker ومراقبة التحديثات
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').then(registration => {
+                
+                // عند العثور على تحديث جديد
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    
+                    newWorker.addEventListener('statechange', () => {
+                        // حالة: تم التثبيت وجاهز للتفعيل
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // 🔥 تشغيل شاشة التحديث فوراً
+                            showForceUpdateScreen();
+                        }
+                    });
                 });
             });
+
+            // ضمان تحديث الصفحة إذا تحكم الـ SW الجديد
+            let refreshing;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (refreshing) return;
+                window.location.reload();
+                refreshing = true;
+            });
         });
-    });
-}
+    }
+</script>
 
 
 
@@ -24570,6 +24513,7 @@ if (sessionStorage.getItem("reloadedForUpdate")) {
     
 </body>
 </html>
+
 
 
 
