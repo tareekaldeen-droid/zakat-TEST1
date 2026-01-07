@@ -22606,27 +22606,27 @@ document.addEventListener('DOMContentLoaded', function() {
                                       /* ================================================= */
 
                                       
-                                      /* ================================================= */
-                    /* ضبط التابلت: هوامش مريحة مع نفس لون الخلفية تماماً */
+                                              /* ================================================= */
+                    /* ضبط التابلت: هوامش داخلية (منه وفيه) دون تقليص الخلفية */
                     /* ================================================= */
                     
                     @media screen and (min-width: 601px) and (max-width: 1200px) {
-                        body {
-                            /* 1. إبعاد النص عن الحواف (يمين ويسار) */
-                            /* الخلفية ستملأ هذه المساحة تلقائياً لأنها جزء من الصفحة */
-                            padding-left: 60px !important;
-                            padding-right: 60px !important;
-                            
-                            /* مسافة من الأعلى والأسفل لراحة العين */
-                            padding-top: 40px !important;
-                            padding-bottom: 40px !important;
-
-                            /* 2. ضبط تقني لضمان عدم تأثر عرض الصفحة */
-                            box-sizing: border-box !important;
+                        /* نطبق التنسيق على html و body لضمان تمدد اللون للحواف */
+                        html, body {
                             width: 100% !important;
+                            margin: 0 !important;
+                            overflow-x: hidden !important; /* منع أي تمدد عرضي */
+                        }
+
+                        body {
+                            /* استخدام النسبة المئوية % يجعل الهامش متناسقاً مع حجم الشاشة */
+                            /* هذا يبعد النص عن الحافة بنسبة 8% من كل جانب */
+                            padding-left: 8% !important; 
+                            padding-right: 8% !important;
                             
-                            /* 3. تحسين شكل النص في المساحة الجديدة */
-                            text-align: justify !important; /* محاذاة النص كالكتاب */
+                            /* هذا الأمر (border-box) هو السر: */
+                            /* يجعل الـ padding محسوباً "داخل" عرض الصفحة وليس "إضافة" عليها */
+                            box-sizing: border-box !important;
                         }
                     }
 
@@ -24252,6 +24252,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
