@@ -4017,28 +4017,6 @@ body.dark-mode .smart-logo-box {
 
 
 
-/* تحسين شكل صورة التحديث */
-#update-notification-modal .notif-image-container {
-    background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 100%);
-    border-radius: 15px;
-    padding: 15px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 160px; /* ارتفاع ثابت للصورة */
-}
-
-#update-notification-modal .notif-main-img {
-    height: 100%;
-    width: auto;
-    filter: drop-shadow(0 5px 15px rgba(13, 124, 102, 0.2));
-    transition: transform 0.3s ease;
-}
-
-#update-notification-modal .notif-main-img:hover {
-    transform: scale(1.1) rotate(5deg);
-}
 
 
 
@@ -4112,39 +4090,6 @@ body.dark-mode .smart-logo-box {
 </div>
 
 
-<!-- نافذة التحديث الجديد -->
-<div class="custom-modal notification-modal" id="update-notification-modal" style="z-index: 20000;">
-    <div class="notif-header">
-        <!-- اللوجو الصغير -->
-        <img id="update-logo-small" src="" class="notif-logo-small">
-        <div class="notif-meta">
-            <span class="notif-date-badge" style="background: var(--accent-color); color: white;">New</span>
-            <span class="notif-time-badge" id="update-version-badge">v3.0.1</span>
-        </div>
-    </div>
-    
-    <div class="notif-content">
-        <h3 class="notif-title animate-pop" id="update-title"></h3>
-        
-        <!-- الصورة الكبيرة للتحديث -->
-        <div class="notif-image-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/4213/4213179.png" class="notif-main-img" style="object-fit: contain; padding: 20px; background: #f0f9f7;">
-        </div>
-        
-        <p class="notif-body" id="update-body" style="font-size: 1.1rem; font-weight: 600;"></p>
-    </div>
-
-    <div class="notif-actions">
-        <!-- زر التحديث -->
-        <button id="btn-reload-update" class="btn-primary notif-btn" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); box-shadow: 0 4px 15px rgba(13, 124, 102, 0.3);">
-            <span id="update-btn-text"></span>
-        </button>
-        <!-- زر الإغلاق -->
-        <button onclick="closeModal('update-notification-modal')" class="btn-outline notif-btn" style="background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); margin-top: 0;">
-            <span id="update-cancel-text"></span>
-        </button>
-    </div>
-</div>
 
 
 
@@ -24346,67 +24291,19 @@ if ('serviceWorker' in navigator) {
             // التحقق من وجود تحديثات في الكود (HTML/JS/CSS)
             registration.addEventListener('updatefound', () => {
                 const newWorker = registration.installing;
-                
                 newWorker.addEventListener('statechange', () => {
                     if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        // ============================================================
-                        // تم اكتشاف تحديث جديد - إظهار النافذة المخصصة بدلاً من confirm
-                        // ============================================================
-                        showCustomUpdateModal(newWorker);
+                        // تم تثبيت تحديث جديد في الخلفية
+                        const msg = currentLanguage === 'ar' ? 'تحديث جديد للتطبيق متوفر. هل تريد التحديث الآن؟' : 'Uygulama için yeni güncelleme mevcut. Şimdi güncellemek ister misiniz?';
+                        if(confirm(msg)) {
+                            window.location.reload();
+                        }
                     }
                 });
             });
         });
     });
 }
-
-// دالة إظهار نافذة التحديث المخصصة
-function showCustomUpdateModal(worker) {
-    const lang = localStorage.getItem('appLanguage') || 'ar';
-    const currentLogo = lang === 'ar' ? AR_LOGO : TR_LOGO;
-    
-    // 1. تعيين النصوص حسب اللغة
-    const texts = {
-        ar: {
-            title: "تحديث جديد متوفر! 🚀",
-            body: "تم إضافة تحسينات جديدة وميزات إضافية للتطبيق. يرجى التحديث للحصول على أحدث نسخة.",
-            btn: "تحديث الآن",
-            cancel: "لاحقاً"
-        },
-        tr: {
-            title: "Yeni Güncelleme Mevcut! 🚀",
-            body: "Uygulamaya yeni özellikler ve iyileştirmeler eklendi. En son sürümü almak için lütfen güncelleyin.",
-            btn: "Şimdi Güncelle",
-            cancel: "Daha Sonra"
-        }
-    };
-
-    const t = texts[lang];
-
-    // 2. تعيين المحتوى في النافذة
-    document.getElementById('update-logo-small').src = currentLogo;
-    document.getElementById('update-title').textContent = t.title;
-    document.getElementById('update-body').textContent = t.body;
-    document.getElementById('update-btn-text').textContent = t.btn;
-    document.getElementById('update-cancel-text').textContent = t.cancel;
-
-    // 3. تفعيل زر التحديث
-    const updateBtn = document.getElementById('btn-reload-update');
-    // نقوم بإزالة أي مستمعين سابقين لتجنب التكرار (استنساخ الزر)
-    const newBtn = updateBtn.cloneNode(true);
-    updateBtn.parentNode.replaceChild(newBtn, updateBtn);
-    
-    newBtn.addEventListener('click', () => {
-        // إرسال رسالة للـ Service Worker لتخطي الانتظار وتفعيل التحديث فوراً
-        worker.postMessage({ action: 'skipWaiting' });
-        window.location.reload();
-    });
-
-    // 4. عرض النافذة
-    document.getElementById('modal-overlay').classList.add('show');
-    document.getElementById('update-notification-modal').classList.add('show');
-}
-
 
 
 
