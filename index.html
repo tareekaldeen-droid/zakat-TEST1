@@ -3778,49 +3778,188 @@ body.dark-mode .smart-logo-box {
 
 
 
-/* شاشة الترحيب (Splash Screen) */
+/* ============================================ */
+/* شاشة الترحيب - زخرفة إسلامية فاخرة */
+/* ============================================ */
 #splash-screen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #ffffff;
     z-index: 99999;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.5s ease-out;
+    transition: opacity 0.5s ease-out, background-color 0.3s ease;
+    overflow: hidden;
+    
+    /* --- الوضع النهاري: خلفية بيضاء فاتحة --- */
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
 }
 
+/* ====================================== */
+/* طبقة الزخرفة الإسلامية الرئيسية */
+/* ====================================== */
+#splash-screen::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.06; 
+    
+    /* نمط هندسي إسلامي متقدم - نجوم ثمانية متداخلة */
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%230d7c66' fill-rule='evenodd'%3E%3Cpath d='M50 10 L55 35 L80 35 L60 50 L70 75 L50 60 L30 75 L40 50 L20 35 L45 35 Z' opacity='0.8'/%3E%3Ccircle cx='50' cy='50' r='15' fill='none' stroke='%230d7c66' stroke-width='1' opacity='0.5'/%3E%3Cpath d='M50 0 L52 48 L50 50 L48 48 Z' transform='rotate(0 50 50)'/%3E%3Cpath d='M50 0 L52 48 L50 50 L48 48 Z' transform='rotate(45 50 50)'/%3E%3Cpath d='M50 0 L52 48 L50 50 L48 48 Z' transform='rotate(90 50 50)'/%3E%3Cpath d='M50 0 L52 48 L50 50 L48 48 Z' transform='rotate(135 50 50)'/%3E%3Cpath d='M50 0 L52 48 L50 50 L48 48 Z' transform='rotate(180 50 50)'/%3E%3Cpath d='M50 0 L52 48 L50 50 L48 48 Z' transform='rotate(225 50 50)'/%3E%3Cpath d='M50 0 L52 48 L50 50 L48 48 Z' transform='rotate(270 50 50)'/%3E%3Cpath d='M50 0 L52 48 L50 50 L48 48 Z' transform='rotate(315 50 50)'/%3E%3C/g%3E%3C/svg%3E");
+    
+    background-size: 100px 100px;
+    pointer-events: none;
+    z-index: 1;
+    animation: rotatePattern 60s linear infinite;
+}
+
+/* طبقة زخرفة ثانوية (زخارف الزوايا) */
+#splash-screen::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.04;
+    
+    /* نمط أرابيسك دقيق */
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%230d7c66' stroke-width='1'%3E%3Ccircle cx='40' cy='40' r='30' opacity='0.3'/%3E%3Ccircle cx='40' cy='40' r='20' opacity='0.4'/%3E%3Ccircle cx='40' cy='40' r='10' opacity='0.5'/%3E%3Cpath d='M40 10 Q50 20 40 30 Q30 20 40 10' fill='%230d7c66' opacity='0.2'/%3E%3Cpath d='M40 50 Q50 60 40 70 Q30 60 40 50' fill='%230d7c66' opacity='0.2'/%3E%3Cpath d='M10 40 Q20 50 30 40 Q20 30 10 40' fill='%230d7c66' opacity='0.2'/%3E%3Cpath d='M50 40 Q60 50 70 40 Q60 30 50 40' fill='%230d7c66' opacity='0.2'/%3E%3C/g%3E%3C/svg%3E");
+    
+    background-size: 80px 80px;
+    pointer-events: none;
+    z-index: 0;
+    animation: rotatePattern 80s linear infinite reverse;
+}
+
+/* حركة دوران بطيئة للزخرفة */
+@keyframes rotatePattern {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ====================================== */
+/* الوضع الليلي - خلفية فاخرة */
+/* ====================================== */
+[data-theme="dark"] #splash-screen {
+    /* تدرج كحلي-أخضر غامق فخم */
+    background: linear-gradient(135deg, #051a15 0%, #0a2820 100%);
+}
+
+[data-theme="dark"] #splash-screen::before {
+    opacity: 0.08;
+    /* تحويل اللون إلى ذهبي لامع */
+    filter: invert(1) sepia(1) saturate(3) hue-rotate(10deg) brightness(1.2);
+}
+
+[data-theme="dark"] #splash-screen::after {
+    opacity: 0.06;
+    filter: invert(1) sepia(1) saturate(2) hue-rotate(20deg) brightness(1.1);
+}
+
+/* ====================================== */
+/* تنسيق اللوجو الدائري المحسّن */
+/* ====================================== */
 .splash-logo {
+    position: relative;
+    z-index: 10;
     width: 150px;
     height: 150px;
     object-fit: contain;
     margin-bottom: 20px;
-    animation: pulseLogo 2s infinite;
+    border-radius: 50%;
+    background-color: #ffffff;
+    padding: 20px;
+    
+    /* ظل متعدد الطبقات لعمق أكبر */
+    box-shadow: 
+        0 10px 30px rgba(13, 124, 102, 0.15),
+        0 5px 15px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    
+    border: 2px solid rgba(13, 124, 102, 0.1);
+    
+    animation: pulseLogo 2.5s infinite ease-in-out;
 }
 
-.loading-bar-container {
-    width: 200px;
-    height: 4px;
-    background-color: #f0f0f0;
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.loading-bar {
-    width: 0%;
-    height: 100%;
-    background-color: var(--primary-color);
-    transition: width 2s ease-in-out;
-}
-
+/* حركة نبض اللوجو */
 @keyframes pulseLogo {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 
+            0 10px 30px rgba(13, 124, 102, 0.15),
+            0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 
+            0 15px 40px rgba(13, 124, 102, 0.25),
+            0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+}
+
+/* اللوجو في الوضع الليلي */
+[data-theme="dark"] .splash-logo {
+    background: linear-gradient(135deg, #12241e 0%, #1a3329 100%);
+    border-color: rgba(255, 215, 100, 0.2);
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.6),
+        0 5px 20px rgba(255, 215, 100, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .splash-logo:hover {
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.7),
+        0 8px 25px rgba(255, 215, 100, 0.2);
+}
+
+/* ====================================== */
+/* عناصر زخرفية إضافية في الزوايا */
+/* ====================================== */
+.splash-corner-decoration {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.splash-corner-decoration.top-left {
+    top: 0;
+    left: 0;
+    background: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 Q60 0 60 60 L0 60 Z' fill='%230d7c66' opacity='0.3'/%3E%3Ccircle cx='60' cy='60' r='40' fill='none' stroke='%230d7c66' stroke-width='2'/%3E%3C/svg%3E") no-repeat;
+}
+
+.splash-corner-decoration.top-right {
+    top: 0;
+    right: 0;
+    background: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M120 0 Q60 0 60 60 L120 60 Z' fill='%230d7c66' opacity='0.3'/%3E%3Ccircle cx='60' cy='60' r='40' fill='none' stroke='%230d7c66' stroke-width='2'/%3E%3C/svg%3E") no-repeat;
+}
+
+.splash-corner-decoration.bottom-left {
+    bottom: 0;
+    left: 0;
+    background: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 120 Q60 120 60 60 L0 60 Z' fill='%230d7c66' opacity='0.3'/%3E%3Ccircle cx='60' cy='60' r='40' fill='none' stroke='%230d7c66' stroke-width='2'/%3E%3C/svg%3E") no-repeat;
+}
+
+.splash-corner-decoration.bottom-right {
+    bottom: 0;
+    right: 0;
+    background: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M120 120 Q60 120 60 60 L120 60 Z' fill='%230d7c66' opacity='0.3'/%3E%3Ccircle cx='60' cy='60' r='40' fill='none' stroke='%230d7c66' stroke-width='2'/%3E%3C/svg%3E") no-repeat;
+}
+
+[data-theme="dark"] .splash-corner-decoration {
+    opacity: 0.12;
+    filter: invert(1) sepia(1) saturate(2) hue-rotate(15deg) brightness(1.3);
 }
 
 /* النوافذ المنبثقة (Modals) */
@@ -24354,6 +24493,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
