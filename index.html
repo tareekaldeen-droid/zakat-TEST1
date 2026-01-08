@@ -4037,6 +4037,401 @@ body.dark-mode .smart-logo-box {
 
 
 
+    /* ============================================ */
+    /* 💎 المتغيرات والألوان (Variables) */
+    /* ============================================ */
+    :root {
+        --hz-bg: #f8fafc;
+        --hz-card: #ffffff;
+        --hz-input: #f1f5f9;
+        --hz-border: #e2e8f0;
+        --hz-text: #0f172a;
+        --hz-text-sub: #64748b;
+        --hz-primary: #0d7c66;
+        
+        /* ألوان الحذف (الخطر) - نهاري */
+        --hz-danger-bg: #fff1f2;
+        --hz-danger-border: #fda4af;
+        --hz-danger-text: #e11d48;
+        --hz-danger-btn: #e11d48;
+    }
+
+    [data-theme="dark"] {
+        --hz-bg: #0f172a;
+        --hz-card: #1e293b;
+        --hz-input: #334155;
+        --hz-border: #475569;
+        --hz-text: #f8fafc;
+        --hz-text-sub: #94a3b8;
+        
+        /* ألوان الحذف (الخطر) - ليلي */
+        --hz-danger-bg: rgba(225, 29, 72, 0.1);
+        --hz-danger-border: rgba(225, 29, 72, 0.3);
+        --hz-danger-text: #fb7185;
+        --hz-danger-btn: #be123c;
+    }
+
+    /* ============================================ */
+    /* 🏗️ الهيكل الأساسي (Layout) */
+    /* ============================================ */
+    .settings-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+        padding-bottom: 80px;
+        font-family: 'Cairo', sans-serif; /* خط افتراضي */
+    }
+
+    .horizon-card {
+        background: var(--hz-card);
+        border-radius: 20px;
+        border: 1px solid var(--hz-border);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        overflow: hidden;
+    }
+
+    /* ============================================ */
+    /* 📑 التبويبات (Tabs) */
+    /* ============================================ */
+    .horizon-tabs {
+        display: flex; 
+        padding: 10px 20px; 
+        background: var(--hz-bg);
+        border-bottom: 1px solid var(--hz-border); 
+        gap: 10px; 
+        overflow-x: auto;
+    }
+
+    .hz-tab {
+        padding: 8px 16px; 
+        border-radius: 10px; 
+        font-size: 0.9rem; 
+        font-weight: 600;
+        color: var(--hz-text-sub); 
+        cursor: pointer; 
+        transition: 0.2s; 
+        display: flex; 
+        align-items: center; 
+        gap: 8px; 
+        white-space: nowrap;
+    }
+
+    .hz-tab:hover { background: rgba(0,0,0,0.05); color: var(--hz-text); }
+    
+    .hz-tab.active { 
+        background: var(--hz-card); 
+        color: var(--hz-primary); 
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    }
+
+    /* ============================================ */
+    /* 🎛️ المحتوى وعناصر التحكم (Controls) */
+    /* ============================================ */
+    .horizon-content { padding: 2rem; min-height: 350px; }
+    .hz-section { display: none; animation: fadeIn 0.3s ease; }
+    .hz-section.active { display: block; }
+
+    /* الحاوية لكل مجموعة تحكم */
+    .control-box { 
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px dashed var(--hz-border); /* خط فاصل خفيف */
+    }
+    .control-box:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    /* العناوين (مصغرة) */
+    .control-title {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--hz-text);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* حاوية الأزرار (مصغرة) */
+    .segment-container {
+        background: var(--hz-input);
+        padding: 3px;
+        border-radius: 10px;
+        display: flex;
+        gap: 3px;
+    }
+
+    /* الأزرار (مصغرة) */
+    .segment-item {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 6px 4px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--hz-text-sub);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        transition: 0.2s;
+    }
+
+    .segment-item:hover { color: var(--hz-text); }
+    .segment-item.active { 
+        background: var(--hz-card); 
+        color: var(--hz-primary); 
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06); 
+    }
+
+    /* ============================================ */
+    /* 📋 القوائم (Lists) */
+    /* ============================================ */
+    .icon-list { display: flex; flex-direction: column; gap: 10px; }
+    
+    .icon-item {
+        display: flex; align-items: center; gap: 15px; padding: 12px 15px;
+        background: var(--hz-bg); border-radius: 12px; text-decoration: none; color: var(--hz-text);
+        transition: 0.2s; border: 1px solid transparent;
+    }
+    .icon-item:hover { border-color: var(--hz-border); background: var(--hz-card); }
+    .item-symbol { font-size: 1.4rem; }
+    .item-text h4 { margin: 0; font-size: 0.95rem; }
+    .item-text p { margin: 2px 0 0; font-size: 0.75rem; color: var(--hz-text-sub); }
+
+    /* ============================================ */
+    /* 🗑️ منطقة الحذف (Delete Zone) */
+    /* ============================================ */
+    .delete-zone { 
+        margin-top: 25px; 
+        padding: 20px; 
+        background: var(--hz-danger-bg);
+        border: 1px dashed var(--hz-danger-border);
+        border-radius: 12px; 
+        text-align: center; 
+        transition: all 0.3s ease;
+    }
+
+    .btn-del { 
+        background: var(--hz-danger-btn);
+        color: white; 
+        border: none; 
+        padding: 10px 20px; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        font-weight: 600; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 8px; 
+        transition: 0.2s;
+    }
+    .btn-del:hover { opacity: 0.9; transform: scale(1.02); }
+
+    .delete-zone p {
+        font-size: 0.75rem; 
+        color: var(--hz-danger-text);
+        margin-top: 8px;
+    }
+
+    /* ============================================ */
+    /* ℹ️ بطاقات المعلومات والفريق */
+    /* ============================================ */
+    .info-detail-card {
+        background: var(--hz-bg); border-radius: 16px; padding: 20px; margin-bottom: 15px;
+        border: 1px solid transparent; transition: 0.2s;
+    }
+    .info-detail-card:hover { background: var(--hz-card); border-color: var(--hz-border); box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+    .info-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .info-icon-box {
+        width: 36px; height: 36px; background: rgba(13, 124, 102, 0.1); color: var(--hz-primary);
+        border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .info-head h4 { margin: 0; font-size: 1rem; color: var(--hz-text); font-weight: 700; }
+    .info-body p { margin: 0; font-size: 0.9rem; color: var(--hz-text-sub); line-height: 1.6; }
+
+    /* بطاقات الفريق */
+    .team-rich-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    .team-rich-card {
+        background: var(--hz-bg); border-radius: 18px; padding: 20px;
+        display: flex; align-items: flex-start; gap: 15px;
+        border: 1px solid transparent; transition: all 0.3s ease;
+    }
+    .team-rich-card:hover {
+        background: var(--hz-card); border-color: var(--hz-border);
+        box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08); transform: translateY(-3px);
+    }
+    .team-avatar-rich {
+        width: 70px; height: 70px; border-radius: 50%; object-fit: cover;
+        border: 3px solid var(--hz-card); box-shadow: 0 5px 15px rgba(0,0,0,0.1); flex-shrink: 0;
+    }
+    .team-info-rich { flex: 1; }
+    .team-info-rich h4 { margin: 0 0 4px 0; font-size: 1.05rem; font-weight: 700; color: var(--hz-text); }
+    .team-role-badge {
+        display: inline-block; padding: 3px 10px; background: rgba(13, 124, 102, 0.08);
+        color: var(--hz-primary); border-radius: 50px; font-size: 0.7rem; font-weight: 600; margin-bottom: 8px;
+    }
+    .team-bio { font-size: 0.85rem; color: var(--hz-text-sub); line-height: 1.5; margin: 0; }
+
+    /* ============================================ */
+    /* 📱 التجاوب مع الهاتف (Mobile) */
+    /* ============================================ */
+    @media (max-width: 600px) {
+        .horizon-content { padding: 1.5rem; }
+        .team-rich-grid { grid-template-columns: 1fr; }
+
+        /* تعديل التبويبات لتكون شبكة 2x2 */
+        .horizon-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow-x: visible;
+            flex-wrap: wrap;
+            padding: 15px;
+            gap: 10px;
+        }
+        .hz-tab {
+            justify-content: center;
+            text-align: center;
+            width: auto;
+            margin: 0;
+            background: var(--hz-input);
+            border: 1px solid transparent;
+        }
+        .hz-tab.active {
+            background: var(--hz-card);
+            border-color: var(--hz-primary);
+            color: var(--hz-primary);
+        }
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+
+
+/* ============================================ */
+/* ☁️ تصميم البطاقات الناعمة (Unified Soft Cards) */
+/* ============================================ */
+
+/* حاوية العناوين */
+.soft-ui-group {
+    margin-bottom: 25px;
+}
+
+.soft-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    padding: 0 5px;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* الشبكة */
+.soft-grid {
+    display: grid;
+    gap: 12px;
+}
+.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* 🎨 التصميم الأساسي للبطاقة */
+.soft-card {
+    background: var(--bg-color); /* الافتراضي لباقي البطاقات */
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 12px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 🔥 تخصيص لون بطاقات Aa (الحجم) فقط */
+.font-size-btn {
+    background: rgba(0, 0, 0, 0.06) !important; /* اللون الذي طلبته */
+}
+
+/* النصوص والأيقونات */
+.soft-card .preview {
+    font-size: 1.4rem;
+    color: var(--text-color);
+    line-height: 1;
+    transition: transform 0.3s ease;
+    z-index: 2;
+}
+
+.soft-card .name {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+    z-index: 2;
+}
+
+/* تأثير التحويم */
+.soft-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* ============================================ */
+/* ✨ حالة التحديد (Active State) */
+/* ============================================ */
+.soft-card.active {
+    background: var(--card-bg) !important; /* يعود للون الكارت الأبيض عند التحديد ليبرز */
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 20px rgba(13, 124, 102, 0.15);
+    transform: translateY(-2px);
+}
+
+/* تلوين العناصر عند التحديد */
+.soft-card.active .preview,
+.soft-card.active .name {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* علامة صح صغيرة */
+.soft-card.active::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 6px;
+    height: 6px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+/* إخفاء اللغات */
+html[lang="ar"] .font-tr { display: none !important; }
+html[lang="tr"] .font-ar { display: none !important; }
+
+
+
+
+
+
+        
+
+
+
+
+
         
 
     </style>
@@ -17456,398 +17851,338 @@ inizi mübarek kılsın ve zekâtınızı kabul etsin. 🏪✨">
             </div>
         </div>
 
-         <!-- ============================================ -->
+        <!-- ============================================ -->
 <!-- صفحة الإعدادات - نسخة شاملة ومفصلة -->
 <!-- ============================================ -->
 <div id="settingsPage" class="page">
-    <div class="settings-page-wrapper">
+    <div class="settings-wrapper">
         
-        <!-- 1. الهيدر المدمج (Compact Hero Section) -->
-        <div class="settings-hero">
-            <!-- العنصر الأول: اللوجو (سيظهر في البداية حسب اللغة) -->
-            <div class="hero-logo-box">
-                <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/37q072n986bg8r1rlj5ljk2iqkt-UbHFLyXccdPR0FBy.png" 
-                     alt="Logo" class="hero-logo-img">
+        <div class="horizon-card">
+            
+     
+
+            <!-- التبويبات -->
+            <div class="horizon-tabs">
+                <div class="hz-tab active" onclick="switchHzTab('display', this)">
+                    <span>🎨</span> <span data-ar="المظهر" data-tr="Görünüm">المظهر</span>
+                </div>
+                <div class="hz-tab" onclick="switchHzTab('actions', this)">
+                    <span>⚡</span> <span data-ar="الإجراءات" data-tr="İşlemler">الإجراءات</span>
+                </div>
+                <div class="hz-tab" onclick="switchHzTab('info', this)">
+                    <span>ℹ️</span> <span data-ar="عن البرنامج" data-tr="Hakkında">عن البرنامج</span>
+                </div>
+                <div class="hz-tab" onclick="switchHzTab('team', this)">
+                    <span>👥</span> <span data-ar="الفريق" data-tr="Ekip">الفريق</span>
+                </div>
             </div>
 
-            <!-- العنصر الثاني: النص (سيظهر في النهاية مع وجود مسافة كبيرة بينهما) -->
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span data-ar="حاسبة الزكاة الذكية" data-tr="Akıllı Zekât Hesaplayıcı">حاسبة الزكاة الذكية</span>
-                </h1>
-                <div class="hero-badges">
-                    <span class="badge badge-primary">v3.0.0</span>
-                    <span class="badge badge-secondary" data-ar="مجاني" data-tr="Ücretsiz">مجاني</span>
-                </div>
+            <!-- المحتوى -->
+            <div class="horizon-content">
+
+                <!-- 1. قسم المظهر -->
+              <div id="sec-display" class="hz-section active">
+    
+    <!-- أ. المظهر (3 أعمدة) -->
+    <div class="soft-ui-group">
+        <div class="soft-label">
+            <span>🎨</span> <span data-ar="المظهر" data-tr="Tema">المظهر</span>
+        </div>
+        <div class="soft-grid cols-3">
+            <div class="soft-card theme-option-card" data-theme="light" onclick="changeThemeMode('light')">
+                <span class="preview">☀️</span>
+                <span class="name" data-ar="فاتح" data-tr="Açık">فاتح</span>
+            </div>
+            <div class="soft-card theme-option-card" data-theme="dark" onclick="changeThemeMode('dark')">
+                <span class="preview">🌙</span>
+                <span class="name" data-ar="داكن" data-tr="Koyu">داكن</span>
+            </div>
+            <div class="soft-card theme-option-card" data-theme="auto" onclick="changeThemeMode('auto')">
+                <span class="preview">⚙️</span>
+                <span class="name" data-ar="تلقائي" data-tr="Oto">تلقائي</span>
             </div>
         </div>
+    </div>
 
-        <!-- باقي محتوى الصفحة (الشبكة والبطاقات) يوضع هنا... -->
-        <!-- ... -->
-
-
-        <!-- 2. لوحة التحكم (Dashboard Grid) -->
-        <div class="settings-dashboard">
-
-            <!-- بطاقة المظهر -->
-            <div class="dashboard-card">
-                <div class="card-header-modern">
-                    <div class="header-icon" style="background: #e0f2f1; color: var(--primary-color);">🎨</div>
-                    <div class="header-title" data-ar="تخصيص المظهر" data-tr="Görünüm">تخصيص المظهر</div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label" data-ar="الوضع (Theme)" data-tr="Tema">الوضع</label>
-                    <div class="options-grid">
-                        <button class="option-btn theme-option-card" data-theme="light" onclick="changeThemeMode('light')">
-                            <span>☀️</span> <span data-ar="نهاري" data-tr="Gündüz">نهاري</span>
-                        </button>
-                        <button class="option-btn theme-option-card" data-theme="dark" onclick="changeThemeMode('dark')">
-                            <span>🌙</span> <span data-ar="ليلي" data-tr="Gece">ليلي</span>
-                        </button>
-                        <button class="option-btn theme-option-card" data-theme="auto" onclick="changeThemeMode('auto')">
-                            <span>⚙️</span> <span data-ar="تلقائي" data-tr="Oto">تلقائي</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label" data-ar="حجم الخط" data-tr="Yazı Boyutu">حجم الخط</label>
-                    <div class="options-grid" style="grid-template-columns: repeat(4, 1fr);">
-                        <button class="option-btn font-size-btn" onclick="changeFontSize('small')">S</button>
-                        <button class="option-btn font-size-btn" onclick="changeFontSize('medium')">M</button>
-                        <button class="option-btn font-size-btn" onclick="changeFontSize('large')">L</button>
-                        <button class="option-btn font-size-btn" onclick="changeFontSize('xlarge')">XL</button>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label" data-ar="نوع الخط" data-tr="Yazı Tipi">نوع الخط</label>
-                    <div class="options-grid font-options"> <!-- font-options class for specific styling if needed -->
-                        <div class="option-btn font-family-card ar-font" data-font="Amiri" onclick="changeFontFamily('Amiri')" style="font-family: 'Amiri';">النسخ</div>
-                        <div class="option-btn font-family-card ar-font" data-font="Cairo" onclick="changeFontFamily('Cairo')" style="font-family: 'Cairo';">الكوفي</div>
-                        <div class="option-btn font-family-card ar-font" data-font="Lateef" onclick="changeFontFamily('Lateef')" style="font-family: 'Lateef';">الرقعة</div>
-                        <div class="option-btn font-family-card tr-font" data-font="Roboto" onclick="changeFontFamily('Roboto')">Roboto</div>
-                    </div>
-                </div>
+    <!-- ب. الحجم (4 أعمدة) -->
+    <div class="soft-ui-group">
+        <div class="soft-label">
+            <span>Aa</span> <span data-ar="حجم الخط" data-tr="Yazı Boyutu">حجم الخط</span>
+        </div>
+        <div class="soft-grid cols-4">
+            <div class="soft-card font-size-btn" data-size="small" onclick="changeFontSize('small')">
+                <span class="preview" style="font-size: 0.9rem;">Aa</span>
+                <span class="name">S</span>
             </div>
-
-
-
-
-
-<!-- زر سجل التحديثات بتصميم زر التثبيت -->
-<div class="control-group" style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
-    <div class="settings-row-btn" onclick="showUpdatesHistory()">
-        <div class="row-info">
-            <div class="icon-bg-small">🚀</div>
-            <div>
-                <div class="row-title" data-ar="ما الجديد؟" data-tr="Yenilikler">ما الجديد؟</div>
-                <div class="row-subtitle" data-ar="عرض سجل التحديثات والميزات" data-tr="Güncelleme geçmişini görüntüle">عرض سجل التحديثات والميزات</div>
+            <div class="soft-card font-size-btn" data-size="medium" onclick="changeFontSize('medium')">
+                <span class="preview" style="font-size: 1.1rem;">Aa</span>
+                <span class="name">M</span>
+            </div>
+            <div class="soft-card font-size-btn" data-size="large" onclick="changeFontSize('large')">
+                <span class="preview" style="font-size: 1.3rem;">Aa</span>
+                <span class="name">L</span>
+            </div>
+            <div class="soft-card font-size-btn" data-size="xlarge" onclick="changeFontSize('xlarge')">
+                <span class="preview" style="font-size: 1.5rem;">Aa</span>
+                <span class="name">XL</span>
             </div>
         </div>
-        <div class="row-arrow">←</div>
+    </div>
+
+    <!-- ج. نوع الخط (3 أعمدة) -->
+    <div class="soft-ui-group">
+        <div class="soft-label">
+            <span>✒️</span> <span data-ar="نوع الخط" data-tr="Yazı Tipi">نوع الخط</span>
+        </div>
+        
+        <div class="soft-grid cols-3">
+            <!-- خطوط عربية -->
+            <div class="soft-card font-family-card font-ar" data-font="Amiri" onclick="changeFontFamily('Amiri')">
+                <span class="preview" style="font-family: 'Amiri', serif;">النسخ</span>
+                <span class="name">Amiri</span>
+            </div>
+            <div class="soft-card font-family-card font-ar" data-font="Cairo" onclick="changeFontFamily('Cairo')">
+                <span class="preview" style="font-family: 'Cairo', sans-serif;">الكوفي</span>
+                <span class="name">Cairo</span>
+            </div>
+            <div class="soft-card font-family-card font-ar" data-font="Lateef" onclick="changeFontFamily('Lateef')">
+                <span class="preview" style="font-family: 'Lateef', cursive;">الرقعة</span>
+                <span class="name">Lateef</span>
+            </div>
+
+            <!-- خطوط تركية -->
+            <div class="soft-card font-family-card font-tr" data-font="Roboto" onclick="changeFontFamily('Roboto')">
+                <span class="preview" style="font-family: 'Roboto', sans-serif;">Modern</span>
+                <span class="name">Roboto</span>
+            </div>
+            <div class="soft-card font-family-card font-tr" data-font="Merriweather" onclick="changeFontFamily('Merriweather')">
+                <span class="preview" style="font-family: 'Merriweather', serif;">Klasik</span>
+                <span class="name">Serif</span>
+            </div>
+            <div class="soft-card font-family-card font-tr" data-font="Pacifico" onclick="changeFontFamily('Pacifico')">
+                <span class="preview" style="font-family: 'Pacifico', cursive;">El Yazısı</span>
+                <span class="name">Script</span>
+            </div>
+        </div>
     </div>
 </div>
 
 
-<!-- زر مشاركة التطبيق -->
-<div class="menu-card" onclick="shareAppGlobal()">
-    <div class="icon-box soft-green">📲</div>
-    <span class="card-title" data-ar="مشاركة التطبيق" data-tr="Uygulamayı Paylaş">مشاركة التطبيق</span>
-</div>
-
-
-
-
-            <!-- بطاقة التواصل -->
-            <div class="dashboard-card">
-                <div class="card-header-modern">
-                    <div class="header-icon" style="background: #e3f2fd; color: #1976d2;">📞</div>
-                    <div class="header-title" data-ar="مركز التواصل" data-tr="İletişim">مركز التواصل</div>
-                </div>
-
-                <div class="link-list">
-                    <a href="https://wa.me/905386263700" target="_blank" class="modern-link">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="color: #25D366; font-size: 1.4rem;">📱</span>
-                            <div>
-                                <div style="font-weight: 600;" data-ar="واتساب" data-tr="WhatsApp">واتساب</div>
-                                <div style="font-size: 0.75rem; color: var(--text-secondary);" data-ar="رد سريع" data-tr="Hızlı Yanıt">رد سريع</div>
+                <!-- 2. قسم الإجراءات -->
+                <div id="sec-actions" class="hz-section">
+                    <div class="icon-list">
+                        <div class="icon-item" onclick="showUpdatesHistory()" style="cursor: pointer;">
+                            <span class="item-symbol">🚀</span>
+                            <div class="item-text">
+                                <h4 data-ar="سجل التحديثات" data-tr="Güncellemeler">سجل التحديثات</h4>
+                                <p data-ar="ما الجديد في هذا الإصدار؟" data-tr="Yenilikler">ما الجديد في هذا الإصدار؟</p>
                             </div>
                         </div>
-                        <span>←</span>
-                    </a>
 
-                  
-                    <a href="mailto:support@dinyolu.com" class="modern-link">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="color: #EA4335; font-size: 1.4rem;">✉️</span>
-                            <div>
-                                <div style="font-weight: 600;" data-ar="البريد الإلكتروني" data-tr="E-posta">البريد الإلكتروني</div>
-                                <div style="font-size: 0.75rem; color: var(--text-secondary);" data-ar="للاقتراحات" data-tr="Öneriler">للاقتراحات</div>
+                        <div class="icon-item" onclick="shareAppGlobal()" style="cursor: pointer;">
+                            <span class="item-symbol">📲</span>
+                            <div class="item-text">
+                                <h4 data-ar="مشاركة التطبيق" data-tr="Paylaş">مشاركة التطبيق</h4>
+                                <p data-ar="شارك الأجر مع أصدقائك" data-tr="Hayrı paylaş">شارك الأجر مع أصدقائك</p>
                             </div>
                         </div>
-                        <span>←</span>
-                    </a>
+
+                        <a href="https://wa.me/905386263700" target="_blank" class="icon-item">
+                            <span class="item-symbol" style="color: #25D366;">💬</span>
+                            <div class="item-text">
+                                <h4 data-ar="تواصل عبر واتساب" data-tr="WhatsApp">تواصل عبر واتساب</h4>
+                                <p data-ar="للدعم الفني والاقتراحات" data-tr="Destek">للدعم الفني والاقتراحات</p>
+                            </div>
+                        </a>
+
+                        <div class="delete-zone">
+                            <button class="btn-del" onclick="clearHistory()">
+                                🗑️ <span data-ar="مسح جميع البيانات" data-tr="Tüm Verileri Sil">مسح جميع البيانات</span>
+                            </button>
+                            <p style="font-size: 0.75rem; color: #e11d48; margin-top: 8px;" data-ar="تحذير: لا يمكن التراجع عن الحذف" data-tr="Uyarı: Geri alınamaz">تحذير: لا يمكن التراجع عن الحذف</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
+               <!-- 3. قسم عن البرنامج (نسخة مفصلة ومتوسطة الطول) -->
+<div id="sec-info" class="hz-section">
 
-
-<!-- بطاقة عن البرنامج -->
-<div class="dashboard-card full-width-desktop">
-    <div class="card-header-modern">
-        <div class="header-icon" style="background: #fff3e0; color: #f57c00;">ℹ️</div>
-        <div class="header-title" data-ar="عن البرنامج" data-tr="Hakkında">عن البرنامج</div>
+    <!-- 1. الرؤية والرسالة -->
+    <div class="info-detail-card">
+        <div class="info-head">
+            <div class="info-icon-box">🎯</div>
+            <h4 data-ar="الرؤية والرسالة" data-tr="Vizyon ve Misyon">الرؤية والرسالة</h4>
+        </div>
+        <div class="info-body">
+            <p data-ar="نسعى لأن يكون هذا التطبيق المرجع التقني الأول لكل مسلم يريد تأدية فريضة الزكاة باطمئنان. نهدف لتبسيط المسائل الفقهية المعقدة وتحويلها إلى أرقام واضحة، لتمكين المستخدم من حساب زكاته بدقة وسهولة مهما تنوعت ممتلكاته." 
+               data-tr="Bu uygulamanın, zekat ibadetini gönül rahatlığıyla yerine getirmek isteyen her Müslüman için birincil teknik referans olmasını hedefliyoruz. Karmaşık fıkhi meseleleri basitleştirerek net rakamlara dönüştürmeyi amaçlıyoruz.">
+                نسعى لأن يكون هذا التطبيق المرجع التقني الأول لكل مسلم يريد تأدية فريضة الزكاة باطمئنان. نهدف لتبسيط المسائل الفقهية المعقدة وتحويلها إلى أرقام واضحة، لتمكين المستخدم من حساب زكاته بدقة وسهولة مهما تنوعت ممتلكاته.
+            </p>
+        </div>
     </div>
 
-    <!-- رسالة المهمة -->
-    <div class="mission-box">
-        <p data-ar="تطبيق 'حاسبة الزكاة الذكية' هو أداة وقفية مجانية تهدف إلى تسهيل ركن الزكاة على المسلمين. تم تطويره بدقة برمجية عالية ومراجعة شرعية لضمان صحة الحسابات وفق المذاهب الأربعة، مع احترام كامل لخصوصية المستخدم." 
-           data-tr="'Akıllı Zekât Hesaplayıcı', Müslümanlar için zekâtı kolaylaştırmayı amaçlayan ücretsiz bir vakıf aracıdır. Dört mezhebe göre hesaplamaların doğruluğunu sağlamak için yüksek yazılım hassasiyeti ve şer'i inceleme ile geliştirilmiştir.">
-            تطبيق 'حاسبة الزكاة الذكية' هو أداة وقفية مجانية تهدف إلى تسهيل ركن الزكاة على المسلمين. تم تطويره بدقة برمجية عالية ومراجعة شرعية لضمان صحة الحسابات وفق المذاهب الأربعة.
-        </p>
+    <!-- 2. المرجعية الشرعية -->
+    <div class="info-detail-card">
+        <div class="info-head">
+            <div class="info-icon-box">📚</div>
+            <h4 data-ar="المنهجية الشرعية" data-tr="Şer'i Metodoloji">المنهجية الشرعية</h4>
+        </div>
+        <div class="info-body">
+            <p data-ar="نعتمد في خوارزميات الحساب على المذاهب الفقهية الأربعة المعتبرة، مع الأخذ بمبدأ 'الأحوط' في المسائل الخلافية لضمان براءة الذمة. يتم مراجعة المحتوى دورياً من قبل لجنة شرعية متخصصة لمواكبة الفتاوى المعاصرة." 
+               data-tr="Hesaplama algoritmalarında dört mezhebi esas alıyor, ihtilaflı konularda sorumluluktan kurtulmak için 'ihtiyatlı' olanı seçiyoruz. İçerik, güncel fetvalara uyum sağlamak için uzman bir şer'i heyet tarafından düzenli olarak denetlenmektedir.">
+                نعتمد في خوارزميات الحساب على المذاهب الفقهية الأربعة المعتبرة، مع الأخذ بمبدأ 'الأحوط' في المسائل الخلافية لضمان براءة الذمة. يتم مراجعة المحتوى دورياً من قبل لجنة شرعية متخصصة لمواكبة الفتاوى المعاصرة.
+            </p>
+        </div>
     </div>
 
-    <!-- شبكة المميزات -->
-    <div class="about-features-grid">
-        
-        <!-- ميزة 1: الخصوصية -->
-        <div class="feature-item">
-            <div class="feature-icon-box" style="background: #e8f5e9; color: #2ecc71;">🔒</div>
-            <div class="feature-title" data-ar="خصوصية تامة" data-tr="Tam Gizlilik">خصوصية تامة</div>
-            <div class="feature-desc" data-ar="بياناتك لا تغادر جهازك أبداً" data-tr="Verileriniz cihazınızdan çıkmaz">بياناتك لا تغادر جهازك أبداً</div>
+    <!-- 3. الخصوصية المطلقة -->
+    <div class="info-detail-card">
+        <div class="info-head">
+            <div class="info-icon-box">🛡️</div>
+            <h4 data-ar="الخصوصية المطلقة" data-tr="Mutlak Gizlilik">الخصوصية المطلقة</h4>
         </div>
-
-        <!-- ميزة 2: بدون نت -->
-        <div class="feature-item">
-            <div class="feature-icon-box" style="background: #e3f2fd; color: #2196f3;">⚡</div>
-            <div class="feature-title" data-ar="يعمل بلا إنترنت" data-tr="Çevrimdışı">يعمل بلا إنترنت</div>
-            <div class="feature-desc" data-ar="متاح في أي وقت ومكان" data-tr="Her zaman kullanılabilir">متاح في أي وقت ومكان</div>
+        <div class="info-body">
+            <p data-ar="بياناتك المالية هي سر خاص بك وحدك. صممنا التطبيق بتقنية (Offline First) بحيث تتم جميع العمليات الحسابية محلياً على معالج هاتفك. لا نقوم بجمع، تخزين، أو مشاركة أي معلومة تخص ثروتك مع أي خادم أو جهة خارجية." 
+               data-tr="Mali verileriniz sadece size aittir. Uygulamayı, tüm hesaplamalar telefonunuzun işlemcisinde yerel olarak yapılacak şekilde tasarladık. Servetinizle ilgili hiçbir bilgiyi toplamıyor, saklamıyor veya paylaşmıyoruz.">
+                بياناتك المالية هي سر خاص بك وحدك. صممنا التطبيق بتقنية (Offline First) بحيث تتم جميع العمليات الحسابية محلياً على معالج هاتفك. لا نقوم بجمع، تخزين، أو مشاركة أي معلومة تخص ثروتك مع أي خادم أو جهة خارجية.
+            </p>
         </div>
-
-        <!-- ميزة 3: تقارير PDF -->
-        <div class="feature-item">
-            <div class="feature-icon-box" style="background: #fce4ec; color: #e91e63;">📄</div>
-            <div class="feature-title" data-ar="تقارير PDF" data-tr="PDF Raporları">تقارير PDF</div>
-            <div class="feature-desc" data-ar="تصدير ومشاركة الحسابات" data-tr="Hesaplamaları dışa aktar">تصدير ومشاركة الحسابات</div>
-        </div>
-
-        <!-- ميزة 4: مجاني -->
-        <div class="feature-item">
-            <div class="feature-icon-box" style="background: #fff8e1; color: #ffc107;">💚</div>
-            <div class="feature-title" data-ar="مجاني 100%" data-tr="%100 Ücretsiz">مجاني 100%</div>
-            <div class="feature-desc" data-ar="بدون إعلانات أو رسوم" data-tr="Reklamsız ve ücretsiz">بدون إعلانات أو رسوم</div>
-        </div>
-
     </div>
 
-    <!-- التذييل وحقوق النشر -->
-    <div style="margin-top: 1.5rem; text-align: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
-        <p style="font-size: 0.85rem; color: var(--text-secondary);">
-            <span data-ar="الإصدار الحالي:" data-tr="Sürüm:">الإصدار الحالي:</span> 
-            <strong style="color: var(--primary-color);">3.0.0 (Stable)</strong>
-        </p>
-        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
-            © 2025 www.dinyolu.com.
-        </p>
+    <!-- 4. شمولية الأصول -->
+    <div class="info-detail-card">
+        <div class="info-head">
+            <div class="info-icon-box">🧮</div>
+            <h4 data-ar="شمولية الأصول" data-tr="Varlık Kapsamı">شمولية الأصول</h4>
+        </div>
+        <div class="info-body">
+            <p data-ar="يغطي التطبيق كافة أبواب الزكاة: النقدين (الذهب والفضة) بمختلف العيارات، العملات الورقية والرقمية، عروض التجارة والبضائع، الأسهم والصناديق الاستثمارية، بالإضافة إلى زكاة الأنعام، مع مراعاة شروط النصاب والحول لكل صنف." 
+               data-tr="Uygulama tüm zekat kalemlerini kapsar: Farklı ayarlardaki altın ve gümüş, kağıt ve dijital paralar, ticari mallar, hisse senetleri ve yatırım fonları ile hayvanların zekatı; her sınıf için nisap ve yıl şartları dikkate alınır.">
+                يغطي التطبيق كافة أبواب الزكاة: النقدين (الذهب والفضة) بمختلف العيارات، العملات الورقية والرقمية، عروض التجارة والبضائع، الأسهم والصناديق الاستثمارية، بالإضافة إلى زكاة الأنعام، مع مراعاة شروط النصاب والحول لكل صنف.
+            </p>
+        </div>
     </div>
+
+    <!-- 5. دقة البيانات الحية -->
+    <div class="info-detail-card">
+        <div class="info-head">
+            <div class="info-icon-box">📡</div>
+            <h4 data-ar="دقة البيانات الحية" data-tr="Canlı Veri Doğruluğu">دقة البيانات الحية</h4>
+        </div>
+        <div class="info-body">
+            <p data-ar="لضمان دقة تحديد النصاب، يرتبط التطبيق بمصادر اقتصادية عالمية لجلب أسعار الذهب والعملات بشكل لحظي فور فتح التطبيق. كما يوفر مرونة كاملة للمستخدم لتعديل الأسعار يدوياً حسب سعر السوق في بلده إذا لزم الأمر." 
+               data-tr="Nisabın doğru belirlenmesi için uygulama, açıldığında altın ve döviz fiyatlarını anlık olarak küresel kaynaklardan çeker. Ayrıca kullanıcıya, gerekirse kendi ülkesindeki piyasa fiyatına göre manuel düzenleme esnekliği sağlar.">
+                لضمان دقة تحديد النصاب، يرتبط التطبيق بمصادر اقتصادية عالمية لجلب أسعار الذهب والعملات بشكل لحظي فور فتح التطبيق. كما يوفر مرونة كاملة للمستخدم لتعديل الأسعار يدوياً حسب سعر السوق في بلده إذا لزم الأمر.
+            </p>
+        </div>
+    </div>
+
+    <!-- 6. وقفية ومجانية التطبيق -->
+    <div class="info-detail-card">
+        <div class="info-head">
+            <div class="info-icon-box">💚</div>
+            <h4 data-ar="وقفية ومجانية التطبيق" data-tr="Vakıf ve Ücretsiz">وقفية ومجانية التطبيق</h4>
+        </div>
+        <div class="info-body">
+            <p data-ar="هذا المشروع هو 'وقف إلكتروني' خالص لوجه الله تعالى. التطبيق مجاني بالكامل، ولا يحتوي على أي إعلانات تجارية قد تشتت انتباهك أثناء عبادة الحساب. نسألكم الدعاء للقائمين عليه وللمساهمين في نشره." 
+               data-tr="Bu proje, Allah rızası için yapılmış bir 'dijital vakıftır'. Uygulama tamamen ücretsizdir ve hesaplama ibadeti sırasında dikkatinizi dağıtacak hiçbir ticari reklam içermez. Emeği geçenler ve yayılmasına katkıda bulunanlar için dua etmenizi rica ederiz.">
+                هذا المشروع هو 'وقف إلكتروني' خالص لوجه الله تعالى. التطبيق مجاني بالكامل، ولا يحتوي على أي إعلانات تجارية قد تشتت انتباهك أثناء عبادة الحساب. نسألكم الدعاء للقائمين عليه وللمساهمين في نشره.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- 7. الرعاية والتمويل (Wow Mobilya - بدون strong) -->
+    <div class="info-detail-card">
+        <div class="info-head">
+            <div class="info-icon-box">🤝</div>
+            <h4 data-ar="الرعاية والتمويل" data-tr="Sponsorluk ve Finansman">الرعاية والتمويل</h4>
+        </div>
+        <div class="info-body">
+            <p data-ar="تم تمويل وتطوير هذا المشروع برعاية كريمة من شركة واو موبيليا (Wow Mobilya) التركية. جاء هذا الدعم ابتغاء وجه الله تعالى وخدمةً للمسلمين، لضمان بقاء التطبيق مجانياً وخالياً من الإعلانات. نسأل الله أن يبارك في أرزاقهم ويجعل هذا العمل صدقة جارية في ميزان حسناتهم." 
+               data-tr="Bu proje, Türk firması Wow Mobilya'nın cömert sponsorluğu ile geliştirilmiştir. Bu destek, Allah rızası için ve Müslümanlara hizmet amacıyla, uygulamanın ücretsiz ve reklamsız kalmasını sağlamak için verilmiştir. Allah kazançlarına bereket versin ve bu çalışmayı sadaka-i cariye olarak kabul etsin.">
+                تم تمويل وتطوير هذا المشروع برعاية كريمة من شركة واو موبيليا (Wow Mobilya) التركية. جاء هذا الدعم ابتغاء وجه الله تعالى وخدمةً للمسلمين، لضمان بقاء التطبيق مجانياً وخالياً من الإعلانات. نسأل الله أن يبارك في أرزاقهم ويجعل هذا العمل صدقة جارية في ميزان حسناتهم.
+            </p>
+        </div>
+    </div>
+
+
+
+
 </div>
 
-
-
-
-
-            <!-- بطاقة الفريق (تأخذ عرض كامل في الديسك توب) -->
-          <div class="dashboard-card full-width-desktop">
-    <div class="card-header-modern">
-        <div class="header-icon" style="background: #f3e5f5; color: #7b1fa2;">👥</div>
-        <div class="header-title" data-ar="فريق العمل" data-tr="Çalışma Ekibi">فريق العمل</div>
-    </div>
-
-    <div class="team-grid-responsive">
-        <!-- البطاقة الأولى -->
-        <div class="team-member-card">
-            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1024,h=683,fit=crop,trim=49.01933701657458;0;49.01933701657458;0/a5oqci6YCwpNHTpH/ouuo--o-c-uossoao3osso-o-oaosso--uo-r-1447-06-18-uu-13.51.41_b7ed5312-jQ0C5NbIsgBwHbdb.jpg" 
-                 alt="م. المعتز بالله" 
-                 style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 3px solid var(--primary-color); box-shadow: 0 3px 10px rgba(0,0,0,0.15);" />
-            <div style="font-weight: 700; color: var(--primary-color); font-size: 1.1rem; margin-bottom: 5px;" 
-                 data-ar="المهندس معتز بالله حاج شعبان" 
-                 data-tr="Mühendis Mutez Bellah Hac Şaban">
-                المهندس معتز بالله حاج شعبان
-            </div>
-            <div style="font-size: 0.85rem; color: #666; font-weight: 600; margin-bottom: 8px;" 
-                 data-ar="💻 التطوير والبرمجة" 
-                 data-tr="💻 Geliştirme ve Programlama">
-                💻 التطوير والبرمجة
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; padding: 0 10px;" 
-                 data-ar="مهندس برمجيات متخصص في تطوير التطبيقات الإسلامية وأنظمة الحسابات المالية" 
-                 data-tr="İslami uygulamalar ve finansal hesaplama sistemleri geliştirme konusunda uzman yazılım mühendisi">
-                مهندس برمجيات متخصص في تطوير التطبيقات الإسلامية وأنظمة الحسابات المالية
-            </div>
-        </div>
+<!-- 4. قسم الفريق (Team Section) -->
+<div id="sec-team" class="hz-section">
+    <div class="team-rich-grid">
         
-        <!-- البطاقة الثانية -->
-        <div class="team-member-card">
-            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=874,fit=crop/a5oqci6YCwpNHTpH/ouuo--o-c-uossoao3osso-o-oaosso--uo-r-1447-06-18-uu-10.02.13_74395aaa-mKdzlsh4hfyEOxmu.jpg" 
-                 alt="أ. حسن الحلو" 
-                 style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 3px solid var(--primary-color); box-shadow: 0 3px 10px rgba(0,0,0,0.15);" />
-            <div style="font-weight: 700; color: var(--primary-color); font-size: 1.1rem; margin-bottom: 5px;" 
-                 data-ar="الأستاذ حسن الحلو" 
-                 data-tr="Hoca Hasan Helo">
-                الأستاذ حسن الحلو
-            </div>
-            <div style="font-size: 0.85rem; color: #666; font-weight: 600; margin-bottom: 8px;" 
-                 data-ar="📝 التدقيق والمراجعة" 
-                 data-tr="📝 Denetim ve İnceleme">
-                📝 التدقيق والمراجعة
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; padding: 0 10px;" 
-                 data-ar="خبير في مراجعة الحسابات المالية والتدقيق الدقيق للعمليات الحسابية والزكوية" 
-                 data-tr="Mali hesapların incelenmesi ve zekat hesaplamalarının detaylı denetimi konusunda uzman">
-                خبير في مراجعة الحسابات المالية والتدقيق الدقيق للعمليات الحسابية والزكوية
-            </div>
-        </div>
-        
-        <!-- البطاقة الثالثة -->
-        <div class="team-member-card">
-            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/whatsapp-image-2025-12-21-at-2.38.51-am-rzUknUoDJbUYH7Jt.jpeg" 
-                 alt="الشيخ عبد القادر الصيادي" 
-                 style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 3px solid var(--primary-color); box-shadow: 0 3px 10px rgba(0,0,0,0.15);" />
-            <div style="font-weight: 700; color: var(--primary-color); font-size: 1.1rem; margin-bottom: 5px;" 
-                 data-ar="الشيخ عبد القادر الصيادي" 
-                 data-tr="Şeyh Abdulkadir Es-Sayyadi">
-                الشيخ عبد القادر الصيادي
-            </div>
-            <div style="font-size: 0.85rem; color: #666; font-weight: 600; margin-bottom: 8px;" 
-                 data-ar="🕌 الاستشارة الشرعية" 
-                 data-tr="🕌 Şer'i Danışmanlık">
-                🕌 الاستشارة الشرعية
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; padding: 0 10px;" 
-                 data-ar="عالم شرعي متخصص في فقه الزكاة والمعاملات المالية الإسلامية" 
-                 data-tr="Zekat fıkhı ve İslami mali işlemler konusunda uzman İslam alimi">
-                عالم شرعي متخصص في فقه الزكاة والمعاملات المالية الإسلامية
-            </div>
-        </div>
-        
-        <!-- البطاقة الرابعة -->
-        <div class="team-member-card">
-            <div style="font-size: 3rem; margin-bottom: 10px;">🕌</div>
-            <div style="font-weight: 700; color: var(--primary-color); font-size: 1.1rem; margin-bottom: 5px;" 
-                 data-ar="الشيخ عبد القادر أكتع" 
-                 data-tr="Şeyh Abdulkadir Akta">
-                الشيخ عبد القادر أكتع
-            </div>
-            <div style="font-size: 0.85rem; color: #666; font-weight: 600; margin-bottom: 8px;" 
-                 data-ar="🕌 الاستشارة الشرعية" 
-                 data-tr="🕌 Şer'i Danışmanlık">
-                🕌 الاستشارة الشرعية
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; padding: 0 10px;" 
-                 data-ar="مستشار شرعي متخصص في أحكام الزكاة والفتاوى المالية المعاصرة" 
-                 data-tr="Zekat hükümleri ve çağdaş mali fetvalar konusunda uzman şer'i danışman">
-                مستشار شرعي متخصص في أحكام الزكاة والفتاوى المالية المعاصرة
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-<!-- بطاقة سياسة الاستخدام وإخلاء المسؤولية -->
-<div class="dashboard-card full-width-desktop">
-    <div class="card-header-modern">
-        <div class="header-icon" style="background: #fff3e0; color: #f57c00;">⚖️</div>
-        <div class="header-title" data-ar="سياسة الاستخدام وإخلاء المسؤولية" data-tr="Kullanım Politikası ve Sorumluluk Reddi">سياسة الاستخدام وإخلاء المسؤولية</div>
-    </div>
-
-    <!-- قائمة الشروط -->
-    <div class="policy-list">
-        <div class="policy-item">
-            <div class="policy-icon">1</div>
-            <div>
-                <strong data-ar="دقة البيانات:" data-tr="Veri Doğruluğu:">دقة البيانات:</strong>
-                <span data-ar="المستخدم هو المسؤول الوحيد عن صحة الأرقام والأسعار المدخلة (مثل سعر الذهب، العملات، وقيمة الأصول)." 
-                      data-tr="Girilen rakamların ve fiyatların (altın fiyatı, döviz kurları vb.) doğruluğundan yalnızca kullanıcı sorumludur.">
-                    المستخدم هو المسؤول الوحيد عن صحة الأرقام والأسعار المدخلة.
-                </span>
-            </div>
-        </div>
-
-        <div class="policy-item">
-            <div class="policy-icon">2</div>
-            <div>
-                <strong data-ar="طبيعة التطبيق:" data-tr="Uygulamanın Doğası:">طبيعة التطبيق:</strong>
-                <span data-ar="هذا التطبيق أداة حسابية مساعدة وليس جهة إفتاء. في الحالات المعقدة جداً، يُنصح بمراجعة عالم شرعي." 
-                      data-tr="Bu uygulama bir hesaplama aracıdır, fetva makamı değildir. Karmaşık durumlarda bir âlime danışılması önerilir.">
-                    هذا التطبيق أداة حسابية مساعدة وليس جهة إفتاء.
-                </span>
-            </div>
-        </div>
-
-        <div class="policy-item">
-            <div class="policy-icon">3</div>
-            <div>
-                <strong data-ar="الخصوصية:" data-tr="Gizlilik:">الخصوصية:</strong>
-                <span data-ar="نحن لا نجمع أي بيانات. فقدان الجهاز أو مسح ذاكرة المتصفح يعني فقدان السجلات المحفوظة." 
-                      data-tr="Veri toplamıyoruz. Cihazın kaybolması veya tarayıcı önbelleğinin silinmesi, kayıtların kaybolması anlamına gelir.">
-                    نحن لا نجمع أي بيانات. فقدان الجهاز يعني فقدان السجلات.
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <!-- صندوق إخلاء المسؤولية الهام -->
-    <div class="liability-box">
-        <div class="liability-title">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-            <span data-ar="تنويه هام وإخلاء مسؤولية" data-tr="Önemli Uyarı ve Sorumluluk Reddi">تنويه هام وإخلاء مسؤولية</span>
-        </div>
-        <div class="liability-text">
-            <span data-ar="يخلي فريق تطوير 'حاسبة الزكاة الذكية' مسؤوليته الكاملة (القانونية والشرعية) عن أي خطأ في حساب الزكاة ناتج عن " 
-                  data-tr="'Akıllı Zekât Hesaplayıcı' geliştirme ekibi, aşağıdakilerden kaynaklanan herhangi bir zekât hesaplama hatasından (yasal ve şer'i) tam sorumluluğunu reddeder: ">
-                يخلي فريق تطوير 'حاسبة الزكاة الذكية' مسؤوليته الكاملة عن أي خطأ ناتج عن 
-            </span>
-            <strong data-ar="إدخال بيانات خاطئة من قبل المستخدم، أو عدم تحديث أسعار الذهب والعملات، أو سوء فهم للأحكام الشرعية." 
-                    data-tr="Kullanıcı tarafından yanlış veri girişi, altın/döviz kurlarının güncellenmemesi veya şer'i hükümlerin yanlış anlaşılması.">
-                إدخال بيانات خاطئة من قبل المستخدم، أو عدم تحديث أسعار الذهب والعملات.
-            </strong>
-            <span data-ar=" استخدامك للتطبيق يعني موافقتك على هذه السياسة." 
-                  data-tr=" Uygulamayı kullanmanız bu politikayı kabul ettiğiniz anlamına gelir.">
-                 استخدامك للتطبيق يعني موافقتك على هذه السياسة.
-            </span>
-        </div>
-    </div>
-</div>
-
-
-
-
-            <!-- منطقة الخطر -->
-            <div class="danger-zone">
-                <h4 style="color: #ef4444; margin-bottom: 10px; font-size: 1.1rem;">
-                    <span data-ar="⚠️ منطقة إدارة البيانات" data-tr="Veri Yönetimi">⚠️ منطقة إدارة البيانات</span>
-                </h4>
-                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 15px;" 
-                   data-ar="جميع بياناتك مخزنة محلياً على جهازك. هذا الإجراء لا يمكن التراجع عنه." 
-                   data-tr="Verileriniz yerel olarak saklanır. Bu işlem geri alınamaz.">
-                    جميع بياناتك مخزنة محلياً على جهازك. هذا الإجراء لا يمكن التراجع عنه.
+        <!-- عضو 1: المطور -->
+        <div class="team-rich-card">
+            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1024,h=683,fit=crop,trim=49.01933701657458;0;49.01933701657458;0/a5oqci6YCwpNHTpH/ouuo--o-c-uossoao3osso-o-oaosso--uo-r-1447-06-18-uu-13.51.41_b7ed5312-jQ0C5NbIsgBwHbdb.jpg" class="team-avatar-rich" alt="Muatez Billah">
+            <div class="team-info-rich">
+                <h4 data-ar="م. معتز بالله حاج شعبان" data-tr="Müh. Muatez Billah Hac Şaban">م. معتز بالله حاج شعبان</h4>
+                <span class="team-role-badge" data-ar="تطوير وبرمجة" data-tr="Yazılım ve Geliştirme">تطوير وبرمجة</span>
+                <p class="team-bio" data-ar="قام بتصميم وبناء التطبيق بالكامل، مع التركيز على تجربة المستخدم والخوارزميات الدقيقة لحساب الزكاة." data-tr="Zekât hesaplama algoritmaları ve kullanıcı deneyimine odaklanarak uygulamayı tasarladı ve geliştirdi.">
+                    قام بتصميم وبناء التطبيق بالكامل، مع التركيز على تجربة المستخدم والخوارزميات الدقيقة لحساب الزكاة.
                 </p>
-                <button onclick="clearHistory()" class="btn" style="background: #fee2e2; color: #ef4444; border: 1px solid #ef4444; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">
-                    <span data-ar="🗑️ مسح جميع السجلات" data-tr="🗑️ Tümünü Sil">🗑️ مسح جميع السجلات</span>
-                </button>
             </div>
+        </div>
 
-        </div> <!-- نهاية الشبكة -->
+        <!-- عضو 2: المدقق -->
+        <div class="team-rich-card">
+            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=874,fit=crop/a5oqci6YCwpNHTpH/ouuo--o-c-uossoao3osso-o-oaosso--uo-r-1447-06-18-uu-10.02.13_74395aaa-mKdzlsh4hfyEOxmu.jpg" class="team-avatar-rich" alt="Hasan El-Hılu">
+            <div class="team-info-rich">
+                <h4 data-ar="أ. حسن الحلو" data-tr="Hoca Hasan El-Hılu">أ. حسن الحلو</h4>
+                <span class="team-role-badge" data-ar="تدقيق ومراجعة" data-tr="Kontrol ve Denetim">تدقيق ومراجعة</span>
+                <p class="team-bio" data-ar="أشرف على التدقيق المالي واللغوي للمحتوى، لضمان خلو التطبيق من الأخطاء الحسابية والمصطلحات." data-tr="Uygulamanın hatasız olması için mali ve dilsel denetimini gerçekleştirdi.">
+                    أشرف على التدقيق المالي واللغوي للمحتوى، لضمان خلو التطبيق من الأخطاء الحسابية والمصطلحات.
+                </p>
+            </div>
+        </div>
+
+        <!-- عضو 3: المستشار الشرعي -->
+        <div class="team-rich-card">
+            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=711,fit=crop/a5oqci6YCwpNHTpH/whatsapp-image-2025-12-21-at-2.38.51-am-rzUknUoDJbUYH7Jt.jpeg" class="team-avatar-rich" alt="Abdulkadir Es-Sayyadi">
+            <div class="team-info-rich">
+                <!-- تم التعديل هنا: Hoca بدلاً من Şeyh -->
+                <h4 data-ar="الشيخ عبد القادر الصيادي" data-tr="Hoca Abdulkadir Es-Sayyadi">الشيخ عبد القادر الصيادي</h4>
+                <span class="team-role-badge" data-ar="استشارة شرعية" data-tr="Şer'i Danışman">استشارة شرعية</span>
+                <p class="team-bio" data-ar="قدم الاستشارات الفقهية المتعلقة بالمذاهب الأربعة، وتأكد من مطابقة الخوارزميات للأحكام الشرعية." data-tr="Dört mezhebe dayalı fıkhi danışmanlık sağladı ve algoritmaların şeriata uygunluğunu doğruladı.">
+                    قدم الاستشارات الفقهية المتعلقة بالمذاهب الأربعة، وتأكد من مطابقة الخوارزميات للأحكام الشرعية.
+                </p>
+            </div>
+        </div>
+
+        <!-- عضو 4: المستشار الشرعي -->
+        <div class="team-rich-card">
+            <div class="team-avatar-rich" style="background:#f1f5f9; display:flex; align-items:center; justify-content:center; font-size:2rem; border-color:#e2e8f0;">🕌</div>
+            <div class="team-info-rich">
+                <!-- تم التعديل هنا: Hoca بدلاً من Şeyh -->
+                <h4 data-ar="الشيخ عبد القادر أكتع" data-tr="Hoca Abdulkadir Akta">الشيخ عبد القادر أكتع</h4>
+                <span class="team-role-badge" data-ar="استشارة شرعية" data-tr="Şer'i Danışman">استشارة شرعية</span>
+                <p class="team-bio" data-ar="ساهم في مراجعة الفتاوى المعاصرة وقرارات المجامع الفقهية لضمان شمولية التطبيق للنوازل الحديثة." data-tr="Çağdaş fetvaları ve fıkıh meclisi kararlarını inceleyerek uygulamanın güncel kalmasına katkıda bulundu.">
+                    ساهم في مراجعة الفتاوى المعاصرة وقرارات المجامع الفقهية لضمان شمولية التطبيق للنوازل الحديثة.
+                </p>
+            </div>
+        </div>
+
     </div>
 </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchHzTab(secId, btn) {
+        document.querySelectorAll('.hz-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.hz-section').forEach(s => s.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('sec-' + secId).classList.add('active');
+    }
+</script>
+
 
 
     <!-- ============================================ -->
@@ -24372,6 +24707,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
