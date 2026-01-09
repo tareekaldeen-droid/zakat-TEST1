@@ -4858,11 +4858,11 @@ html[lang="tr"] .font-ar { display: none !important; }
 
 
 
-<div id="deleteModalOverlay" class="modal-overlay">
+<!-- نافذة الحذف -->
+<div id="deleteModalOverlay" class="modal-overlay" onclick="handleOutsideClick(event)">
     <div class="ultra-modal">
         <div class="modal-title" id="modalTitle">تأكيد الحذف</div>
         
-        <!-- منطقة الرسائل العصرية -->
         <div id="modalFeedback" class="modal-feedback"></div>
         
         <div class="modal-msg" id="modalMsg">يرجى كتابة كلمة "حذف" للتأكيد</div>
@@ -4874,6 +4874,7 @@ html[lang="tr"] .font-ar { display: none !important; }
         </div>
     </div>
 </div>
+
 
 
 
@@ -20202,66 +20203,85 @@ function displayHistory() {
     container.innerHTML = html + '</div>';
 }
 
-// دالة إظهار الرسائل داخل النافذة
-function showModalFeedback(message, type) {
+// 1. تعريف المتغير في أعلى ملف الـ JS ليكون متاحاً لجميع الدوال
+let currentDeleteId = null;
+
+// 2. دالة فتح النافذة
+function openDeleteModal(id) {
+    console.log("Opening modal for ID:", id); // للتأكد في الكونسول
+    currentDeleteId = id; 
+    const isAr = currentLanguage === 'ar';
+    const modal = document.getElementById('deleteModalOverlay');
     const feedbackDiv = document.getElementById('modalFeedback');
-    feedbackDiv.innerText = message;
-    feedbackDiv.className = `modal-feedback show feedback-${type}`;
+    const inputField = document.getElementById('confirmInput');
+
+    // إعادة ضبط النافذة
+    feedbackDiv.classList.remove('show');
+    inputField.value = '';
+    inputField.style.borderColor = '';
     
-    // إخفاء الرسالة بعد 3 ثوانٍ إذا لم يتم الحذف
-    if (type === 'error') {
-        setTimeout(() => {
-            feedbackDiv.classList.remove('show');
-        }, 3000);
+    // تحديث النصوص
+    document.getElementById('modalTitle').innerText = isAr ? 'تأكيد الحذف' : 'Silme Onayı';
+    document.getElementById('modalMsg').innerText = isAr ? 'يرجى كتابة كلمة "حذف" للتأكيد' : 'Onaylamak için "SIL" yazınız';
+    document.getElementById('confirmDeleteBtn').innerText = isAr ? 'حذف نهائي' : 'Kalıcı Olarak Sil';
+    inputField.placeholder = isAr ? 'اكتب هنا...' : 'Buraya yazın...';
+    
+    // إظهار النافذة
+    modal.classList.add('active');
+    setTimeout(() => inputField.focus(), 300);
+}
+
+// 3. دالة إغلاق النافذة (تأكد من اسم الكلاس active)
+function closeDeleteModal() {
+    const modal = document.getElementById('deleteModalOverlay');
+    modal.classList.remove('active');
+    currentDeleteId = null;
+}
+
+// 4. إغلاق النافذة عند الضغط خارجها
+function handleOutsideClick(event) {
+    if (event.target.id === 'deleteModalOverlay') {
+        closeDeleteModal();
     }
 }
 
+// 5. دالة الحذف الفعلي
 function processDelete() {
     const inputField = document.getElementById('confirmInput');
     const inputVal = inputField.value.trim();
     const isAr = currentLanguage === 'ar';
     const requiredWord = isAr ? 'حذف' : 'SIL';
 
+    // التحقق من الكلمة
     if (inputVal === requiredWord) {
-        // 1. تنفيذ الحذف في البيانات
-        zakatHistory = zakatHistory.filter(item => item.id !== currentDeleteId);
-        localStorage.setItem('zakatHistory', JSON.stringify(zakatHistory));
-        
-        // 2. إظهار رسالة نجاح عصرية
-        showModalFeedback(isAr ? '✓ تم الحذف بنجاح' : '✓ Başarıyla silindi', 'success');
-        
-        // 3. تحديث الواجهة وإغلاق النافذة بعد ثانية واحدة
-        setTimeout(() => {
-            displayHistory();
-            closeDeleteModal();
-        }, 1000);
-
+        if (currentDeleteId !== null) {
+            // تنفيذ الحذف الفعلي من المصفوفة
+            zakatHistory = zakatHistory.filter(item => item.id !== currentDeleteId);
+            
+            // تحديث التخزين المحلي
+            localStorage.setItem('zakatHistory', JSON.stringify(zakatHistory));
+            
+            // إظهار رسالة النجاح
+            showModalFeedback(isAr ? '✓ تم الحذف بنجاح' : '✓ Başarıyla silindi', 'success');
+            
+            // تحديث القائمة وإغلاق النافذة بعد ثانية
+            setTimeout(() => {
+                displayHistory(); // إعادة بناء القائمة في الصفحة
+                closeDeleteModal();
+            }, 1000);
+        }
     } else {
-        // إظهار رسالة خطأ وهز النافذة
+        // رسالة خطأ
         showModalFeedback(isAr ? '⚠ الكلمة غير صحيحة' : '⚠ Hatalı kelime', 'error');
         inputField.style.borderColor = '#ef4444';
-        setTimeout(() => inputField.style.borderColor = '', 2000);
     }
 }
 
-// تعديل بسيط على دالة الفتح لتصفير الرسائل
-function openDeleteModal(id) {
-    currentDeleteId = id;
-    const isAr = currentLanguage === 'ar';
-    const modal = document.getElementById('deleteModalOverlay');
+// 6. دالة إظهار الرسائل
+function showModalFeedback(message, type) {
     const feedbackDiv = document.getElementById('modalFeedback');
-    
-    feedbackDiv.classList.remove('show'); // إخفاء أي رسائل سابقة
-    document.getElementById('modalTitle').innerText = isAr ? 'تأكيد الحذف' : 'Silme Onayı';
-    document.getElementById('modalMsg').innerText = isAr ? 'يرجى كتابة كلمة "حذف" للتأكيد' : 'Onaylamak için "SIL" yazınız';
-    document.getElementById('confirmDeleteBtn').innerText = isAr ? 'حذف نهائي' : 'Kalıcı Olarak Sil';
-    
-    const inputField = document.getElementById('confirmInput');
-    inputField.value = '';
-    inputField.placeholder = isAr ? 'اكتب هنا...' : 'Buraya yazın...';
-    
-    modal.classList.add('active');
-    setTimeout(() => inputField.focus(), 400); // تركيز تلقائي على الحقل
+    feedbackDiv.innerText = message;
+    feedbackDiv.className = `modal-feedback show feedback-${type}`;
 }
 
 
@@ -20272,28 +20292,7 @@ function openDeleteModal(id) {
         // ============================================
         // حذف عنصر من السجل
         // ============================================
-        function deleteHistoryItem(id) {
-            if (!confirm(currentLanguage === 'ar' ? 'هل تريد حذف هذا العنصر؟' : 'Bu öğeyi silmek istiyor musunuz?')) {
-                return;
-            }
-
-            if (!db) return;
-
-            const transaction = db.transaction(['history'], 'readwrite');
-            const objectStore = transaction.objectStore('history');
-            const request = objectStore.delete(id);
-
-            request.onsuccess = function() {
-                loadHistory();
-                showToast(
-                    currentLanguage === 'ar' ? 
-                    'تم حذف العنصر' : 
-                    'Öğe silindi',
-                    'success'
-                );
-            };
-        }
-
+       
         // ============================================
         // مسح السجل
         // ============================================
@@ -24998,6 +24997,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
