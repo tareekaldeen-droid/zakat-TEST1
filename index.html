@@ -24435,119 +24435,121 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
+
+
+
+
+
 // ============================================
-// 🔙 نظام إدارة الرجوع والخروج الذكي
+// 🧠 نظام الذكاء في التنقل والرجوع
 // ============================================
 
-// 1. تهيئة سجل المتصفح عند بدء التشغيل
-document.addEventListener('DOMContentLoaded', function() {
-    // إضافة حالة أولية للتاريخ لمنع الخروج المباشر
-    window.history.pushState({ page: 'home' }, '', '#home');
-    
-    // التعامل مع زر الرجوع
-    window.addEventListener('popstate', handleBackButton);
-});
-
-// 2. دالة التعامل مع زر الرجوع
+// 1. التعامل الذكي مع زر الرجوع
 function handleBackButton(event) {
-    // إخفاء أي نوافذ منبثقة مفتوحة أولاً
-    const openModals = document.querySelectorAll('.modal-overlay.show');
-    if (openModals.length > 0) {
-        openModals.forEach(modal => modal.classList.remove('show'));
-        // إعادة دفع الحالة للبقاء في نفس الصفحة بعد إغلاق المودال
-        window.history.pushState({ page: getCurrentPageId() }, '', '#' + getCurrentPageId());
+    // الحالة 1: إذا كانت نافذة القراءة (الأحكام) مفتوحة
+    const readerOverlay = document.getElementById('zakat-reader-overlay');
+    if (readerOverlay && readerOverlay.style.opacity !== '0') {
+        // نغلق النافذة فقط ونبقى في صفحة الأحكام
+        closeZakatReader(false); // false تعني لا تقم بالرجوع في التاريخ لأننا ضغطنا زر الرجوع بالفعل
         return;
     }
 
-    // التحقق من الصفحة الحالية
+    // الحالة 2: إذا كانت نافذة تأكيد الخروج مفتوحة
+    const exitModal = document.getElementById('exit-modal-overlay');
+    if (exitModal && exitModal.classList.contains('show')) {
+        dismissExit();
+        // إعادة دفع الحالة للبقاء في الرئيسية
+        window.history.pushState({ page: 'home' }, '', '#home');
+        return;
+    }
+
+    // الحالة 3: إذا كانت أي نافذة منبثقة أخرى مفتوحة (مثل الإعدادات أو السجل)
+    const openModals = document.querySelectorAll('.modal-overlay.show, .custom-modal.show, .settings-panel.show');
+    if (openModals.length > 0) {
+        openModals.forEach(el => {
+            el.classList.remove('show');
+            if(el.id === 'settingsPanel') {
+                document.getElementById('settingsBtn').classList.remove('active');
+            }
+        });
+        return;
+    }
+
+    // الحالة 4: التنقل بين الصفحات
     const activePage = document.querySelector('.page.active');
     
     if (activePage && activePage.id !== 'homePage') {
-        // إذا كنا في صفحة فرعية، نعود للرئيسية
-        navigateTo('home', false); // false تعني لا تضف للتاريخ لأننا نعود
+        // إذا كنت في أي صفحة فرعية (أحكام، حاسبة...) -> عد للرئيسية
+        navigateTo('home', false); // false = لا تضف سجل جديد
     } else {
-        // إذا كنا في الرئيسية، نظهر نافذة الخروج
+        // الحالة 5: إذا كنت في الرئيسية -> أظهر نافذة الخروج
         showExitModal();
-        // إعادة دفع الحالة لمنع المتصفح من الخروج الفعلي فوراً
+        // نمنع الخروج الفعلي ونبقي المستخدم ليرى النافذة
         window.history.pushState({ page: 'home' }, '', '#home');
     }
 }
 
-// 3. تحديث دالة التنقل (navigateTo)
-// استبدل دالة navigateTo القديمة بهذه النسخة المحدثة
-function navigateTo(pageId, addToHistory = true) {
-    // إخفاء جميع الصفحات
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
-    // إظهار الصفحة المطلوبة
-    const targetPage = document.getElementById(pageId + 'Page');
-    if (targetPage) {
-        targetPage.classList.add('active');
-        window.scrollTo(0, 0);
-    }
-
-    // تحديث الشريط السفلي
-    const navBtn = document.querySelector(`.nav-item[onclick="navigateTo('${pageId}')"]`);
-    if (navBtn) navBtn.classList.add('active');
-
-    // إخفاء/إظهار الشريط السفلي في الرئيسية
-    const bottomNav = document.querySelector('.bottom-nav');
-    if (pageId === 'home') {
-        if(bottomNav) bottomNav.classList.add('hidden');
-    } else {
-        if(bottomNav) bottomNav.classList.remove('hidden');
-    }
-
-    // إدارة سجل المتصفح
-    if (addToHistory) {
-        window.history.pushState({ page: pageId }, '', '#' + pageId);
-    }
-    
-    // تحديث العنوان
-    updatePageTitle(pageId);
-}
-
-// 4. دوال نافذة الخروج
-function showExitModal() {
-    const overlay = document.getElementById('exit-modal-overlay');
-    const modal = document.getElementById('exit-modal');
-    if (overlay && modal) {
-        overlay.classList.add('show');
-        modal.classList.add('show');
-    }
-}
-
-function dismissExit() {
-    const overlay = document.getElementById('exit-modal-overlay');
-    const modal = document.getElementById('exit-modal');
-    if (overlay && modal) {
-        overlay.classList.remove('show');
-        modal.classList.remove('show');
-    }
-}
-
+        
+// دالة الخروج النهائية
 function confirmAppExit() {
-    // محاولة إغلاق النافذة (يعمل في PWA والتطبيقات)
-    window.close();
+    // إخفاء المودال
+    dismissExit();
     
-    // إذا لم يغلق (في المتصفح العادي)، نوجهه لصفحة فارغة أو جوجل
-    // أو نتركه يعود للخلف مرتين للخروج من الموقع
-    window.history.go(-2);
-    
-    // رسالة وداع لطيفة
+    // استبدال محتوى الصفحة بالكامل بشاشة الوداع
     document.body.innerHTML = `
-        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#0d7c66; color:white; flex-direction:column;">
-            <h1>👋</h1>
-            <h2>${currentLanguage === 'ar' ? 'في أمان الله' : 'Güle Güle'}</h2>
+        <div style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0d7c66 0%, #206f63 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            z-index: 999999;
+            animation: fadeIn 0.5s ease;
+        ">
+            <div style="font-size: 4rem; margin-bottom: 1rem; animation: float 3s infinite ease-in-out;">
+                👋
+            </div>
+            <h1 style="font-family: 'Amiri', serif; font-size: 2.5rem; margin-bottom: 0.5rem;">
+                ${currentLanguage === 'ar' ? 'في أمان الله' : 'Allah\'a Emanet Olun'}
+            </h1>
+            <p style="font-size: 1.1rem; opacity: 0.9;">
+                ${currentLanguage === 'ar' ? 'نسأل الله أن يتقبل منا ومنكم' : 'Allah kabul etsin'}
+            </p>
+            
+            <button onclick="location.reload()" style="
+                margin-top: 2rem;
+                padding: 10px 20px;
+                background: rgba(255,255,255,0.2);
+                border: 1px solid rgba(255,255,255,0.4);
+                color: white;
+                border-radius: 50px;
+                cursor: pointer;
+                font-family: inherit;
+            ">
+                ${currentLanguage === 'ar' ? 'العودة للتطبيق' : 'Uygulamaya Dön'}
+            </button>
         </div>
+        <style>
+            @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        </style>
     `;
-}
-
-// دالة مساعدة لمعرفة الصفحة الحالية
-function getCurrentPageId() {
-    const activePage = document.querySelector('.page.active');
-    return activePage ? activePage.id.replace('Page', '') : 'home';
 }
 
 
@@ -24936,6 +24938,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
