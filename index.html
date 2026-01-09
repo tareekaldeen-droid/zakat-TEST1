@@ -19951,25 +19951,12 @@ function saveToHistory() {
 function displayHistory() {
     const container = document.getElementById('historyContainer');
     
-    // حالة السجل الفارغ
     if (!zakatHistory || zakatHistory.length === 0) {
         container.innerHTML = `
             <div class="empty-state" style="padding: 4rem 1rem; text-align: center;">
-                <div style="
-                    width: 120px; height: 120px; margin: 0 auto 20px;
-                    background: linear-gradient(135deg, rgba(13,124,102,0.08), rgba(13,124,102,0.02));
-                    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-                ">
-                    <svg viewBox="0 0 24 24" width="60" height="60" fill="var(--text-secondary)" style="opacity: 0.4;">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                    </svg>
-                </div>
-                <h3 style="font-size:1.4rem; margin-bottom: 10px; color: var(--text-color);">
+                <h3 style="color: var(--text-color);">
                     ${currentLanguage === 'ar' ? 'لا توجد سجلات محفوظة' : 'Kayıtlı Hesaplama Yok'}
                 </h3>
-                <p style="color:var(--text-secondary); font-size: 1rem; max-width: 300px; margin: 0 auto;">
-                    ${currentLanguage === 'ar' ? 'قم بإجراء حساب جديد وحفظه ليظهر هنا في السجل.' : 'Yeni bir hesaplama yapın ve geçmişte görünmesi için kaydedin.'}
-                </p>
             </div>
         `;
         return;
@@ -19979,83 +19966,70 @@ function displayHistory() {
     
     zakatHistory.forEach((item) => {
         const dateObj = new Date(item.date);
-        
-        // 1. توليد رقم التقرير
+        const isAr = currentLanguage === 'ar';
+
+        // 1. توليد رقم التقرير (أرقام إنجليزية)
         const year = dateObj.getFullYear();
         const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
         const day = dateObj.getDate().toString().padStart(2, '0');
         const timePart = dateObj.getTime().toString().slice(-6);
         const reportID = `ZKT-${year}${month}${day}-${timePart}`;
 
-        // 2. تنسيق التاريخ (Date) حسب اللغة الحالية
-        const dateString = dateObj.toLocaleDateString(currentLanguage === 'ar' ? 'ar-EG' : 'tr-TR', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-        });
+        // 2. تنسيق التاريخ (أرقام إنجليزية 1, 2, 3)
+        const dateString = `${day}/${month}/${year}`;
 
-        // 3. تنسيق الوقت (Time) حسب اللغة الحالية
-        const timeString = dateObj.toLocaleTimeString(currentLanguage === 'ar' ? 'ar-EG' : 'tr-TR', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
+        // 3. تنسيق الوقت (أرقام إنجليزية مع ص/م للعربي)
+        let hours = dateObj.getHours();
+        const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+        const ampm = isAr ? (hours >= 12 ? 'م' : 'ص') : (hours >= 12 ? 'PM' : 'AM');
+        hours = hours % 12 || 12; 
+        const timeString = `${hours}:${minutes} ${ampm}`;
         
-        // 4. النصوص المترجمة (تم تحديث اسم الزر هنا)
-        const txtTotal = currentLanguage === 'ar' ? 'إجمالي الزكاة الواجبة' : 'Toplam Vacip Zekât';
-        
-        // === هنا التغيير المطلوب في اسم الزر ===
-        const txtPDF = currentLanguage === 'ar' ? 'تحضير تفاصيل التقرير PDF' : 'Rapor Detaylarını Hazırla PDF';
-        
-        const txtDelete = currentLanguage === 'ar' ? 'حذف' : 'Sil';
-        const txtReportNo = currentLanguage === 'ar' ? 'رقم التقرير' : 'Rapor No';
-
-        // 5. تحضير البيانات بأمان
+        const txtTotal = isAr ? 'إجمالي الزكاة الواجبة' : 'Toplam Vacip Zekât';
+        const txtPDF = isAr ? 'تحضير تفاصيل التقرير PDF' : 'Rapor Detaylarını Hazırla PDF';
         const itemJson = encodeURIComponent(JSON.stringify(item));
 
         html += `
             <div class="ultra-card">
-                <!-- الرمز الخلفي الزخرفي -->
+                <!-- الرمز الخلفي الزخرفي (كبير وشفاف) -->
                 <div class="uc-deco-icon">
                     <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
                         <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                     </svg>
                 </div>
 
-                <div class="uc-content">
-                    <!-- الصف العلوي: التاريخ والرقم -->
-                    <div class="uc-top-row">
-                        <!-- التاريخ والوقت -->
-                        <div class="uc-date-badge">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="opacity:0.7">
-                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                            </svg>
-                            <span style="margin: 0 4px;">${dateString}</span>
-                            <span style="opacity: 0.4;">|</span>
-                            <span style="margin: 0 4px;">${timeString}</span>
-                        </div>
+                <div class="uc-content" style="text-align: center;">
+                    
+                    <!-- أولاً: رقم التقرير في الأعلى والمنتصف -->
+                    <div class="uc-report-id" style="margin-bottom: 12px; display: block; font-family: sans-serif;" dir="ltr">
+                        #${reportID}
+                    </div>
 
-                        <!-- رقم التقرير -->
-                        <div class="uc-report-id" title="${txtReportNo}" dir="ltr">
-                            #${reportID}
+                    <!-- ثانياً: التاريخ والوقت في المنتصف -->
+                    <div style="display: flex; justify-content: center; margin-bottom: 18px;">
+                        <div class="uc-date-badge" style="width: auto; padding: 6px 16px; font-family: sans-serif; direction: ltr;">
+                            <span>📅 ${dateString}</span>
+                            <span style="margin: 0 10px; opacity: 0.3;">|</span>
+                            <span>🕒 ${timeString}</span>
                         </div>
                     </div>
 
-                    <!-- المبلغ -->
-                    <div class="uc-amount-box">
+                    <!-- ثالثاً: قسم المبلغ -->
+                    <div class="uc-amount-box" style="margin-bottom: 25px;">
                         <div class="uc-label">${txtTotal}</div>
-                        <div class="uc-amount">${item.totalFormatted}</div>
+                        <div class="uc-amount" style="font-family: sans-serif;">${item.totalFormatted}</div>
                     </div>
 
-                    <!-- الأزرار -->
-                    <div class="uc-actions">
-                        <button class="btn-ultra" onclick="generatePDFFromHistory(JSON.parse(decodeURIComponent('${itemJson}')))">
+                    <!-- رابعاً: الأزرار مع استخدام كلاس uc-icon -->
+                    <div class="uc-actions" style="display: flex; gap: 10px; justify-content: center; grid-template-columns: unset;">
+                        <button class="btn-ultra" style="flex: 1; max-width: 280px;" onclick="generatePDFFromHistory(JSON.parse(decodeURIComponent('${itemJson}')))">
                             <svg class="uc-icon" viewBox="0 0 24 24">
                                 <path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5v1.5H19v2.5h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/>
                             </svg>
                             <span>${txtPDF}</span>
                         </button>
                         
-                        <button class="btn-ultra-delete" onclick="deleteHistoryItem(${item.id})" title="${txtDelete}">
+                        <button class="btn-ultra-delete" style="width: 52px; flex-shrink: 0;" onclick="deleteHistoryItem(${item.id})">
                             <svg class="uc-icon" viewBox="0 0 24 24">
                                 <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                             </svg>
