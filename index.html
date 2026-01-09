@@ -24443,114 +24443,241 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // ============================================
-// 🧠 نظام الذكاء في التنقل والرجوع
+// 🧠 نظام الملاحة والرجوع الذكي الشامل (Smart Navigation System)
 // ============================================
 
-// 1. التعامل الذكي مع زر الرجوع
+// 1. تهيئة النظام عند بدء التشغيل
+document.addEventListener('DOMContentLoaded', function() {
+    // تعيين الحالة الأولية للصفحة الرئيسية
+    // replaceState يستخدم لتعديل المدخل الحالي في التاريخ بدلاً من إضافة واحد جديد
+    window.history.replaceState({ page: 'home', type: 'root' }, '', '#home');
+    
+    // الاستماع لحدث الرجوع (Back Button)
+    window.addEventListener('popstate', handleBackButton);
+});
+
+// 2. العقل المدبر: دالة معالجة زر الرجوع
 function handleBackButton(event) {
-    // الحالة 1: إذا كانت نافذة القراءة (الأحكام) مفتوحة
+    // --- المستوى 1: النوافذ المنبثقة والطبقات العليا (Highest Priority) ---
+
+    // أ. قارئ الأحكام الفقهية
     const readerOverlay = document.getElementById('zakat-reader-overlay');
     if (readerOverlay && readerOverlay.style.opacity !== '0') {
-        // نغلق النافذة فقط ونبقى في صفحة الأحكام
-        closeZakatReader(false); // false تعني لا تقم بالرجوع في التاريخ لأننا ضغطنا زر الرجوع بالفعل
+        closeZakatReader(false); // false = لا ترجع في التاريخ لأننا ضغطنا الرجوع بالفعل
         return;
     }
 
-    // الحالة 2: إذا كانت نافذة تأكيد الخروج مفتوحة
+    // ب. نافذة تأكيد الخروج
     const exitModal = document.getElementById('exit-modal-overlay');
     if (exitModal && exitModal.classList.contains('show')) {
         dismissExit();
-        // إعادة دفع الحالة للبقاء في الرئيسية
-        window.history.pushState({ page: 'home' }, '', '#home');
+        // إعادة تثبيت حالة الرئيسية لمنع الخروج
+        window.history.pushState({ page: 'home', type: 'root' }, '', '#home');
         return;
     }
 
-    // الحالة 3: إذا كانت أي نافذة منبثقة أخرى مفتوحة (مثل الإعدادات أو السجل)
-    const openModals = document.querySelectorAll('.modal-overlay.show, .custom-modal.show, .settings-panel.show');
-    if (openModals.length > 0) {
-        openModals.forEach(el => {
-            el.classList.remove('show');
-            if(el.id === 'settingsPanel') {
-                document.getElementById('settingsBtn').classList.remove('active');
-            }
-        });
-        return;
-    }
-
-    // الحالة 4: التنقل بين الصفحات
-    const activePage = document.querySelector('.page.active');
+    // ج. النوافذ المنبثقة الأخرى (مثل سجل التحديثات، الإشعارات، التثبيت)
+    // نتحقق من أي مودال مفتوح حالياً
+    const openModals = document.querySelectorAll('.modal-overlay.show, .custom-modal.show');
+    let isAnyModalOpen = false;
     
-    if (activePage && activePage.id !== 'homePage') {
-        // إذا كنت في أي صفحة فرعية (أحكام، حاسبة...) -> عد للرئيسية
-        navigateTo('home', false); // false = لا تضف سجل جديد
+    openModals.forEach(el => {
+        if (el.classList.contains('show')) {
+            // إغلاق المودال
+            el.classList.remove('show');
+            isAnyModalOpen = true;
+            
+            // معالجة خاصة لبعض المودالات
+            if(el.id === 'updates-history-modal') {
+                // تنظيف أي حالة خاصة
+            }
+        }
+    });
+
+    // إغلاق قائمة الإعدادات الجانبية (في وضع القراءة)
+    const settingsPanel = document.getElementById('settingsPanel');
+    if (settingsPanel && settingsPanel.classList.contains('show')) {
+        settingsPanel.classList.remove('show');
+        isAnyModalOpen = true;
+    }
+
+    // إذا تم إغلاق أي نافذة، نتوقف هنا (نبقى في نفس الصفحة)
+    if (isAnyModalOpen) {
+        return;
+    }
+
+    // --- المستوى 2: التنقل بين الصفحات (Page Navigation) ---
+
+    // معرفة الصفحة الحالية الظاهرة
+    const activePage = document.querySelector('.page.active');
+    const activePageId = activePage ? activePage.id.replace('Page', '') : 'home';
+
+    if (activePageId !== 'home') {
+        // إذا كنا في أي صفحة فرعية (حاسبة، إعدادات، سجل...) -> نعود للرئيسية
+        navigateTo('home', false); // false = لا تضف سجل جديد، فقط غير العرض
     } else {
-        // الحالة 5: إذا كنت في الرئيسية -> أظهر نافذة الخروج
+        // --- المستوى 3: الصفحة الرئيسية (Root) ---
+        // إذا كنا في الرئيسية وضغطنا رجوع -> نظهر نافذة الخروج
         showExitModal();
-        // نمنع الخروج الفعلي ونبقي المستخدم ليرى النافذة
-        window.history.pushState({ page: 'home' }, '', '#home');
+        // نمنع المتصفح من الخروج الفعلي بإعادة دفع الحالة
+        window.history.pushState({ page: 'home', type: 'root' }, '', '#home');
     }
 }
 
+// 3. دالة التنقل بين الصفحات (محدثة لدعم التاريخ)
+function navigateTo(pageId, addToHistory = true) {
+    // إخفاء جميع الصفحات
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
-        
-// دالة الخروج النهائية
-function confirmAppExit() {
-    // إخفاء المودال
-    dismissExit();
+    // إظهار الصفحة المطلوبة
+    const targetPage = document.getElementById(pageId + 'Page');
+    if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    // تحديث الشريط السفلي
+    const navBtn = document.querySelector(`.nav-item[onclick="navigateTo('${pageId}')"]`);
+    if (navBtn) navBtn.classList.add('active');
+
+    // إخفاء/إظهار الشريط السفلي في الرئيسية
+    const bottomNav = document.querySelector('.bottom-nav');
+    if (pageId === 'home') {
+        if(bottomNav) bottomNav.classList.add('hidden');
+    } else {
+        if(bottomNav) bottomNav.classList.remove('hidden');
+    }
+
+    // إضافة الصفحة لسجل التاريخ (إلا إذا كنا نعود للخلف)
+    if (addToHistory) {
+        window.history.pushState({ page: pageId, type: 'main' }, '', '#' + pageId);
+    }
     
-    // استبدال محتوى الصفحة بالكامل بشاشة الوداع
+    // تحديث العنوان
+    updatePageTitle(pageId);
+}
+
+// 4. دوال فتح النوافذ الفرعية (يجب أن تضيف للتاريخ لكي يعمل زر الرجوع)
+
+// أ. دالة فتح سجل التحديثات (في الإعدادات)
+// استبدل الدالة القديمة showUpdatesHistory بهذه:
+async function showUpdatesHistory() {
+    // ... (نفس كود جلب البيانات السابق) ...
+    let data = window.updatesData;
+    if (!data) {
+        try {
+            const response = await fetch(NOTIFICATION_CONFIG.JSON_URL);
+            data = await response.json();
+        } catch (e) { return; }
+    }
+    // ... (نفس كود بناء HTML) ...
+    const container = document.getElementById('updates-list-container');
+    if (!container) return;
+    
+    // ... (بناء المحتوى) ...
+    let html = '';
+    if (data.latest) { html += createUpdateCard(data.latest, currentLanguage, true); }
+    container.innerHTML = html;
+
+    // --- الجزء المهم: الفتح وإضافة التاريخ ---
+    document.getElementById('modal-overlay').classList.add('show');
+    document.getElementById('updates-history-modal').classList.add('show');
+    
+    // إضافة حالة "modal" للتاريخ لكي يغلقها زر الرجوع
+    window.history.pushState({ page: 'settings', type: 'modal', modal: 'updates' }, '', '#settings/updates');
+}
+
+// ب. دالة فتح قارئ الأحكام (محدثة)
+window.openDefinitionWindow = function(contentId) {
+    if (document.getElementById('zakat-reader-overlay')) return;
+
+    var targetId = contentId || 'hiddenDefinitionContent';
+    var hiddenContent = document.getElementById(targetId);
+    if (!hiddenContent) return;
+
+    // --- إضافة حالة "reading" للتاريخ ---
+    window.history.pushState({ page: 'fiqh', type: 'reader' }, '', '#fiqh/reading');
+
+    // ... (باقي كود إنشاء الـ iframe والـ overlay كما هو تماماً في الكود السابق) ...
+    // (اختصاراً للمساحة: أنشئ الـ overlay والـ iframe واعرض المحتوى)
+    var overlay = document.createElement('div');
+    overlay.id = 'zakat-reader-overlay';
+    // ... ستايل ...
+    overlay.style.cssText = `position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 2147483647; opacity: 0; transition: opacity 0.3s ease;`;
+    
+    var iframe = document.createElement('iframe');
+    iframe.style.cssText = "width: 100%; height: 100%; border: none;";
+    overlay.appendChild(iframe);
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden'; // منع السكرول في الخلفية
+    
+    requestAnimationFrame(() => overlay.style.opacity = '1');
+    
+    var doc = iframe.contentWindow.document;
+    doc.open();
+    // ... اكتب المحتوى ...
+    // (استخدم نفس كود HTML القارئ الموجود في ردودي السابقة)
+    // ملاحظة: تأكد من تمرير متغيرات العناوين واللغة
+    var currentTitleObj = sectionTitles[targetId] || { ar: 'قارئ الزكاة', tr: 'Zekât Okuyucu' };
+    var displayTitle = currentLanguage === 'ar' ? currentTitleObj.ar : currentTitleObj.tr;
+    
+    // ... كتابة الـ HTML داخل الـ iframe ...
+    doc.write(`<!DOCTYPE html><html dir="${currentLanguage==='ar'?'rtl':'ltr'}"><head>...</head><body>...${hiddenContent.innerHTML}...</body></html>`);
+    doc.close();
+};
+
+// 5. دوال الإغلاق اليدوي (زر X)
+// يجب أن تقوم بالرجوع في التاريخ (history.back) إذا أغلق المستخدم بيده
+// لكي لا يضطر للضغط مرتين على زر الرجوع لاحقاً
+
+// أ. إغلاق القارئ
+window.closeZakatReader = function(goBack = true) {
+    var overlay = document.getElementById('zakat-reader-overlay');
+    if (overlay) {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            if(overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }, 300);
+        document.body.style.overflow = 'auto';
+        
+        // إذا كان الإغلاق يدوياً (ليس عبر زر الرجوع)، نعود خطوة في التاريخ لنحذف حالة القراءة
+        if (goBack) window.history.back();
+    }
+};
+
+// ب. إغلاق المودالات العامة
+window.closeModal = function(id) {
+    const modal = document.getElementById(id);
+    const overlay = document.getElementById('modal-overlay');
+    
+    if(modal && modal.classList.contains('show')) {
+        modal.classList.remove('show');
+        if(overlay) overlay.classList.remove('show');
+        
+        // إذا كان المودال قد أضاف حالة للتاريخ (مثل سجل التحديثات)، نعود للخلف
+        if (id === 'updates-history-modal') {
+            window.history.back();
+        }
+    }
+};
+
+// 6. دالة الخروج النهائية (شاشة الوداع)
+function confirmAppExit() {
+    dismissExit();
     document.body.innerHTML = `
-        <div style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0d7c66 0%, #206f63 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-            z-index: 999999;
-            animation: fadeIn 0.5s ease;
-        ">
-            <div style="font-size: 4rem; margin-bottom: 1rem; animation: float 3s infinite ease-in-out;">
-                👋
-            </div>
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0d7c66 0%, #206f63 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; z-index: 999999;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">👋</div>
             <h1 style="font-family: 'Amiri', serif; font-size: 2.5rem; margin-bottom: 0.5rem;">
                 ${currentLanguage === 'ar' ? 'في أمان الله' : 'Allah\'a Emanet Olun'}
             </h1>
-            <p style="font-size: 1.1rem; opacity: 0.9;">
-                ${currentLanguage === 'ar' ? 'نسأل الله أن يتقبل منا ومنكم' : 'Allah kabul etsin'}
-            </p>
-            
-            <button onclick="location.reload()" style="
-                margin-top: 2rem;
-                padding: 10px 20px;
-                background: rgba(255,255,255,0.2);
-                border: 1px solid rgba(255,255,255,0.4);
-                color: white;
-                border-radius: 50px;
-                cursor: pointer;
-                font-family: inherit;
-            ">
+            <button onclick="location.reload()" style="margin-top: 2rem; padding: 10px 20px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; border-radius: 50px; cursor: pointer;">
                 ${currentLanguage === 'ar' ? 'العودة للتطبيق' : 'Uygulamaya Dön'}
             </button>
         </div>
-        <style>
-            @keyframes float {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-10px); }
-            }
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-        </style>
     `;
 }
+
 
 
 
@@ -24938,6 +25065,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
