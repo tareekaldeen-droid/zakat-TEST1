@@ -4430,6 +4430,192 @@ html[lang="tr"] .font-ar { display: none !important; }
 
 
 
+/* ============================================ */
+/* تصميم السجل "ألترا مودرن" (Ultra Modern UI) */
+/* ============================================ */
+
+/* الحاوية العامة */
+.history-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* البطاقة الرئيسية */
+.ultra-card {
+    /* خلفية نهاري: رمادي مزرق فاتح جداً (ليس أبيض) */
+    background: linear-gradient(135deg, #f3f6f8 0%, #eef2f5 100%);
+    border-radius: 24px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgb(121 124 124);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* خلفية ليلي: كحلي غامق فاخر */
+[data-theme="dark"] .ultra-card {
+    background: linear-gradient(135deg, #1a202c 0%, #171923 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+}
+
+.ultra-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -10px rgba(13, 124, 102, 0.15);
+    border-color: var(--primary-color);
+}
+
+/* الرمز الخلفي الزخرفي (كبير وشفاف) */
+.uc-deco-icon {
+    position: absolute;
+    top: -20px;
+    /* يتغير مكانه حسب اللغة تلقائياً */
+    inset-inline-end: -20px; 
+    font-size: 8rem;
+    opacity: 0.04;
+    transform: rotate(15deg);
+    pointer-events: none;
+    color: var(--primary-color);
+    z-index: 0;
+}
+
+/* المحتوى */
+.uc-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* الصف العلوي: التاريخ والرقم */
+.uc-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.uc-date-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: rgba(0, 0, 0, 0.04);
+    padding: 6px 12px;
+    border-radius: 50px;
+}
+
+[data-theme="dark"] .uc-date-badge {
+    background: rgba(255, 255, 255, 0.05);
+    color: #a0aec0;
+}
+
+/* رقم التقرير المميز */
+.uc-report-id {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+/* قسم المبلغ */
+.uc-amount-box {
+    margin: 10px 0 20px 0;
+}
+
+.uc-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.uc-amount {
+    font-size: 2.2rem;
+    font-weight: 800;
+    /* تدرج لوني للنص */
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: sans-serif;
+    letter-spacing: -1px;
+}
+
+/* الأزرار */
+.uc-actions {
+    display: grid;
+    grid-template-columns: 1fr auto; /* زر كبير وزر صغير */
+    gap: 12px;
+}
+
+/* زر PDF المتطور */
+.btn-ultra {
+    border: none;
+    padding: 14px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s;
+    /* خلفية شبه شفافة بلون الثيم */
+    background: rgba(13, 124, 102, 0.1); 
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .btn-ultra {
+    background: rgba(13, 124, 102, 0.2);
+    color: #4db6ac;
+}
+
+.btn-ultra:hover {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 8px 20px -5px rgba(13, 124, 102, 0.4);
+}
+
+/* زر الحذف */
+.btn-ultra-delete {
+    width: 50px;
+    background: rgba(239, 68, 68, 0.08);
+    color: #ef4444;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btn-ultra-delete:hover {
+    background: #ef4444;
+    color: white;
+    box-shadow: 0 8px 20px -5px rgba(239, 68, 68, 0.3);
+}
+
+/* أيقونات */
+.uc-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+
+
+
+
+
+        
+
+
 
 
 
@@ -18320,33 +18506,45 @@ function detectBrowserLanguage() {
 
 
 
-        // ============================================
-        // تغيير اللغة وحفظها
-        // ============================================
-        document.getElementById('languageSelect').addEventListener('change', function(e) {
-            currentLanguage = e.target.value;
-            
-            // حفظ اللغة المختارة في ذاكرة المتصفح
-            localStorage.setItem('appLanguage', currentLanguage);
-            
-            if (currentLanguage === 'ar') {
-                document.documentElement.setAttribute('lang', 'ar');
-                document.documentElement.setAttribute('dir', 'rtl');
-            } else {
-                document.documentElement.setAttribute('lang', 'tr');
-                document.documentElement.setAttribute('dir', 'ltr');
-            }
-            
-            applyTranslation();
-            
-            const activePage = document.querySelector('.page.active');
-            if (activePage) {
-                const pageId = activePage.id.replace('Page', '');
-                updatePageTitle(pageId);
-            }
-            
-            showToast(currentLanguage === 'ar' ? 'تم حفظ اللغة المفضلة' : 'Dil tercihi kaydedildi', 'success');
-        });
+       // ============================================
+// تغيير اللغة وحفظها (محدث لتنشيط السجل فوراً)
+// ============================================
+document.getElementById('languageSelect').addEventListener('change', function(e) {
+    currentLanguage = e.target.value;
+    
+    // حفظ اللغة المختارة في ذاكرة المتصفح
+    localStorage.setItem('appLanguage', currentLanguage);
+    
+    // تحديث اتجاه الصفحة
+    if (currentLanguage === 'ar') {
+        document.documentElement.setAttribute('lang', 'ar');
+        document.documentElement.setAttribute('dir', 'rtl');
+    } else {
+        document.documentElement.setAttribute('lang', 'tr');
+        document.documentElement.setAttribute('dir', 'ltr');
+    }
+    
+    // تطبيق الترجمة على النصوص الثابتة
+    applyTranslation();
+    
+    // تحديث عنوان الصفحة النشطة
+    const activePage = document.querySelector('.page.active');
+    if (activePage) {
+        const pageId = activePage.id.replace('Page', '');
+        updatePageTitle(pageId);
+        
+        // === إضافة هامة جداً: إعادة رسم السجل إذا كانت صفحة السجل مفتوحة ===
+        if (pageId === 'history') {
+            displayHistory(); 
+        }
+    }
+    
+    // تحديث اللوجو
+    const newLogo = currentLanguage === 'ar' ? AR_LOGO : TR_LOGO;
+    updateAppLogos(newLogo);
+
+    showToast(currentLanguage === 'ar' ? 'تم تغيير اللغة' : 'Dil değiştirildi', 'success');
+});
 
 
         // ============================================
@@ -19748,398 +19946,134 @@ function saveToHistory() {
         }
 
 // ============================================
-// عرض السجل - تصميم عصري وواضح
+// عرض السجل - تصميم ألترا مودرن (مع تحديث اللغة واسم الزر الجديد)
 // ============================================
 function displayHistory() {
     const container = document.getElementById('historyContainer');
     
+    // حالة السجل الفارغ
     if (!zakatHistory || zakatHistory.length === 0) {
         container.innerHTML = `
-            <div class="empty-state">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                </svg>
-                <h3>${currentLanguage === 'ar' ? 'لا يوجد سجل' : 'Geçmiş Yok'}</h3>
-                <p>${currentLanguage === 'ar' ? 'لم تقم بحفظ أي حسابات بعد' : 'Henüz hiç hesaplama kaydetmediniz'}</p>
+            <div class="empty-state" style="padding: 4rem 1rem; text-align: center;">
+                <div style="
+                    width: 120px; height: 120px; margin: 0 auto 20px;
+                    background: linear-gradient(135deg, rgba(13,124,102,0.08), rgba(13,124,102,0.02));
+                    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+                ">
+                    <svg viewBox="0 0 24 24" width="60" height="60" fill="var(--text-secondary)" style="opacity: 0.4;">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                </div>
+                <h3 style="font-size:1.4rem; margin-bottom: 10px; color: var(--text-color);">
+                    ${currentLanguage === 'ar' ? 'لا توجد سجلات محفوظة' : 'Kayıtlı Hesaplama Yok'}
+                </h3>
+                <p style="color:var(--text-secondary); font-size: 1rem; max-width: 300px; margin: 0 auto;">
+                    ${currentLanguage === 'ar' ? 'قم بإجراء حساب جديد وحفظه ليظهر هنا في السجل.' : 'Yeni bir hesaplama yapın ve geçmişte görünmesi için kaydedin.'}
+                </p>
             </div>
         `;
         return;
     }
 
-    let html = '';
+    let html = '<div class="history-container">';
+    
     zakatHistory.forEach((item) => {
-        const date = new Date(item.date);
-        const dateString = date.toLocaleDateString('en-US', {
+        const dateObj = new Date(item.date);
+        
+        // 1. توليد رقم التقرير
+        const year = dateObj.getFullYear();
+        const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+        const day = dateObj.getDate().toString().padStart(2, '0');
+        const timePart = dateObj.getTime().toString().slice(-6);
+        const reportID = `ZKT-${year}${month}${day}-${timePart}`;
+
+        // 2. تنسيق التاريخ (Date) حسب اللغة الحالية
+        const dateString = dateObj.toLocaleDateString(currentLanguage === 'ar' ? 'ar-EG' : 'tr-TR', {
             year: 'numeric',
-            month: 'long',
-            day: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+
+        // 3. تنسيق الوقت (Time) حسب اللغة الحالية
+        const timeString = dateObj.toLocaleTimeString(currentLanguage === 'ar' ? 'ar-EG' : 'tr-TR', {
             hour: '2-digit',
             minute: '2-digit'
         });
+        
+        // 4. النصوص المترجمة (تم تحديث اسم الزر هنا)
+        const txtTotal = currentLanguage === 'ar' ? 'إجمالي الزكاة الواجبة' : 'Toplam Vacip Zekât';
+        
+        // === هنا التغيير المطلوب في اسم الزر ===
+        const txtPDF = currentLanguage === 'ar' ? 'تحضير تفاصيل التقرير PDF' : 'Rapor Detaylarını Hazırla PDF';
+        
+        const txtDelete = currentLanguage === 'ar' ? 'حذف' : 'Sil';
+        const txtReportNo = currentLanguage === 'ar' ? 'رقم التقرير' : 'Rapor No';
 
-        // بناء التفاصيل الكاملة لكل نوع
-        let detailsHTML = '';
-        let itemNumber = 1;
+        // 5. تحضير البيانات بأمان
+        const itemJson = encodeURIComponent(JSON.stringify(item));
 
-        // 1. زكاة النقود والودائع
-        if (item.breakdown.money > 0 && item.moneyDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.08), rgba(65, 184, 166, 0.08)); border-right: 4px solid var(--primary-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(13, 124, 102, 0.2);">
-                        <strong style="font-size: 1.05rem; color: var(--primary-color);">${itemNumber}. 💵 ${currentLanguage === 'ar' ? 'زكاة النقود والودائع (2.5%)' : 'Nakit ve Mevduat Zekâtı (%2.5)'}</strong>
-                        <strong style="font-size: 1.1rem; color: var(--primary-color);">${formatCurrency(item.breakdown.money, item.currency)}</strong>
-                    </div>
-            `;
-            if (item.moneyDetails.cashAtHome > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'النقود في المنزل' : 'Evdeki Nakit'}:</span><span style="font-weight: 600;">${formatCurrency(item.moneyDetails.cashAtHome, item.currency)}</span></div>`;
-            }
-            if (item.moneyDetails.currentAccounts > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'الحسابات الجارية' : 'Vadesiz Hesaplar'}:</span><span style="font-weight: 600;">${formatCurrency(item.moneyDetails.currentAccounts, item.currency)}</span></div>`;
-            }
-            if (item.moneyDetails.savingsAccounts > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'حسابات التوفير' : 'Tasarruf Hesapları'}:</span><span style="font-weight: 600;">${formatCurrency(item.moneyDetails.savingsAccounts, item.currency)}</span></div>`;
-            }
-            if (item.moneyDetails.fixedDeposits > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'الودائع الثابتة' : 'Vadeli Mevduatlar'}:</span><span style="font-weight: 600;">${formatCurrency(item.moneyDetails.fixedDeposits, item.currency)}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-            itemNumber++;
-        }
-
-        // 2. زكاة الذهب والفضة
-        if (item.breakdown.goldSilver > 0 && item.goldSilverDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(255, 215, 0, 0.08)); border-right: 4px solid #d4af37; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(212, 175, 55, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #d4af37;">${itemNumber}. 🏆 ${currentLanguage === 'ar' ? 'زكاة الذهب والفضة (2.5%)' : 'Altın ve Gümüş Zekâtı (%2.5)'}</strong>
-                        <strong style="font-size: 1.1rem; color: #d4af37;">${formatCurrency(item.breakdown.goldSilver, item.currency)}</strong>
-                    </div>
-            `;
-            if (item.goldSilverDetails.gold24 > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'ذهب عيار 24' : '24 Ayar Altın'}:</span><span style="font-weight: 600;">${item.goldSilverDetails.gold24} ${currentLanguage === 'ar' ? 'جرام' : 'gram'}</span></div>`;
-            }
-            if (item.goldSilverDetails.gold22 > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'ذهب عيار 22' : '22 Ayar Altın'}:</span><span style="font-weight: 600;">${item.goldSilverDetails.gold22} ${currentLanguage === 'ar' ? 'جرام' : 'gram'}</span></div>`;
-            }
-            if (item.goldSilverDetails.gold21 > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'ذهب عيار 21' : '21 Ayar Altın'}:</span><span style="font-weight: 600;">${item.goldSilverDetails.gold21} ${currentLanguage === 'ar' ? 'جرام' : 'gram'}</span></div>`;
-            }
-            if (item.goldSilverDetails.gold18 > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'ذهب عيار 18' : '18 Ayar Altın'}:</span><span style="font-weight: 600;">${item.goldSilverDetails.gold18} ${currentLanguage === 'ar' ? 'جرام' : 'gram'}</span></div>`;
-            }
-            if (item.goldSilverDetails.silver > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'الفضة' : 'Gümüş'}:</span><span style="font-weight: 600;">${item.goldSilverDetails.silver} ${currentLanguage === 'ar' ? 'جرام' : 'gram'}</span></div>`;
-            }
-            if (item.goldSilverDetails.jewelryTrade > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'مجوهرات للتجارة' : 'Ticari Mücevher'}:</span><span style="font-weight: 600;">${formatCurrency(item.goldSilverDetails.jewelryTrade, item.currency)}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-            itemNumber++;
-        }
-
-        // 3. زكاة العملات الرقمية
-        if (item.breakdown.crypto > 0 && item.cryptoDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(255, 152, 0, 0.08), rgba(255, 193, 7, 0.08)); border-right: 4px solid #ff9800; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(255, 152, 0, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #ff9800;">${itemNumber}. ₿ ${currentLanguage === 'ar' ? 'زكاة العملات الرقمية (2.5%)' : 'Kripto Para Zekâtı (%2.5)'}</strong>
-                        <strong style="font-size: 1.1rem; color: #ff9800;">${formatCurrency(item.breakdown.crypto, item.currency)}</strong>
-                    </div>
-            `;
-            if (item.cryptoDetails.bitcoin > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ Bitcoin:</span><span style="font-weight: 600;">${formatCurrency(item.cryptoDetails.bitcoin, item.currency)}</span></div>`;
-            }
-            if (item.cryptoDetails.ethereum > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ Ethereum:</span><span style="font-weight: 600;">${formatCurrency(item.cryptoDetails.ethereum, item.currency)}</span></div>`;
-            }
-            if (item.cryptoDetails.otherCrypto > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'عملات أخرى' : 'Diğer Kripto'}:</span><span style="font-weight: 600;">${formatCurrency(item.cryptoDetails.otherCrypto, item.currency)}</span></div>`;
-            }
-            if (item.cryptoDetails.nfts > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ NFTs:</span><span style="font-weight: 600;">${formatCurrency(item.cryptoDetails.nfts, item.currency)}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-            itemNumber++;
-        }
-
-        // 4. زكاة الأسهم
-        if (item.breakdown.stocks > 0 && item.stocksDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(33, 150, 243, 0.08), rgba(3, 169, 244, 0.08)); border-right: 4px solid #2196f3; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(33, 150, 243, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #2196f3;">${itemNumber}. 📈 ${currentLanguage === 'ar' ? 'زكاة الأسهم (2.5%)' : 'Hisse Senedi Zekâtı (%2.5)'}</strong>
-                        <strong style="font-size: 1.1rem; color: #2196f3;">${formatCurrency(item.breakdown.stocks, item.currency)}</strong>
-                    </div>
-            `;
-            if (item.stocksDetails.tradingStocks > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'أسهم للمضاربة' : 'Spekülatif Hisseler'}:</span><span style="font-weight: 600;">${formatCurrency(item.stocksDetails.tradingStocks, item.currency)}</span></div>`;
-            }
-            if (item.stocksDetails.investmentStocks > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'أسهم استثمار' : 'Yatırım Hisseleri'}:</span><span style="font-weight: 600;">${formatCurrency(item.stocksDetails.investmentStocks, item.currency)}</span></div>`;
-            }
-            if (item.stocksDetails.mutualFunds > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'صناديق استثمار' : 'Yatırım Fonları'}:</span><span style="font-weight: 600;">${formatCurrency(item.stocksDetails.mutualFunds, item.currency)}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-            itemNumber++;
-        }
-
-        // 5. زكاة عروض التجارة
-        if (item.breakdown.trade > 0 && item.tradeDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(156, 39, 176, 0.08), rgba(171, 71, 188, 0.08)); border-right: 4px solid #9c27b0; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(156, 39, 176, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #9c27b0;">${itemNumber}. 🏪 ${currentLanguage === 'ar' ? 'زكاة عروض التجارة (2.5%)' : 'Ticari Mal Zekâtı (%2.5)'}</strong>
-                        <strong style="font-size: 1.1rem; color: #9c27b0;">${formatCurrency(item.breakdown.trade, item.currency)}</strong>
-                    </div>
-            `;
-            if (item.tradeDetails.merchandise > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'البضائع' : 'Emtia'}:</span><span style="font-weight: 600;">${formatCurrency(item.tradeDetails.merchandise, item.currency)}</span></div>`;
-            }
-            if (item.tradeDetails.rawMaterials > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'المواد الخام' : 'Ham Maddeler'}:</span><span style="font-weight: 600;">${formatCurrency(item.tradeDetails.rawMaterials, item.currency)}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-            itemNumber++;
-        }
-
-        // 6. زكاة العقارات
-        if (item.breakdown.realEstate > 0 && item.realEstateDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(233, 30, 99, 0.08), rgba(244, 67, 54, 0.08)); border-right: 4px solid #e91e63; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(233, 30, 99, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #e91e63;">${itemNumber}. 🏢 ${currentLanguage === 'ar' ? 'زكاة العقارات (2.5%)' : 'Gayrimenkul Zekâtı (%2.5)'}</strong>
-                        <strong style="font-size: 1.1rem; color: #e91e63;">${formatCurrency(item.breakdown.realEstate, item.currency)}</strong>
-                    </div>
-            `;
-            if (item.realEstateDetails.realEstateSale > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'عقارات للبيع' : 'Satış Amaçlı'}:</span><span style="font-weight: 600;">${formatCurrency(item.realEstateDetails.realEstateSale, item.currency)}</span></div>`;
-            }
-            if (item.realEstateDetails.rentalIncome > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'دخل الإيجارات' : 'Kira Geliri'}:</span><span style="font-weight: 600;">${formatCurrency(item.realEstateDetails.rentalIncome, item.currency)}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-            itemNumber++;
-        }
-
-        // 7. زكاة الزرع والثمار
-        if (item.breakdown.crops > 0 && item.cropsDetails) {
-            let irrigationText = '';
-            let rate = '';
-            if (item.cropsDetails.irrigationType === 'rain') {
-                irrigationText = currentLanguage === 'ar' ? 'بالمطر (بلا كلفة)' : 'Yağmurla (masrafsız)';
-                rate = '10%';
-            } else if (item.cropsDetails.irrigationType === 'machine') {
-                irrigationText = currentLanguage === 'ar' ? 'بالآلات (بكلفة)' : 'Makineyle (masraflı)';
-                rate = '5%';
-            } else {
-                irrigationText = currentLanguage === 'ar' ? 'مختلط' : 'Karışık';
-                rate = '7.5%';
-            }
-
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(139, 195, 74, 0.08), rgba(156, 204, 101, 0.08)); border-right: 4px solid #8bc34a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(139, 195, 74, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #8bc34a;">${itemNumber}. 🌾 ${currentLanguage === 'ar' ? 'زكاة الزرع والثمار' : 'Mahsul Zekâtı'} (${rate})</strong>
-                        <strong style="font-size: 1.1rem; color: #8bc34a;">${formatCurrency(item.breakdown.crops, item.currency)}</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'الكمية' : 'Miktar'}:</span><span style="font-weight: 600;">${item.cropsDetails.cropsWeight} ${currentLanguage === 'ar' ? 'كجم' : 'kg'}</span></div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;${item.cropsDetails.cropsPricePerKg > 0 ? ' border-bottom: 1px solid rgba(0,0,0,0.05);' : ''}"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'نوع الري' : 'Sulama Türü'}:</span><span style="font-weight: 600;">${irrigationText}</span></div>
-            `;
-            if (item.cropsDetails.cropsPricePerKg > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'سعر الكيلو' : 'Kilo Fiyatı'}:</span><span style="font-weight: 600;">${formatCurrency(item.cropsDetails.cropsPricePerKg, item.currency)}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-            itemNumber++;
-        }
-
-        // 8. زكاة المواشي
-        if (item.livestock > 0 && item.livestockDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(121, 85, 72, 0.08), rgba(141, 110, 99, 0.08)); border-right: 4px solid #795548; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(121, 85, 72, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #795548;">${itemNumber}. 🐑 ${currentLanguage === 'ar' ? 'زكاة المواشي' : 'Hayvan Zekâtı'}</strong>
-                        <strong style="font-size: 1.1rem; color: #795548;">${item.livestock} ${currentLanguage === 'ar' ? 'رأس' : 'hayvan'}</strong>
-                    </div>
-            `;
-            if (item.livestockDetails.camelsCount > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ 🐪 ${currentLanguage === 'ar' ? 'الإبل' : 'Deve'}:</span><span style="font-weight: 600;">${item.livestockDetails.camelsCount} ${currentLanguage === 'ar' ? 'رأس' : 'adet'}</span></div>`;
-            }
-            if (item.livestockDetails.cattleCount > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ 🐄 ${currentLanguage === 'ar' ? 'البقر' : 'Sığır'}:</span><span style="font-weight: 600;">${item.livestockDetails.cattleCount} ${currentLanguage === 'ar' ? 'رأس' : 'adet'}</span></div>`;
-            }
-            if (item.livestockDetails.sheepCount > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ 🐑 ${currentLanguage === 'ar' ? 'الغنم' : 'Koyun'}:</span><span style="font-weight: 600;">${item.livestockDetails.sheepCount} ${currentLanguage === 'ar' ? 'رأس' : 'adet'}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-            itemNumber++;
-        }
-
-        // 9. زكاة العسل
-        if (item.breakdown.honey > 0 && item.honeyDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(255, 193, 7, 0.08), rgba(255, 235, 59, 0.08)); border-right: 4px solid #ffc107; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(255, 193, 7, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #ffc107;">${itemNumber}. 🍯 ${currentLanguage === 'ar' ? 'زكاة العسل (10%)' : 'Bal Zekâtı (%10)'}</strong>
-                        <strong style="font-size: 1.1rem; color: #ffc107;">${formatCurrency(item.breakdown.honey, item.currency)}</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;${item.honeyDetails.honeyPricePerKg > 0 ? ' border-bottom: 1px solid rgba(0,0,0,0.05);' : ''}"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'الكمية' : 'Miktar'}:</span><span style="font-weight: 600;">${item.honeyDetails.honeyWeight} ${currentLanguage === 'ar' ? 'كجم' : 'kg'}</span></div>
-            `;
-            if (item.honeyDetails.honeyPricePerKg > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'سعر الكيلو' : 'Kilo Fiyatı'}:</span><span style="font-weight: 600;">${formatCurrency(item.honeyDetails.honeyPricePerKg, item.currency)}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-            itemNumber++;
-        }
-
-        // 10. زكاة الراتب
-        if (item.breakdown.salary > 0 && item.salaryDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(0, 150, 136, 0.08), rgba(0, 188, 212, 0.08)); border-right: 4px solid #009688; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(0, 150, 136, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #009688;">${itemNumber}. 💼 ${currentLanguage === 'ar' ? 'زكاة الراتب (2.5%)' : 'Maaş Zekâtı (%2.5)'}</strong>
-                        <strong style="font-size: 1.1rem; color: #009688;">${formatCurrency(item.breakdown.salary, item.currency)}</strong>
-                    </div>
-            `;
-            if (item.salaryDetails.method === 'monthly') {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'الراتب الشهري' : 'Aylık Maaş'}:</span><span style="font-weight: 600;">${formatCurrency(item.salaryDetails.monthlySalary, item.currency)}</span></div>`;
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'عدد الرواتب' : 'Maaş Sayısı'}:</span><span style="font-weight: 600;">${item.salaryDetails.salariesWithHawl}</span></div>`;
-            } else {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'الطريقة' : 'Yöntem'}:</span><span style="font-weight: 600;">${currentLanguage === 'ar' ? 'سنوية' : 'Yıllık'}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-            itemNumber++;
-        }
-
-        // 11. زكاة الفطر
-        if (item.fitrah > 0 && item.fitrahDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(103, 58, 183, 0.08), rgba(126, 87, 194, 0.08)); border-right: 4px solid #673ab7; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(103, 58, 183, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #673ab7;">${itemNumber}. 🌙 ${currentLanguage === 'ar' ? 'زكاة الفطر' : 'Fıtır Sadakası'}</strong>
-                        <strong style="font-size: 1.1rem; color: #673ab7;">${item.fitrahFormatted}</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'عدد الأفراد' : 'Kişi Sayısı'}:</span><span style="font-weight: 600;">${item.fitrahDetails.numberOfPeople}</span></div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'قيمة الصاع' : 'Sa\' Değeri'}:</span><span style="font-weight: 600;">${formatCurrency(item.fitrahDetails.saValue, item.currency)}</span></div>
+        html += `
+            <div class="ultra-card">
+                <!-- الرمز الخلفي الزخرفي -->
+                <div class="uc-deco-icon">
+                    <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
+                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                    </svg>
                 </div>
-            `;
-            itemNumber++;
-        }
 
-        // 12. الديون (الخصومات)
-        if (item.deductions > 0 && item.debtsDetails) {
-            detailsHTML += `
-                <div style="background: linear-gradient(135deg, rgba(244, 67, 54, 0.08), rgba(229, 57, 53, 0.08)); border-right: 4px solid #f44336; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(244, 67, 54, 0.2);">
-                        <strong style="font-size: 1.05rem; color: #f44336;">${itemNumber}. 📋 ${currentLanguage === 'ar' ? 'الديون (خصومات)' : 'Borçlar (İndirimler)'}</strong>
-                        <strong style="font-size: 1.1rem; color: #f44336;">${item.deductionsFormatted}</strong>
+                <div class="uc-content">
+                    <!-- الصف العلوي: التاريخ والرقم -->
+                    <div class="uc-top-row">
+                        <!-- التاريخ والوقت -->
+                        <div class="uc-date-badge">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="opacity:0.7">
+                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                            </svg>
+                            <span style="margin: 0 4px;">${dateString}</span>
+                            <span style="opacity: 0.4;">|</span>
+                            <span style="margin: 0 4px;">${timeString}</span>
+                        </div>
+
+                        <!-- رقم التقرير -->
+                        <div class="uc-report-id" title="${txtReportNo}" dir="ltr">
+                            #${reportID}
+                        </div>
                     </div>
-            `;
-            if (item.debtsDetails.personalDebts > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'ديون شخصية' : 'Kişisel Borçlar'}:</span><span style="font-weight: 600; color: #f44336;">${formatCurrency(item.debtsDetails.personalDebts, item.currency)}</span></div>`;
-            }
-            if (item.debtsDetails.bankLoans > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'قروض بنكية' : 'Banka Kredileri'}:</span><span style="font-weight: 600; color: #f44336;">${formatCurrency(item.debtsDetails.bankLoans, item.currency)}</span></div>`;
-            }
-            if (item.debtsDetails.businessDebts > 0) {
-                detailsHTML += `<div style="display: flex; justify-content: space-between; padding: 0.4rem 0; padding-right: 1rem;"><span style="color: var(--text-secondary);">└─ ${currentLanguage === 'ar' ? 'ديون تجارية' : 'Ticari Borçlar'}:</span><span style="font-weight: 600; color: #f44336;">${formatCurrency(item.debtsDetails.businessDebts, item.currency)}</span></div>`;
-            }
-            detailsHTML += `</div>`;
-        }
 
-       html += `
-    <div class="history-item" style="background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; box-shadow: var(--shadow);">
-        <!-- التاريخ -->
-        <div style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.1), rgba(65, 184, 166, 0.1)); border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; border-right: 3px solid var(--primary-color);">
-            <div style="background: var(--primary-color); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
-                📅
-            </div>
-            <div style="flex: 1;">
-                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.15rem;">${currentLanguage === 'ar' ? 'تاريخ الحساب' : 'Hesaplama Tarihi'}</div>
-                <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-color);">${dateString}</div>
-            </div>
-        </div>
+                    <!-- المبلغ -->
+                    <div class="uc-amount-box">
+                        <div class="uc-label">${txtTotal}</div>
+                        <div class="uc-amount">${item.totalFormatted}</div>
+                    </div>
 
-        <!-- المجموع الكلي -->
-        <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; color: white; text-align: center; box-shadow: 0 4px 8px rgba(13, 124, 102, 0.3);">
-            <div style="font-size: 0.8rem; opacity: 0.9; margin-bottom: 0.3rem; letter-spacing: 0.5px;">💰 ${currentLanguage === 'ar' ? 'المجموع الكلي' : 'GENEL TOPLAM'}</div>
-            <div style="font-size: 1.8rem; font-weight: bold; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">${item.totalFormatted}</div>
-        </div>
-
-        <!-- بطاقات المعلومات الأساسية - صفين -->
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;">
-            <!-- الصف الأول: النصاب والأصول -->
-            <!-- النصاب -->
-            <div style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.08), rgba(65, 184, 166, 0.08)); padding: 0.85rem; border-radius: 8px; border-right: 3px solid var(--primary-color);">
-                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.3rem;">
-                    <span>📊</span>
-                    <span>${currentLanguage === 'ar' ? 'النصاب' : 'Nisap'}</span>
+                    <!-- الأزرار -->
+                    <div class="uc-actions">
+                        <button class="btn-ultra" onclick="generatePDFFromHistory(JSON.parse(decodeURIComponent('${itemJson}')))">
+                            <svg class="uc-icon" viewBox="0 0 24 24">
+                                <path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5v1.5H19v2.5h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/>
+                            </svg>
+                            <span>${txtPDF}</span>
+                        </button>
+                        
+                        <button class="btn-ultra-delete" onclick="deleteHistoryItem(${item.id})" title="${txtDelete}">
+                            <svg class="uc-icon" viewBox="0 0 24 24">
+                                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <div style="font-size: 1.1rem; font-weight: bold; color: var(--primary-color);">${item.nisabFormatted}</div>
             </div>
-            
-            <!-- الأصول -->
-            <div style="background: linear-gradient(135deg, rgba(76, 175, 80, 0.08), rgba(129, 199, 132, 0.08)); padding: 0.85rem; border-radius: 8px; border-right: 3px solid #4caf50;">
-                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.3rem;">
-                    <span>💰</span>
-                    <span>${currentLanguage === 'ar' ? 'الأصول' : 'Varlıklar'}</span>
-                </div>
-                <div style="font-size: 1.1rem; font-weight: bold; color: #4caf50;">${item.assetsFormatted}</div>
-            </div>
-            
-            <!-- الصف الثاني: الخصومات وصافي المال -->
-            <!-- الخصومات -->
-            <div style="background: linear-gradient(135deg, rgba(244, 67, 54, 0.08), rgba(239, 83, 80, 0.08)); padding: 0.85rem; border-radius: 8px; border-right: 3px solid #f44336;">
-                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.3rem;">
-                    <span>➖</span>
-                    <span>${currentLanguage === 'ar' ? 'الخصومات' : 'İndirimler'}</span>
-                </div>
-                <div style="font-size: 1.1rem; font-weight: bold; color: #f44336;">${item.deductionsFormatted}</div>
-            </div>
-            
-            <!-- صافي المال -->
-            <div style="background: linear-gradient(135deg, rgba(13, 124, 102, 0.12), rgba(65, 184, 166, 0.12)); padding: 0.85rem; border-radius: 8px; border-right: 3px solid var(--secondary-color); box-shadow: 0 2px 4px rgba(13, 124, 102, 0.1);">
-                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.3rem;">
-                    <span>✅</span>
-                    <span>${currentLanguage === 'ar' ? 'صافي المال' : 'Net Mal'}</span>
-                </div>
-                <div style="font-size: 1.1rem; font-weight: bold; color: var(--secondary-color);">${item.netWealthFormatted}</div>
-            </div>
-        </div>
-
-        <!-- عنوان التفاصيل -->
-        <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 0.65rem; border-radius: 8px; text-align: center; font-weight: bold; font-size: 1rem; margin-bottom: 1rem; box-shadow: 0 2px 4px rgba(13, 124, 102, 0.2);">
-            💎 ${currentLanguage === 'ar' ? 'تفاصيل الأنواع المستخدمة' : 'Kullanılan Türlerin Detayları'}
-        </div>
-
-        <!-- التفاصيل -->
-        ${detailsHTML}
-
-<!-- أزرار الإجراءات -->
-<div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 2px solid var(--border-color); display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
-    <button class="btn btn-primary" onclick="generatePDFFromHistory(${JSON.stringify(item).replace(/"/g, '&quot;')})">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
-        </svg>
-        ${currentLanguage === 'ar' ? ' مشاركة PDF' : ' PDF Paylaş'}
-    </button>
-    
-    <button class="btn btn-outline" onclick="deleteHistoryItem(${item.id})">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-        </svg>
-        ${currentLanguage === 'ar' ? ' حذف هذا السجل' : ' Bu Kaydı Sil'}
-    </button>
-</div>
-
-    </div>
-`;
-
+        `;
     });
 
+    html += '</div>';
     container.innerHTML = html;
 }
 
+
+
+
+        
 
         // ============================================
         // حذف عنصر من السجل
@@ -24866,6 +24800,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
