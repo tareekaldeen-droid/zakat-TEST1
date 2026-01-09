@@ -4428,6 +4428,91 @@ html[lang="tr"] .font-ar { display: none !important; }
 
         
 
+/* ============================================ */
+/* نافذة الخروج العصرية (Exit Modal) */
+/* ============================================ */
+.exit-modal-content {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.exit-icon {
+    width: 80px;
+    height: 80px;
+    background: #fee2e2;
+    color: #ef4444;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 1.5rem;
+    animation: pulse-red 2s infinite;
+}
+
+.exit-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.exit-text {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.exit-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.btn-stay {
+    background: var(--bg-color);
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-exit {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    transition: all 0.2s;
+}
+
+.btn-stay:hover { background: var(--border-color); }
+.btn-exit:hover { background: #dc2626; transform: translateY(-2px); }
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
 
 
 
@@ -4502,7 +4587,30 @@ html[lang="tr"] .font-ar { display: none !important; }
 
 
 
+<!-- نافذة تأكيد الخروج -->
+<div class="modal-overlay" id="exit-modal-overlay" style="z-index: 99999;">
+    <div class="custom-modal" id="exit-modal" style="bottom: auto; top: 50%; transform: translate(-50%, -50%); left: 50%; width: 90%; max-width: 400px; background: transparent; box-shadow: none; padding: 0;">
+        <div class="exit-modal-content">
+            <div class="exit-icon">
+                🚪
+            </div>
+            <h3 class="exit-title" data-ar="تسجيل الخروج؟" data-tr="Çıkış Yapılsın mı?">تسجيل الخروج؟</h3>
+            <p class="exit-text" data-ar="هل تود حقاً الخروج من التطبيق؟" data-tr="Uygulamadan çıkmak istiyor musunuz?">
+                هل تود حقاً الخروج من التطبيق؟
+            </p>
+            <div class="exit-actions">
+                <button class="btn-stay" onclick="dismissExit()" data-ar="بقاء" data-tr="Kal">بقاء</button>
+                <button class="btn-exit" onclick="confirmAppExit()" data-ar="خروج" data-tr="Çıkış">خروج</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+
+
+
+    
 
     <!-- ============================================ -->
     <!-- شريط التنقل العلوي -->
@@ -24326,6 +24434,127 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+// ============================================
+// 🔙 نظام إدارة الرجوع والخروج الذكي
+// ============================================
+
+// 1. تهيئة سجل المتصفح عند بدء التشغيل
+document.addEventListener('DOMContentLoaded', function() {
+    // إضافة حالة أولية للتاريخ لمنع الخروج المباشر
+    window.history.pushState({ page: 'home' }, '', '#home');
+    
+    // التعامل مع زر الرجوع
+    window.addEventListener('popstate', handleBackButton);
+});
+
+// 2. دالة التعامل مع زر الرجوع
+function handleBackButton(event) {
+    // إخفاء أي نوافذ منبثقة مفتوحة أولاً
+    const openModals = document.querySelectorAll('.modal-overlay.show');
+    if (openModals.length > 0) {
+        openModals.forEach(modal => modal.classList.remove('show'));
+        // إعادة دفع الحالة للبقاء في نفس الصفحة بعد إغلاق المودال
+        window.history.pushState({ page: getCurrentPageId() }, '', '#' + getCurrentPageId());
+        return;
+    }
+
+    // التحقق من الصفحة الحالية
+    const activePage = document.querySelector('.page.active');
+    
+    if (activePage && activePage.id !== 'homePage') {
+        // إذا كنا في صفحة فرعية، نعود للرئيسية
+        navigateTo('home', false); // false تعني لا تضف للتاريخ لأننا نعود
+    } else {
+        // إذا كنا في الرئيسية، نظهر نافذة الخروج
+        showExitModal();
+        // إعادة دفع الحالة لمنع المتصفح من الخروج الفعلي فوراً
+        window.history.pushState({ page: 'home' }, '', '#home');
+    }
+}
+
+// 3. تحديث دالة التنقل (navigateTo)
+// استبدل دالة navigateTo القديمة بهذه النسخة المحدثة
+function navigateTo(pageId, addToHistory = true) {
+    // إخفاء جميع الصفحات
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+    // إظهار الصفحة المطلوبة
+    const targetPage = document.getElementById(pageId + 'Page');
+    if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    // تحديث الشريط السفلي
+    const navBtn = document.querySelector(`.nav-item[onclick="navigateTo('${pageId}')"]`);
+    if (navBtn) navBtn.classList.add('active');
+
+    // إخفاء/إظهار الشريط السفلي في الرئيسية
+    const bottomNav = document.querySelector('.bottom-nav');
+    if (pageId === 'home') {
+        if(bottomNav) bottomNav.classList.add('hidden');
+    } else {
+        if(bottomNav) bottomNav.classList.remove('hidden');
+    }
+
+    // إدارة سجل المتصفح
+    if (addToHistory) {
+        window.history.pushState({ page: pageId }, '', '#' + pageId);
+    }
+    
+    // تحديث العنوان
+    updatePageTitle(pageId);
+}
+
+// 4. دوال نافذة الخروج
+function showExitModal() {
+    const overlay = document.getElementById('exit-modal-overlay');
+    const modal = document.getElementById('exit-modal');
+    if (overlay && modal) {
+        overlay.classList.add('show');
+        modal.classList.add('show');
+    }
+}
+
+function dismissExit() {
+    const overlay = document.getElementById('exit-modal-overlay');
+    const modal = document.getElementById('exit-modal');
+    if (overlay && modal) {
+        overlay.classList.remove('show');
+        modal.classList.remove('show');
+    }
+}
+
+function confirmAppExit() {
+    // محاولة إغلاق النافذة (يعمل في PWA والتطبيقات)
+    window.close();
+    
+    // إذا لم يغلق (في المتصفح العادي)، نوجهه لصفحة فارغة أو جوجل
+    // أو نتركه يعود للخلف مرتين للخروج من الموقع
+    window.history.go(-2);
+    
+    // رسالة وداع لطيفة
+    document.body.innerHTML = `
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#0d7c66; color:white; flex-direction:column;">
+            <h1>👋</h1>
+            <h2>${currentLanguage === 'ar' ? 'في أمان الله' : 'Güle Güle'}</h2>
+        </div>
+    `;
+}
+
+// دالة مساعدة لمعرفة الصفحة الحالية
+function getCurrentPageId() {
+    const activePage = document.querySelector('.page.active');
+    return activePage ? activePage.id.replace('Page', '') : 'home';
+}
+
+
+
+
+
+        
         
 
 
@@ -24707,6 +24936,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
