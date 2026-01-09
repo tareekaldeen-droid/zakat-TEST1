@@ -20152,7 +20152,11 @@ function displayHistory() {
     });
 
     // إنشاء رقم مرجعي فريد
-    const referenceNumber = `ZKT-${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}-${now.getTime().toString().slice(-6)}`;
+  // تحديد التاريخ: إما من السجل المحفوظ أو الوقت الحالي
+    const calcDate = currentCalculation.date ? new Date(currentCalculation.date) : new Date();
+    
+    // توليد الرقم المرجعي بناءً على تاريخ العملية ليكون ثابتاً ومطابقاً لما في السجل
+    const referenceNumber = `ZKT-${calcDate.getFullYear()}${(calcDate.getMonth()+1).toString().padStart(2,'0')}${calcDate.getDate().toString().padStart(2,'0')}-${calcDate.getTime().toString().slice(-6)}`;
 
     const pdfContent = document.getElementById('pdfContent');
     pdfContent.style.display = 'block';
@@ -24800,6 +24804,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
