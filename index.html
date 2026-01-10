@@ -4620,6 +4620,7 @@ html[lang="tr"] .font-ar { display: none !important; }
 
 
 /* تصميم النافذة المنبثقة للتأكيد */
+/* تصميم النافذة المنبثقة للتأكيد - تعديل لرفعها للأعلى */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -4629,13 +4630,19 @@ html[lang="tr"] .font-ar { display: none !important; }
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
     display: flex;
-    align-items: center;
+    
+    /* التغيير الأساسي هنا 👇 */
+    align-items: flex-start; /* يجعل النافذة تبدأ من الأعلى بدلاً من الوسط */
+    padding-top: 15vh;       /* يترك مسافة 15% من أعلى الشاشة (يمكنك زيادتها أو إنقاصها) */
+    
     justify-content: center;
     z-index: 2000;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+    overflow-y: auto; /* يسمح بالتمرير إذا كانت الشاشة صغيرة جداً */
 }
+
 
 .modal-overlay.active {
     opacity: 1;
@@ -25028,6 +25035,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
