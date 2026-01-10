@@ -20222,6 +20222,8 @@ function openDeleteModal(id) {
     document.getElementById('modalTitle').innerText = isAr ? 'تأكيد الحذف' : 'Silme Onayı';
     document.getElementById('modalMsg').innerText = isAr ? 'يرجى كتابة كلمة "حذف" للتأكيد' : 'Onaylamak için "SIL" yazınız';
     document.getElementById('confirmDeleteBtn').innerText = isAr ? 'حذف نهائي' : 'Kalıcı Olarak Sil';
+    document.getElementById('cancelBtn').innerText = isAr ? 'إلغاء' : 'İptal';
+
     inputField.placeholder = isAr ? 'اكتب هنا...' : 'Buraya yazın...';
     
     // إظهار النافذة
@@ -24995,6 +24997,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
