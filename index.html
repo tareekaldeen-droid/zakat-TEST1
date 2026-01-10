@@ -20245,7 +20245,7 @@ function handleOutsideClick(event) {
     }
 }
 
-// 5. دالة الحذف الفعلي
+// 5. دالة الحذف الفعلي (المصححة)
 function processDelete() {
     const inputField = document.getElementById('confirmInput');
     const inputVal = inputField.value.trim();
@@ -20255,27 +20255,45 @@ function processDelete() {
     // التحقق من الكلمة
     if (inputVal === requiredWord) {
         if (currentDeleteId !== null) {
-            // تنفيذ الحذف الفعلي من المصفوفة
-            zakatHistory = zakatHistory.filter(item => item.id !== currentDeleteId);
             
-            // تحديث التخزين المحلي
-            localStorage.setItem('zakatHistory', JSON.stringify(zakatHistory));
-            
-            // إظهار رسالة النجاح
-            showModalFeedback(isAr ? '✓ تم الحذف بنجاح' : '✓ Başarıyla silindi', 'success');
-            
-            // تحديث القائمة وإغلاق النافذة بعد ثانية
-            setTimeout(() => {
-                displayHistory(); // إعادة بناء القائمة في الصفحة
-                closeDeleteModal();
-            }, 1000);
+            // التأكد من وجود قاعدة البيانات
+            if (db) {
+                // فتح معاملة حذف من قاعدة البيانات IndexedDB
+                const transaction = db.transaction(['history'], 'readwrite');
+                const objectStore = transaction.objectStore('history');
+                
+                // تنفيذ الحذف باستخدام ID
+                const request = objectStore.delete(currentDeleteId);
+
+                request.onsuccess = function() {
+                    // 1. تحديث المصفوفة في الذاكرة
+                    zakatHistory = zakatHistory.filter(item => item.id !== currentDeleteId);
+                    
+                    // 2. إظهار رسالة النجاح
+                    showModalFeedback(isAr ? '✓ تم الحذف بنجاح' : '✓ Başarıyla silindi', 'success');
+                    
+                    // 3. تحديث القائمة وإغلاق النافذة
+                    setTimeout(() => {
+                        displayHistory(); // إعادة رسم القائمة
+                        closeDeleteModal();
+                    }, 1000);
+                };
+
+                request.onerror = function(event) {
+                    console.error("Delete error:", event.target.error);
+                    showModalFeedback(isAr ? '❌ حدث خطأ في قاعدة البيانات' : '❌ Veritabanı hatası', 'error');
+                };
+            } else {
+                console.error("Database not initialized");
+            }
         }
     } else {
-        // رسالة خطأ
+        // رسالة خطأ في حال الكلمة غير صحيحة
         showModalFeedback(isAr ? '⚠ الكلمة غير صحيحة' : '⚠ Hatalı kelime', 'error');
         inputField.style.borderColor = '#ef4444';
     }
 }
+
 
 // 6. دالة إظهار الرسائل
 function showModalFeedback(message, type) {
@@ -24997,6 +25015,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
