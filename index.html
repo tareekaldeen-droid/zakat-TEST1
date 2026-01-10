@@ -20245,7 +20245,7 @@ function handleOutsideClick(event) {
     }
 }
 
-// 5. دالة الحذف الفعلي (المصححة)
+// 5. دالة الحذف الفعلي (معدلة لحذف البيانات من قاعدة البيانات)
 function processDelete() {
     const inputField = document.getElementById('confirmInput');
     const inputVal = inputField.value.trim();
@@ -20257,16 +20257,19 @@ function processDelete() {
         if (currentDeleteId !== null) {
             
             // التأكد من وجود قاعدة البيانات
-            if (db) {
-                // فتح معاملة حذف من قاعدة البيانات IndexedDB
+            if (!db) {
+                showModalFeedback(isAr ? 'خطأ في قاعدة البيانات' : 'Veritabanı hatası', 'error');
+                return;
+            }
+
+            // --- بداية التعديل: الحذف من IndexedDB ---
+            try {
                 const transaction = db.transaction(['history'], 'readwrite');
                 const objectStore = transaction.objectStore('history');
-                
-                // تنفيذ الحذف باستخدام ID
                 const request = objectStore.delete(currentDeleteId);
 
                 request.onsuccess = function() {
-                    // 1. تحديث المصفوفة في الذاكرة
+                    // 1. حذف العنصر من المصفوفة المحلية لتحديث العرض فوراً
                     zakatHistory = zakatHistory.filter(item => item.id !== currentDeleteId);
                     
                     // 2. إظهار رسالة النجاح
@@ -20276,23 +20279,33 @@ function processDelete() {
                     setTimeout(() => {
                         displayHistory(); // إعادة رسم القائمة
                         closeDeleteModal();
+                        
+                        // إشعار إضافي للتأكيد
+                        showToast(
+                            isAr ? 'تم حذف السجل نهائياً' : 'Kayıt kalıcı olarak silindi',
+                            'success'
+                        );
                     }, 1000);
                 };
 
                 request.onerror = function(event) {
-                    console.error("Delete error:", event.target.error);
-                    showModalFeedback(isAr ? '❌ حدث خطأ في قاعدة البيانات' : '❌ Veritabanı hatası', 'error');
+                    console.error('Delete error:', event.target.error);
+                    showModalFeedback(isAr ? '❌ فشل الحذف من القاعدة' : '❌ Silme başarısız', 'error');
                 };
-            } else {
-                console.error("Database not initialized");
+
+            } catch (error) {
+                console.error('Error in delete transaction:', error);
+                showModalFeedback(isAr ? '❌ حدث خطأ غير متوقع' : '❌ Beklenmeyen hata', 'error');
             }
+            // --- نهاية التعديل ---
         }
     } else {
-        // رسالة خطأ في حال الكلمة غير صحيحة
+        // رسالة خطأ عند كتابة كلمة مرور خاطئة
         showModalFeedback(isAr ? '⚠ الكلمة غير صحيحة' : '⚠ Hatalı kelime', 'error');
         inputField.style.borderColor = '#ef4444';
     }
 }
+
 
 
 // 6. دالة إظهار الرسائل
@@ -25015,6 +25028,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
