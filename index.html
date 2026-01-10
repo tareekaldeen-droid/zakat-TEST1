@@ -20140,8 +20140,10 @@ function saveToHistory() {
 // ============================================
 let currentDeleteId = null;
 
+// عرض السجل
 function displayHistory() {
     const container = document.getElementById('historyContainer');
+    // تحديث القائمة بناءً على المتغير الحالي
     if (!zakatHistory || zakatHistory.length === 0) {
         container.innerHTML = `<div class="empty-state" style="text-align:center; padding:4rem 1rem;">
             <h3 style="color:var(--text-color);">${currentLanguage === 'ar' ? 'لا توجد سجلات محفوظة' : 'Kayıtlı Hesaplama Yok'}</h3>
@@ -20150,17 +20152,16 @@ function displayHistory() {
     }
 
     let html = '<div class="history-container">';
-    zakatHistory.forEach((item) => {
+    // نستخدم slice().reverse() لعرض الأحدث أولاً دون تخريب المصفوفة الأصلية
+    zakatHistory.slice().reverse().forEach((item) => {
         const dateObj = new Date(item.date);
         const isAr = currentLanguage === 'ar';
         
-        // أرقام إنجليزية للتقرير والتاريخ
         const year = dateObj.getFullYear();
         const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
         const day = dateObj.getDate().toString().padStart(2, '0');
         const reportID = `ZKT-${year}${month}${day}-${dateObj.getTime().toString().slice(-6)}`;
         
-        // تنسيق الوقت (ص/م)
         let hours = dateObj.getHours();
         const minutes = dateObj.getMinutes().toString().padStart(2, '0');
         const ampm = isAr ? (hours >= 12 ? 'م' : 'ص') : (hours >= 12 ? 'PM' : 'AM');
@@ -20191,7 +20192,7 @@ function displayHistory() {
                     <div class="uc-actions" style="display:flex; gap:10px; justify-content:center;">
                         <button class="btn-ultra" style="flex:1; max-width:280px;" onclick="generatePDFFromHistory(JSON.parse(decodeURIComponent('${itemJson}')))">
                             <svg class="uc-icon" viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5v1.5H19v2.5h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/></svg>
-                            <span>${isAr ? 'تحضير تفاصيل التقرير PDF' : 'Rapor Detaylarını Hazırla PDF'}</span>
+                            <span>${isAr ? 'تحضير PDF' : 'PDF Hazırla'}</span>
                         </button>
                         <button class="btn-ultra-delete" style="width:52px;" onclick="openDeleteModal(${item.id})">
                             <svg class="uc-icon" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
@@ -20203,112 +20204,82 @@ function displayHistory() {
     container.innerHTML = html + '</div>';
 }
 
-
-// 2. دالة فتح النافذة
+// فتح النافذة
 function openDeleteModal(id) {
-    console.log("Opening modal for ID:", id); // للتأكد في الكونسول
     currentDeleteId = id; 
     const isAr = currentLanguage === 'ar';
     const modal = document.getElementById('deleteModalOverlay');
-    const feedbackDiv = document.getElementById('modalFeedback');
     const inputField = document.getElementById('confirmInput');
+    const feedbackDiv = document.getElementById('modalFeedback');
 
-    // إعادة ضبط النافذة
+    // إعادة تعيين الحقول
     feedbackDiv.classList.remove('show');
     inputField.value = '';
     inputField.style.borderColor = '';
     
-    // تحديث النصوص
+    // تحديث النصوص (بما في ذلك زر الإلغاء)
     document.getElementById('modalTitle').innerText = isAr ? 'تأكيد الحذف' : 'Silme Onayı';
     document.getElementById('modalMsg').innerText = isAr ? 'يرجى كتابة كلمة "حذف" للتأكيد' : 'Onaylamak için "SIL" yazınız';
     document.getElementById('confirmDeleteBtn').innerText = isAr ? 'حذف نهائي' : 'Kalıcı Olarak Sil';
-    document.getElementById('cancelBtn').innerText = isAr ? 'إلغاء' : 'İptal';
+    
+    // === هنا تحديث نص زر الإلغاء ===
+    const cancelBtn = document.getElementById('cancelBtn');
+    if(cancelBtn) {
+        cancelBtn.innerText = isAr ? 'إلغاء' : 'İptal';
+    }
 
     inputField.placeholder = isAr ? 'اكتب هنا...' : 'Buraya yazın...';
     
-    // إظهار النافذة
     modal.classList.add('active');
     setTimeout(() => inputField.focus(), 300);
 }
 
-// 3. دالة إغلاق النافذة (تأكد من اسم الكلاس active)
+// إغلاق النافذة
 function closeDeleteModal() {
     const modal = document.getElementById('deleteModalOverlay');
     modal.classList.remove('active');
     currentDeleteId = null;
 }
 
-// 4. إغلاق النافذة عند الضغط خارجها
+// إغلاق عند النقر في الخارج
 function handleOutsideClick(event) {
     if (event.target.id === 'deleteModalOverlay') {
         closeDeleteModal();
     }
 }
 
-// 5. دالة الحذف الفعلي (معدلة لحذف البيانات من قاعدة البيانات)
+// تنفيذ الحذف
 function processDelete() {
     const inputField = document.getElementById('confirmInput');
-    const inputVal = inputField.value.trim();
+    const inputVal = inputField.value.trim(); // إزالة المسافات الزائدة
     const isAr = currentLanguage === 'ar';
     const requiredWord = isAr ? 'حذف' : 'SIL';
 
-    // التحقق من الكلمة
-    if (inputVal === requiredWord) {
+    // تحويل المدخلات إلى أحرف كبيرة إذا كانت بالإنجليزية لتسهيل المطابقة
+    if (inputVal.toUpperCase() === requiredWord.toUpperCase()) {
         if (currentDeleteId !== null) {
             
-            // التأكد من وجود قاعدة البيانات
-            if (!db) {
-                showModalFeedback(isAr ? 'خطأ في قاعدة البيانات' : 'Veritabanı hatası', 'error');
-                return;
-            }
-
-            // --- بداية التعديل: الحذف من IndexedDB ---
-            try {
-                const transaction = db.transaction(['history'], 'readwrite');
-                const objectStore = transaction.objectStore('history');
-                const request = objectStore.delete(currentDeleteId);
-
-                request.onsuccess = function() {
-                    // 1. حذف العنصر من المصفوفة المحلية لتحديث العرض فوراً
-                    zakatHistory = zakatHistory.filter(item => item.id !== currentDeleteId);
-                    
-                    // 2. إظهار رسالة النجاح
-                    showModalFeedback(isAr ? '✓ تم الحذف بنجاح' : '✓ Başarıyla silindi', 'success');
-                    
-                    // 3. تحديث القائمة وإغلاق النافذة
-                    setTimeout(() => {
-                        displayHistory(); // إعادة رسم القائمة
-                        closeDeleteModal();
-                        
-                        // إشعار إضافي للتأكيد
-                        showToast(
-                            isAr ? 'تم حذف السجل نهائياً' : 'Kayıt kalıcı olarak silindi',
-                            'success'
-                        );
-                    }, 1000);
-                };
-
-                request.onerror = function(event) {
-                    console.error('Delete error:', event.target.error);
-                    showModalFeedback(isAr ? '❌ فشل الحذف من القاعدة' : '❌ Silme başarısız', 'error');
-                };
-
-            } catch (error) {
-                console.error('Error in delete transaction:', error);
-                showModalFeedback(isAr ? '❌ حدث خطأ غير متوقع' : '❌ Beklenmeyen hata', 'error');
-            }
-            // --- نهاية التعديل ---
+            // 1. الحذف من المصفوفة (نتأكد من مطابقة النوع ID)
+            zakatHistory = zakatHistory.filter(item => item.id != currentDeleteId);
+            
+            // 2. تحديث التخزين المحلي (هذا هو السطر الذي يحفظ التغيير للأبد)
+            localStorage.setItem('zakatHistory', JSON.stringify(zakatHistory));
+            
+            // 3. رسالة نجاح
+            showModalFeedback(isAr ? '✓ تم الحذف بنجاح' : '✓ Başarıyla silindi', 'success');
+            
+            // 4. تحديث الواجهة
+            setTimeout(() => {
+                displayHistory(); 
+                closeDeleteModal();
+            }, 1000);
         }
     } else {
-        // رسالة خطأ عند كتابة كلمة مرور خاطئة
         showModalFeedback(isAr ? '⚠ الكلمة غير صحيحة' : '⚠ Hatalı kelime', 'error');
         inputField.style.borderColor = '#ef4444';
     }
 }
 
-
-
-// 6. دالة إظهار الرسائل
 function showModalFeedback(message, type) {
     const feedbackDiv = document.getElementById('modalFeedback');
     feedbackDiv.innerText = message;
@@ -25028,6 +24999,7 @@ if ('serviceWorker' in navigator) {
     
 </body>
 </html>
+
 
 
 
